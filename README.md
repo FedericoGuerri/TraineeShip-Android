@@ -1,4 +1,4 @@
-# TraineeShip-Android
+# TraineeShip-Android  [![Build Status](https://travis-ci.org/FedericoGuerri/TraineeShip-Android.svg?branch=master)](https://travis-ci.org/FedericoGuerri/TraineeShip-Android)
 
 My repository for the traineeship at university of Florence.
 
