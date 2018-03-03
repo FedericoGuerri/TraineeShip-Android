@@ -4,8 +4,8 @@ sudo: required
 
 android:
   components:
-    #- tools
-    #- platform-tools
+    - tools
+    - platform-tools
 
     # The BuildTools version used by your project
     - build-tools-27.0.2
@@ -20,9 +20,7 @@ android:
     - addon-google_apis-google-27
 
     # System images to run emulator(s) during tests.
-    - sys-img-armeabi-v7a-android-27
-    #- sys-img-armeabi-v7a-android-17
-
+    #- sys-img-armeabi-v7a-android-27
 
 
 # Cache
