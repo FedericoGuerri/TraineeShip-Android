@@ -21,7 +21,10 @@ android:
 
     # System images to run emulator(s) during tests.
     #- sys-img-armeabi-v7a-android-27
-
+licenses:
+    - 'android-sdk-preview-license-52d11cd2'
+    - 'android-sdk-license-.+'
+    - 'google-gdk-license-.+'
 
 # Cache
 before_cache:
