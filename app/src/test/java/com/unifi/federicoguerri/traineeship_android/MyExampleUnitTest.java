@@ -19,4 +19,9 @@ public class MyExampleUnitTest {
     public void subtraction_isCorrect() throws Exception {
         assertEquals(4, 6 - 2);
     }
+
+    @Test
+    public void testMySecondAndroidJunitTest(){
+        assertEquals("Test message",true,true);
+    }
 }
