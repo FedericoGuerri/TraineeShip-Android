@@ -40,7 +40,7 @@ licenses:
 
 before_install:
   #- yes | sdkmanager "platforms;android-24;android-27"
-  - yes | sdkmanager --licenses
+  - yes | sdkmanager "--licenses"
 
 
 # Emulator Management: Create, Start and Wait
