@@ -1,5 +1,6 @@
 package com.unifi.federicoguerri.traineeship_android;
 
+
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -24,4 +25,6 @@ public class MyExampleUnitTest {
     public void testMySecondAndroidJunitTest(){
         assertEquals("Test message",true,true);
     }
+
+
 }
