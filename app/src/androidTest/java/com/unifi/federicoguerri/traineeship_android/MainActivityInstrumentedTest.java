@@ -39,6 +39,10 @@ import static org.junit.Assert.*;
  */
 @RunWith(AndroidJUnit4.class)
 public class MainActivityInstrumentedTest {
+
+    @Rule
+    public ActivityTestRule<MainActivity> rule  = new ActivityTestRule<>(MainActivity.class);
+
     @Test
     public void useAppContext() throws Exception {
         Context appContext = InstrumentationRegistry.getTargetContext();
