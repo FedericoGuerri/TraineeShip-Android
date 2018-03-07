@@ -60,7 +60,7 @@ public class MainActivityInstrumentedTest {
     public void helloWorldTextViewTextIsColorAccentTest() throws Exception {
         MainActivity activity = rule.getActivity();
         TextView helloworldTextView = (TextView)activity.findViewById(R.id.helloWorldTextView);
-        int color=activity.getColor(R.color.colorAccent);
+        int color=helloworldTextView.getContext().getResources().getColor(R.color.colorAccent);
         assertEquals(color,helloworldTextView.getCurrentTextColor());
     }
 
