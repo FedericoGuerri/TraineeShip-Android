@@ -14,7 +14,11 @@ import android.widget.TextView;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.w3c.dom.Text;
 
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.hasTextColor;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.core.IsNull.notNullValue;
@@ -55,10 +59,9 @@ public class MainActivityInstrumentedTest {
     @Test
     public void helloWorldTextViewTextIsColorAccentTest() throws Exception {
         MainActivity activity = rule.getActivity();
-        View viewById = activity.findViewById(R.id.helloWorldTextView);
-        TextView helloworldTextView=(TextView)viewById;
-        int colorAccent=rule.getActivity().getBaseContext().getColor(R.color.colorAccent);
-        assertEquals(helloworldTextView.getCurrentTextColor(), colorAccent);
+        TextView helloworldTextView = (TextView)activity.findViewById(R.id.helloWorldTextView);
+        int color=activity.getColor(R.color.colorAccent);
+        assertEquals(color,helloworldTextView.getCurrentTextColor());
     }
 
 }
