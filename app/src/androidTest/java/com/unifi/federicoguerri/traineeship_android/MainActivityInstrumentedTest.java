@@ -16,11 +16,19 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.w3c.dom.Text;
 
+import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.hasTextColor;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.isA;
+import static org.hamcrest.Matchers.isEmptyOrNullString;
+import static org.hamcrest.core.IsNot.not;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.*;
 
@@ -33,38 +41,23 @@ import static org.junit.Assert.*;
 public class MainActivityInstrumentedTest {
     @Test
     public void useAppContext() throws Exception {
-        // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
-
         assertEquals("com.unifi.federicoguerri.traineeship_android", appContext.getPackageName());
-    }
-
-    @Rule
-    public ActivityTestRule<MainActivity> rule  = new ActivityTestRule<>(MainActivity.class);
-
-    @Test
-    public void helloWorldViewInMainActivityTest() throws Exception {
-        MainActivity activity = rule.getActivity();
-        View viewById = activity.findViewById(R.id.helloWorldTextView);
-        assertThat(viewById,notNullValue());
     }
 
     @Test
     public void helloWorldViewInMainActivityIsATextViewTest() throws Exception {
-        MainActivity activity = rule.getActivity();
-        View viewById = activity.findViewById(R.id.helloWorldTextView);
-        assertThat(viewById, instanceOf(TextView.class));
+        onView(withId(R.id.helloWorldTextView)).check(matches(instanceOf(TextView.class)));
     }
 
     @Test
     public void helloWorldTextViewTextIsColorAccentTest() throws Exception {
-        MainActivity activity = rule.getActivity();
-        TextView helloworldTextView = (TextView)activity.findViewById(R.id.helloWorldTextView);
+        onView(withId(R.id.helloWorldTextView)).check(matches(hasTextColor(R.color.colorAccent)));
+    }
 
-        Context appContext = InstrumentationRegistry.getTargetContext();
-        int color=appContext.getResources().getColor(R.color.colorAccent);
-
-        assertEquals(color,helloworldTextView.getCurrentTextColor());
+    @Test
+    public void helloWorldTextViewIsDisplayedTest(){
+        onView(withText("Hello World!")).check(matches(isDisplayed()));
     }
 
 }
