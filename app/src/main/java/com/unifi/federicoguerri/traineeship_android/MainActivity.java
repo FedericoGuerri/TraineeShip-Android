@@ -11,9 +11,4 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-    public void testCoverageMethod(){
-        int notCovered=0;
-        notCovered++;
-    }
-
 }
