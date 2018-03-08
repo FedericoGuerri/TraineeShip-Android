@@ -29,6 +29,7 @@ licenses:
 before_install:
   - yes | sdkmanager "platforms;android-22"
   - yes | sdkmanager "platforms;android-27"
+  - pip install --user codecov
 
 # Cache
 before_cache:
@@ -49,15 +50,9 @@ script:
   - adb shell input keyevent 82 &
   - ./gradlew connectedCheck
 
-before_install:
-    - pip install --user codecov
-
 after_success:
     - codecov
     
 notifications:
     email:
         - fede95gg@gmail.com
-
-#after success:
-#  - bash <(curl -s https://codecov.io/bash) -t '638e0282-2f07-4225-8128-26329dce1ecd'
