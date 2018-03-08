@@ -54,8 +54,6 @@ before_script:
   - adb devices
   - adb shell input keyevent 82 &
 
-
-
 # Cache
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
@@ -67,7 +65,7 @@ cache:
     - $HOME/.android/build-cache
 
 script:
-  - ./gradlew connectedAndroidTest
+  - ./gradlew connectedCheck
   #- gradle build
 
 after success:
