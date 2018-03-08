@@ -12,6 +12,9 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+        debug{
+            testCoverageEnabled true
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -28,6 +31,7 @@ android {
     }
 
 }
+
 
 ext {
     //App
@@ -48,6 +52,5 @@ dependencies {
     androidTestCompile "com.android.support.test:runner:$testRunnerVersion"
     androidTestCompile "com.android.support.test.espresso:espresso-core:$espressoVersion"
     testCompile "junit:junit:$junitVersion"
-
 
 }
