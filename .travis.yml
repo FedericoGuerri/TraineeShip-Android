@@ -41,7 +41,7 @@ cache:
     - $HOME/.android/build-cache
 
 script:
-  - ./gradlew build jacocoTestReport assembleAndroidTest
+  #- ./gradlew build jacocoTestReport assembleAndroidTest
   - echo no | android create avd --force -n test -t android-22 --abi armeabi-v7a
   - emulator -avd test -no-window &
   - android-wait-for-emulator
@@ -49,5 +49,11 @@ script:
   - adb shell input keyevent 82 &
   - ./gradlew connectedCheck
 
-after success:
-  - bash <(curl -s https://codecov.io/bash) -t '638e0282-2f07-4225-8128-26329dce1ecd'
+before_install:
+    - pip install --user codecov
+
+after_success:
+    - codecov
+
+#after success:
+#  - bash <(curl -s https://codecov.io/bash) -t '638e0282-2f07-4225-8128-26329dce1ecd'
