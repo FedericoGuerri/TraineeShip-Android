@@ -1,5 +1,7 @@
 # TraineeShip-Android  [![Build Status](https://travis-ci.org/FedericoGuerri/TraineeShip-Android.svg?branch=master)](https://travis-ci.org/FedericoGuerri/TraineeShip-Android)
 
+[![codecov.io](https://codecov.io/github/FedericoGuerri/TraineeShip-Android.svg)](https://codecov.io/github/FedericoGuerri/TraineeShip-Android)
+
 My repository for the traineeship at university of Florence.
 
 ## Description
@@ -9,5 +11,6 @@ An android app, developed with:
   - <a href="https://developer.android.com/training/testing/espresso/index.html">Espresso</a>
   - <a href="https://travis-ci.org">Travis</a>
   - <a href="https://gradle.org">Gradle</a>
+  - <a href="https://codecov.io">CodeCov</a>
 
 :rotating_light: **WIP...**
