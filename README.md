@@ -12,7 +12,7 @@ An android app, developed with:
   
   - <a href="https://gradle.org">Gradle</a>
   - <a href="https://junit.org/junit4/">Junit</a>
-  - <a href="https://developer.android.com/training/testing/espresso/index.html">Espresso</a>
+  - <a href="https://developer.android.com/training/testing/espresso/index.html">Espresso</a> (optionally with Orchestrator)
   
 
 :rotating_light: **WIP...**
