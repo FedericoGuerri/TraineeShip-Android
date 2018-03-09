@@ -2,12 +2,12 @@ apply plugin: 'com.android.application'
 apply plugin: 'jacoco-android'
 
 android {
-    compileSdkVersion 25
+    compileSdkVersion 27
     buildToolsVersion "27.0.2"
     defaultConfig {
         applicationId "com.unifi.federicoguerri.traineeship_android"
         minSdkVersion 22
-        targetSdkVersion 25
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -47,7 +47,7 @@ android {
 
 ext {
     //App
-    appCompatVersion = '25.4.0'
+    appCompatVersion = '27.1.0'
     constraintLayoutVersion = '1.0.2'
 
     //Test
