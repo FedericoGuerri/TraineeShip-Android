@@ -44,7 +44,7 @@ public class SplashScreenActivityInstrumentedTest {
         return new BoundedMatcher<View, View>(View.class) {
             @Override
             public boolean matchesSafely(View warning) {
-                return InstrumentationRegistry.getTargetContext().getColor(color) ==
+                return InstrumentationRegistry.getTargetContext().getResources().getColor(color) ==
                         ((ColorDrawable)warning.getBackground()).getColor();
             }
             @Override
