@@ -31,8 +31,19 @@ android {
         }
     }
 
-}
+    project.ext{
+        orchestrator = project.hasProperty('orchestrator') ? project.property('orchestrator') : false
+    }
 
+    testOptions {
+        if (orchestrator) {
+            println("Running android test with orchestrator")
+            execution "ANDROID_TEST_ORCHESTRATOR"
+        }
+    }
+
+
+}
 
 ext {
     //App
@@ -43,6 +54,7 @@ ext {
     junitVersion = '4.12'
     testRunnerVersion='1.0.1'
     espressoVersion = '3.0.1'
+    orchestratorVersion='1.0.1'
 }
 
 dependencies {
@@ -53,5 +65,7 @@ dependencies {
     androidTestImplementation "com.android.support.test:runner:$testRunnerVersion"
     androidTestImplementation "com.android.support.test.espresso:espresso-core:$espressoVersion"
     testImplementation "junit:junit:$junitVersion"
+
+    androidTestUtil "com.android.support.test:orchestrator:$orchestratorVersion"
 
 }
