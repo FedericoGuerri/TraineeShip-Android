@@ -1,8 +1,10 @@
 package com.unifi.federicoguerri.traineeship_android;
 
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
@@ -13,5 +15,12 @@ public class SplashScreenActivity extends AppCompatActivity {
         if(getSupportActionBar()!=null){
             getSupportActionBar().hide();
         }
+
+    }
+
+
+    public void startMainActivity(View view) {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 }

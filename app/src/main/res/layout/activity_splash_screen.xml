@@ -8,6 +8,7 @@
     android:background="@color/splash_background_color"
     android:clickable="true"
     android:focusable="true"
+    android:onClick="startMainActivity"
     tools:context="com.unifi.federicoguerri.traineeship_android.SplashScreenActivity">
 
     <ImageView
@@ -18,11 +19,29 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:focusable="true"
         android:clickable="false"
         android:contentDescription="@string/applogo_image_view_content_descriptor"
+        android:focusable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/splashScreenTapToStarttextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:clickable="false"
+        android:focusable="true"
+        android:text="@string/taptostart_text_view"
+        android:textColor="@color/whiteTextColor"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/splashImageViewLogo" />
 </android.support.constraint.ConstraintLayout>

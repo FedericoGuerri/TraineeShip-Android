@@ -4,4 +4,5 @@
     <color name="splash_background_color">#3f51b5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#ff4081</color>
+    <color name="whiteTextColor">#ffffff</color>
 </resources>
