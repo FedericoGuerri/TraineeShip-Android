@@ -40,6 +40,9 @@ android {
             println("Running android test with orchestrator")
             execution "ANDROID_TEST_ORCHESTRATOR"
         }
+        unitTests {
+            includeAndroidResources = true
+        }
     }
 
 
@@ -55,6 +58,7 @@ ext {
     testRunnerVersion = '1.0.1'
     espressoVersion = '3.0.1'
     orchestratorVersion = '1.0.1'
+    robolectricVersion = '3.3.2'
 }
 
 dependencies {
@@ -69,5 +73,7 @@ dependencies {
     testImplementation "junit:junit:$junitVersion"
 
     androidTestUtil "com.android.support.test:orchestrator:$orchestratorVersion"
+
+    testCompile "org.robolectric:robolectric:$robolectricVersion"
 
 }
