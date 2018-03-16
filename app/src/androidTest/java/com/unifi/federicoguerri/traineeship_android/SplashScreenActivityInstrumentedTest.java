@@ -1,7 +1,10 @@
 package com.unifi.federicoguerri.traineeship_android;
 
+import android.arch.lifecycle.Lifecycle;
 import android.graphics.drawable.ColorDrawable;
 import android.support.test.InstrumentationRegistry;
+import android.support.test.espresso.NoActivityResumedException;
+import android.support.test.espresso.action.ViewActions;
 import android.support.test.espresso.intent.Intents;
 import android.support.test.espresso.matcher.BoundedMatcher;
 import android.support.test.espresso.matcher.ViewMatchers;
@@ -23,20 +26,20 @@ import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static android.support.test.espresso.matcher.ViewMatchers.hasChildCount;
 import static android.support.test.espresso.matcher.ViewMatchers.hasTextColor;
-import static android.support.test.espresso.matcher.ViewMatchers.isClickable;
+import static android.support.test.espresso.matcher.ViewMatchers.isRoot;
 import static android.support.test.espresso.matcher.ViewMatchers.withChild;
 import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static junit.framework.Assert.assertNotNull;
 import static junit.framework.TestCase.assertEquals;
-import static org.hamcrest.CoreMatchers.not;
 
 @RunWith(AndroidJUnit4.class)
 public class SplashScreenActivityInstrumentedTest {
 
     @Rule
-    public ActivityTestRule<SplashScreenActivity> rule  = new ActivityTestRule<>(SplashScreenActivity.class);
+    public ActivityTestRule<SplashScreenActivity> splashScreenRule = new ActivityTestRule<>(SplashScreenActivity.class);
 
     public static Matcher<View> withBackgroundColorId(final int color) {
         Checks.checkNotNull(color);
@@ -54,6 +57,7 @@ public class SplashScreenActivityInstrumentedTest {
         };
     }
 
+    // background view
 
     @Test
     public void backgroundViewIsVisibleTest(){
@@ -76,9 +80,15 @@ public class SplashScreenActivityInstrumentedTest {
     }
 
     @Test
-    public void backgroundViewIsClickableTest(){
-        onView(withId(R.id.splashBackgroundView)).check(matches(isClickable()));
+    public void launchMainActivityByTappingOnBackgroundViewTest(){
+        Intents.init();
+        onView(withId(R.id.splashBackgroundView)).perform(click());
+        intended(hasComponent(MainActivity.class.getName()));
+        Intents.release();
     }
+
+
+    // app logo Imageview
 
     @Test
     public void thereIsAVisibleImageViewTest(){
@@ -90,15 +100,8 @@ public class SplashScreenActivityInstrumentedTest {
         onView(withId(R.id.splashImageViewLogo)).check(matches(withContentDescription(R.string.applogo_image_view_content_descriptor)));
     }
 
-    @Test
-    public void appLogoImageViewIsNotClickableTest(){
-        onView(withId(R.id.splashImageViewLogo)).check(matches(not(isClickable())));
-    }
 
-    @Test
-    public void supportActionBarIsInvisibleTest(){
-        assertEquals(false,rule.getActivity().getSupportActionBar().isShowing());
-    }
+    // Hint Textview
 
     @Test
     public void thereIsAVisibleHintTextViewTest(){
@@ -115,18 +118,24 @@ public class SplashScreenActivityInstrumentedTest {
         onView(withId(R.id.splashScreenTapToStarttextView)).check(matches(hasTextColor(R.color.whiteTextColor)));
     }
 
+
+
+    // General tests
+
     @Test
-    public void hintTextViewIsNotClickableTest(){
-        onView(withId(R.id.splashScreenTapToStarttextView)).check(matches(not(isClickable())));
+    public void launchingMainActivity_WillTerminateSplashScreen(){
+        onView(withId(R.id.splashBackgroundView)).perform(click());
+        assertEquals(Lifecycle.State.DESTROYED,splashScreenRule.getActivity().getLifecycle().getCurrentState());
     }
 
+    @Test(expected = NoActivityResumedException.class)
+    public void pressingBackButton_WillTerminateTheApp(){
+        onView(isRoot()).perform(ViewActions.pressBack());
+    }
 
     @Test
-    public void launchMainActivityByTappingOnBackgroundViewTest(){
-        Intents.init();
-        onView(withId(R.id.splashBackgroundView)).perform(click());
-        intended(hasComponent(MainActivity.class.getName()));
-        Intents.release();
+    public void supportActionBarIsInvisibleTest(){
+        assertEquals(false, splashScreenRule.getActivity().getSupportActionBar().isShowing());
     }
 
 
