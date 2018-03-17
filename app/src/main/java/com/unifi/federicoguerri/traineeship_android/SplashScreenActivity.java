@@ -17,19 +17,19 @@ public class SplashScreenActivity extends AppCompatActivity {
 
     }
 
-    private void endApp() {
+    private void endActivity() {
         finish();
     }
 
     @Override
     public void onBackPressed() {
-        endApp();
+        endActivity();
     }
 
 
     public void startMainActivity(View view) {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
-        endApp();
+        endActivity();
     }
 }

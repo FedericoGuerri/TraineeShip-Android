@@ -1,6 +1,7 @@
 package com.unifi.federicoguerri.traineeship_android;
 
 import android.arch.lifecycle.Lifecycle;
+import android.content.pm.ActivityInfo;
 import android.graphics.drawable.ColorDrawable;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.NoActivityResumedException;
@@ -19,6 +20,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static android.support.test.InstrumentationRegistry.getInstrumentation;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
@@ -60,27 +62,27 @@ public class SplashScreenActivityInstrumentedTest {
     // background view
 
     @Test
-    public void backgroundViewIsVisibleTest(){
+    public void backgroundView_isVisibleTest(){
         onView(withId(R.id.splashBackgroundView)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
     }
 
     @Test
-    public void backgroundViewHasBackgroundColorTest(){
+    public void backgroundView_hasBackgroundColorTest(){
         onView(withId(R.id.splashBackgroundView)).check(matches(withBackgroundColorId(R.color.splash_background_color)));
     }
 
     @Test
-    public void backgroundViewHasTwoChildrenTest(){
+    public void backgroundView_hasTwoChildrenTest(){
         onView(withId(R.id.splashBackgroundView)).check(matches(hasChildCount(2)));
     }
 
     @Test
-    public void backgroundViewHasImageViewLogoAsChildTest(){
+    public void backgroundView_hasImageViewLogoAsChildTest(){
         onView(withId(R.id.splashBackgroundView)).check(matches(withChild(withId(R.id.splashImageViewLogo))));
     }
 
     @Test
-    public void launchMainActivityByTappingOnBackgroundViewTest(){
+    public void mainActivity_launchedByTappingOnBackgroundViewTest(){
         Intents.init();
         onView(withId(R.id.splashBackgroundView)).perform(click());
         intended(hasComponent(MainActivity.class.getName()));
@@ -96,7 +98,7 @@ public class SplashScreenActivityInstrumentedTest {
     }
 
     @Test
-    public void appLogoImageViewHasContentDescriptorTest(){
+    public void appLogoImageView_hasContentDescriptorTest(){
         onView(withId(R.id.splashImageViewLogo)).check(matches(withContentDescription(R.string.applogo_image_view_content_descriptor)));
     }
 
@@ -109,12 +111,12 @@ public class SplashScreenActivityInstrumentedTest {
     }
 
     @Test
-    public void hintTextViewIsShowingHintTextTest(){
+    public void hintTextView_isShowingHintTextTest(){
         onView(withId(R.id.splashScreenTapToStarttextView)).check(matches(withText(R.string.taptostart_text_view)));
     }
 
     @Test
-    public void hintTextViewHasWhiteTextColorTest(){
+    public void hintTextView_hasWhiteTextColorTest(){
         onView(withId(R.id.splashScreenTapToStarttextView)).check(matches(hasTextColor(R.color.whiteTextColor)));
     }
 
@@ -123,18 +125,18 @@ public class SplashScreenActivityInstrumentedTest {
     // General tests
 
     @Test
-    public void launchingMainActivity_WillTerminateSplashScreen(){
+    public void launchingMainActivity_willTerminateSplashScreen(){
         onView(withId(R.id.splashBackgroundView)).perform(click());
         assertEquals(Lifecycle.State.DESTROYED,splashScreenRule.getActivity().getLifecycle().getCurrentState());
     }
 
     @Test(expected = NoActivityResumedException.class)
-    public void pressingBackButton_WillTerminateTheApp(){
+    public void pressingBackButton_willTerminateTheApp(){
         onView(isRoot()).perform(ViewActions.pressBack());
     }
 
     @Test
-    public void supportActionBarIsInvisibleTest(){
+    public void supportActionBar_isInvisibleTest(){
         assertEquals(false, splashScreenRule.getActivity().getSupportActionBar().isShowing());
     }
 

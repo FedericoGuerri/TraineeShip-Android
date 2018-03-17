@@ -2,4 +2,6 @@
     <string name="app_name">TraineeShip-Android</string>
     <string name="applogo_image_view_content_descriptor">Shows the App logo</string>
     <string name="taptostart_text_view">Tap to Start</string>
+    <string name="hint_textView_mainActivity">Tap on + to add a new import.</string>
+    <string name="welcome_textView_mainActivity">Welcome!</string>
 </resources>

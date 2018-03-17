@@ -36,19 +36,35 @@ public class MainActivityInstrumentedTest {
         assertEquals("com.unifi.federicoguerri.traineeship_android", appContext.getPackageName());
     }
 
+    // hint TextView
     @Test
-    public void helloWorldViewInMainActivityIsATextViewTest() throws Exception {
-        onView(withId(R.id.helloWorldTextView)).check(matches(instanceOf(TextView.class)));
+    public void hintTextView_isATextViewTest() throws Exception {
+        onView(withId(R.id.hintTextViewMainActivity)).check(matches(instanceOf(TextView.class)));
     }
 
     @Test
-    public void helloWorldTextViewTextIsColorAccentTest() throws Exception {
-        onView(withId(R.id.helloWorldTextView)).check(matches(hasTextColor(R.color.colorAccent)));
+    public void hintTextView_isColorAccentTest() throws Exception {
+        onView(withId(R.id.hintTextViewMainActivity)).check(matches(hasTextColor(R.color.hint_textView_mainActivity)));
     }
 
     @Test
-    public void helloWorldTextViewIsDisplayedTest(){
-        onView(withText("Hello World!")).check(matches(isDisplayed()));
+    public void hintTextView_isDisplayedTest(){
+        onView(withText(InstrumentationRegistry.getTargetContext().getResources().getString(R.string.hint_textView_mainActivity))).check(matches(isDisplayed()));
     }
 
+    // welcome TextView
+    @Test
+    public void welcomeTextView_isATextViewTest() throws Exception {
+        onView(withId(R.id.welcomeTextViewMainActivity)).check(matches(instanceOf(TextView.class)));
+    }
+
+    @Test
+    public void welcomeTextView_isColorAccentTest() throws Exception {
+        onView(withId(R.id.welcomeTextViewMainActivity)).check(matches(hasTextColor(R.color.welcome_textView_mainActivity)));
+    }
+
+    @Test
+    public void welcomeTextView_isDisplayedTest(){
+        onView(withText(InstrumentationRegistry.getTargetContext().getResources().getString(R.string.welcome_textView_mainActivity))).check(matches(isDisplayed()));
+    }
 }

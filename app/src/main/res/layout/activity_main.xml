@@ -7,14 +7,31 @@
     tools:context="com.unifi.federicoguerri.traineeship_android.MainActivity">
 
     <TextView
-        android:id="@+id/helloWorldTextView"
+        android:id="@+id/hintTextViewMainActivity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        android:textColor="@color/colorAccent"
+        android:clickable="false"
+        android:text="@string/hint_textView_mainActivity"
+        android:textColor="@color/hint_textView_mainActivity"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/welcomeTextViewMainActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="@string/welcome_textView_mainActivity"
+        android:textColor="@color/welcome_textView_mainActivity"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/hintTextViewMainActivity"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

@@ -5,4 +5,6 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#ff4081</color>
     <color name="whiteTextColor">#ffffff</color>
+    <color name="hint_textView_mainActivity">#000000</color>
+    <color name="welcome_textView_mainActivity">#000000</color>
 </resources>
