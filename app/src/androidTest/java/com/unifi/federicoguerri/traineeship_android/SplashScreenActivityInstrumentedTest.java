@@ -1,26 +1,17 @@
 package com.unifi.federicoguerri.traineeship_android;
 
 import android.arch.lifecycle.Lifecycle;
-import android.content.pm.ActivityInfo;
-import android.graphics.drawable.ColorDrawable;
-import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.NoActivityResumedException;
 import android.support.test.espresso.action.ViewActions;
 import android.support.test.espresso.intent.Intents;
-import android.support.test.espresso.matcher.BoundedMatcher;
 import android.support.test.espresso.matcher.ViewMatchers;
-import android.support.test.internal.util.Checks;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.view.View;
 
-import org.hamcrest.Description;
-import org.hamcrest.Matcher;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static android.support.test.InstrumentationRegistry.getInstrumentation;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
@@ -34,7 +25,6 @@ import static android.support.test.espresso.matcher.ViewMatchers.withContentDesc
 import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static junit.framework.Assert.assertNotNull;
 import static junit.framework.TestCase.assertEquals;
 
 @RunWith(AndroidJUnit4.class)
@@ -43,21 +33,6 @@ public class SplashScreenActivityInstrumentedTest {
     @Rule
     public ActivityTestRule<SplashScreenActivity> splashScreenRule = new ActivityTestRule<>(SplashScreenActivity.class);
 
-    public static Matcher<View> withBackgroundColorId(final int color) {
-        Checks.checkNotNull(color);
-        return new BoundedMatcher<View, View>(View.class) {
-            @Override
-            public boolean matchesSafely(View warning) {
-                return InstrumentationRegistry.getTargetContext().getResources().getColor(color) ==
-                        ((ColorDrawable)warning.getBackground()).getColor();
-            }
-            @Override
-            public void describeTo(Description description) {
-                description.appendText("with background color: ");
-                description.appendText(String.valueOf(color));
-            }
-        };
-    }
 
     // background view
 
@@ -68,7 +43,7 @@ public class SplashScreenActivityInstrumentedTest {
 
     @Test
     public void backgroundView_hasBackgroundColorTest(){
-        onView(withId(R.id.splashBackgroundView)).check(matches(withBackgroundColorId(R.color.splash_background_color)));
+        onView(withId(R.id.splashBackgroundView)).check(matches(GetResourcesHelper.withBackgroundColorId(R.color.splash_background_color)));
     }
 
     @Test

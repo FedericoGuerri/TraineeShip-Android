@@ -10,20 +10,15 @@ import com.unifi.federicoguerri.traineeship_android.R;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNotNull;
 
-public class WelcomeTextViewUnitTest extends MainActivityUnitTest {
+public class WelcomeTextViewUnitTest extends AbstractMainActivityUnitTest {
 
     private TextView welcomeTextView;
 
     @Override
-    public void getTestingComponent() {
+    public View getTestingComponent() {
         welcomeTextView=activity.findViewById(R.id.welcomeTextViewMainActivity);
-    }
-
-    @Test
-    public void welcomeTextView_isNotNull(){
-        assertNotNull(welcomeTextView);
+        return welcomeTextView;
     }
 
     @Test
@@ -64,6 +59,11 @@ public class WelcomeTextViewUnitTest extends MainActivityUnitTest {
     @Test
     public void welcomeTextView_isNotClickable(){
         assertEquals(false,welcomeTextView.isClickable());
+    }
+
+    @Test
+    public void welcomeTextView_childOfWelcomeLayout(){
+        assertEquals(R.id.welcomeLayoutMainActivity,((View)welcomeTextView.getParent()).getId());
     }
 
 }

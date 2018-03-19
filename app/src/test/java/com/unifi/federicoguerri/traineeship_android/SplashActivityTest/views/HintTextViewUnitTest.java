@@ -9,21 +9,15 @@ import com.unifi.federicoguerri.traineeship_android.R;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
-public class HintTextViewUnitTest extends SplashActivityUnitTest {
+public class HintTextViewUnitTest extends AbstractSplashActivityUnitTest {
 
     private TextView splashTextView;
 
     @Override
-    public void getTestingComponent() {
+    public View getTestingComponent() {
         splashTextView = activity.findViewById(R.id.splashScreenTapToStarttextView);
-    }
-
-
-    @Test
-    public void splashTextView_isNotNull() throws Exception {
-        assertNotNull(splashTextView);
+        return splashTextView;
     }
 
     @Test

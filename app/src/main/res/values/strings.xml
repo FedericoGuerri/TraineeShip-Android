@@ -4,4 +4,5 @@
     <string name="taptostart_text_view">Tap to Start</string>
     <string name="hint_textView_mainActivity">Tap on + to add a new import.</string>
     <string name="welcome_textView_mainActivity">Welcome!</string>
+    <string name="hint_gallery_textView_mainActivity">Your scansions will be displayed here.</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.unifi.federicoguerri.traineeship_android.SplashActivityTest.views;
+package com.unifi.federicoguerri.traineeship_android.MainActivityTest.views;
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,17 +11,15 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-
-public class AppLogoImageViewUnitTest extends AbstractSplashActivityUnitTest {
+public class AppLogoImageViewUnitTest extends AbstractMainActivityUnitTest {
 
     private ImageView appLogoImageView;
 
     @Override
     public View getTestingComponent() {
-        appLogoImageView = activity.findViewById(R.id.splashImageViewLogo);
+        appLogoImageView=activity.findViewById(R.id.appLogoImageViewMainActivity);
         return appLogoImageView;
     }
-
 
     @Test
     public void appLogoImageView_isVisible() throws Exception {
@@ -31,11 +29,6 @@ public class AppLogoImageViewUnitTest extends AbstractSplashActivityUnitTest {
     @Test
     public void appLogoImageView_isNotClickable() throws Exception {
         assertEquals(false,appLogoImageView.isClickable());
-    }
-
-    @Test
-    public void appLogoImageView_childOfBackgroundView(){
-        assertEquals(R.id.splashBackgroundView,((View)appLogoImageView.getParent()).getId());
     }
 
     @Test
@@ -52,4 +45,10 @@ public class AppLogoImageViewUnitTest extends AbstractSplashActivityUnitTest {
     public void appLogoImageView_drawableIsnotNull() throws Exception {
         assertNotNull(appLogoImageView.getDrawable());
     }
+
+    @Test
+    public void appLogoImageView_childOfWelcomeLayout(){
+        assertEquals(R.id.welcomeLayoutMainActivity,((View)appLogoImageView.getParent()).getId());
+    }
+
 }

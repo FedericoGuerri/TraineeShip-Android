@@ -2,6 +2,7 @@ package com.unifi.federicoguerri.traineeship_android;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
+import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.widget.TextView;
@@ -12,12 +13,15 @@ import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.hasChildCount;
 import static android.support.test.espresso.matcher.ViewMatchers.hasTextColor;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
+import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -29,6 +33,7 @@ public class MainActivityInstrumentedTest {
 
     @Rule
     public ActivityTestRule<MainActivity> rule  = new ActivityTestRule<>(MainActivity.class);
+
 
     @Test
     public void useAppContext() throws Exception {
@@ -67,4 +72,54 @@ public class MainActivityInstrumentedTest {
     public void welcomeTextView_isDisplayedTest(){
         onView(withText(InstrumentationRegistry.getTargetContext().getResources().getString(R.string.welcome_textView_mainActivity))).check(matches(isDisplayed()));
     }
+
+    // hint gallery TextView
+    @Test
+    public void hintGalleryTextView_isATextViewTest() throws Exception {
+        onView(withId(R.id.hintGalleryTextViewMainActivity)).check(matches(instanceOf(TextView.class)));
+    }
+
+    @Test
+    public void hintGalleryTextView_isColorAccentTest() throws Exception {
+        onView(withId(R.id.hintGalleryTextViewMainActivity)).check(matches(hasTextColor(R.color.hint_textView_mainActivity)));
+    }
+
+    @Test
+    public void hintGalleryTextView_isDisplayedTest(){
+        onView(withText(InstrumentationRegistry.getTargetContext().getResources().getString(R.string.hint_gallery_textView_mainActivity))).check(matches(isDisplayed()));
+    }
+
+
+    // app logo Imageview
+
+    @Test
+    public void thereIsAVisibleImageViewTest(){
+        onView(withId(R.id.appLogoImageViewMainActivity)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+    }
+
+    @Test
+    public void appLogoImageView_hasContentDescriptorTest(){
+        onView(withId(R.id.appLogoImageViewMainActivity)).check(matches(withContentDescription(R.string.applogo_image_view_content_descriptor)));
+    }
+
+    // welcome layout
+
+    @Test
+    public void welcomeLayout_isVisibleTest(){
+        onView(withId(R.id.welcomeLayoutMainActivity)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+    }
+
+    @Test
+    public void welcomeLayout_hasBackgroundColorTest(){
+        onView(withId(R.id.welcomeLayoutMainActivity)).check(matches(GetResourcesHelper.withBackgroundColorId(R.color.transparent_background_color)));
+    }
+
+    @Test
+    public void welcomeLayout_hasFourChildrenTest(){
+        onView(withId(R.id.welcomeLayoutMainActivity)).check(matches(hasChildCount(4)));
+    }
+
+
+
+
 }

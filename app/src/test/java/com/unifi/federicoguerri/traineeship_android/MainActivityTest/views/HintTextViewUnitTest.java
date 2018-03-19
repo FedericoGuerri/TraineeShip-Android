@@ -9,20 +9,15 @@ import com.unifi.federicoguerri.traineeship_android.R;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNotNull;
 
-public class HintTextViewUnitTest extends MainActivityUnitTest {
+public class HintTextViewUnitTest extends AbstractMainActivityUnitTest {
 
     private TextView hintTextView;
 
     @Override
-    public void getTestingComponent() {
+    public View getTestingComponent() {
         hintTextView=activity.findViewById(R.id.hintTextViewMainActivity);
-    }
-
-    @Test
-    public void hintTextView_isNotNull(){
-        assertNotNull(hintTextView);
+        return hintTextView;
     }
 
     @Test
@@ -58,5 +53,10 @@ public class HintTextViewUnitTest extends MainActivityUnitTest {
     @Test
     public void hintTextView_hasTextSize14(){
         assertEquals(14,(int)hintTextView.getTextSize());
+    }
+
+    @Test
+    public void hintTextView_childOfWelcomeLayout(){
+        assertEquals(R.id.welcomeLayoutMainActivity,((View)hintTextView.getParent()).getId());
     }
 }

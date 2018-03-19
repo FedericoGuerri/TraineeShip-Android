@@ -12,21 +12,16 @@ import org.robolectric.shadows.ShadowActivity;
 import org.robolectric.shadows.ShadowIntent;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 import static org.robolectric.Shadows.shadowOf;
 
-public class BackgroundViewUnitTest extends SplashActivityUnitTest {
+public class BackgroundViewUnitTest extends AbstractSplashActivityUnitTest {
 
     private View backgroundView;
 
     @Override
-    public void getTestingComponent() {
+    public View getTestingComponent() {
         backgroundView = activity.findViewById(R.id.splashBackgroundView);
-    }
-
-    @Test
-    public void backgroundView_isNotNull() throws Exception {
-        assertNotNull(backgroundView);
+        return backgroundView;
     }
 
     @Test
