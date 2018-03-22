@@ -25,7 +25,7 @@ public class GetResourcesHelper {
             }
             @Override
             public void describeTo(Description description) {
-                description.appendText("with background color: ");
+                description.appendText("expected background color: ");
                 description.appendText(String.valueOf(color));
             }
         };

@@ -5,4 +5,6 @@
     <string name="hint_textView_mainActivity">Tap on + to add a new import.</string>
     <string name="welcome_textView_mainActivity">Welcome!</string>
     <string name="hint_gallery_textView_mainActivity">Your scansions will be displayed here.</string>
+    <string name="price_textview_listview_placeholder">price placeholder</string>
+    <string name="item_imageview_pricelistview_contentdescriptor">Shows the scan miniature.</string>
 </resources>

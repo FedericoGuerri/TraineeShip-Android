@@ -5,8 +5,13 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.view.View;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import org.hamcrest.Description;
+import org.hamcrest.Matcher;
+import org.hamcrest.TypeSafeMatcher;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -39,6 +44,18 @@ public class MainActivityInstrumentedTest {
     public void useAppContext() throws Exception {
         Context appContext = InstrumentationRegistry.getTargetContext();
         assertEquals("com.unifi.federicoguerri.traineeship_android", appContext.getPackageName());
+    }
+
+    public static Matcher<View> withListSize (final int size) {
+        return new TypeSafeMatcher<View>() {
+            @Override public boolean matchesSafely (final View view) {
+                return ((ListView) view).getCount () == size;
+            }
+
+            @Override public void describeTo (final Description description) {
+                description.appendText ("expected " + size + " items");
+            }
+        };
     }
 
     // hint TextView
@@ -119,6 +136,17 @@ public class MainActivityInstrumentedTest {
         onView(withId(R.id.welcomeLayoutMainActivity)).check(matches(hasChildCount(4)));
     }
 
+    // prices ListView
+
+    @Test
+    public void pricesListView_hasBackgroundColorTest(){
+        onView(withId(R.id.pricesListViewMainActivity)).check(matches(GetResourcesHelper.withBackgroundColorId(R.color.transparent_background_color)));
+    }
+
+    @Test
+    public void pricesListView_hasNoChildTest(){
+        onView(withId(R.id.pricesListViewMainActivity)).check(matches(withListSize(0)));
+    }
 
 
 
