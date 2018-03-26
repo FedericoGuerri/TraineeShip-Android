@@ -144,9 +144,19 @@ public class MainActivityInstrumentedTest {
     }
 
     @Test
-    public void pricesListView_hasNoChildTest(){
+    public void pricesListView_isInvisibleIfHasNoChildTest(){
         onView(withId(R.id.pricesListViewMainActivity)).check(matches(withListSize(0)));
+        onView(withId(R.id.pricesListViewMainActivity)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.INVISIBLE)));
     }
+
+    @Test
+    public void pricesListView_isInvisibleThenWelcomeLayoutIsVisibleTest(){
+        onView(withId(R.id.pricesListViewMainActivity)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.INVISIBLE)));
+        onView(withId(R.id.welcomeLayoutMainActivity)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+    }
+
+
+
 
 
 

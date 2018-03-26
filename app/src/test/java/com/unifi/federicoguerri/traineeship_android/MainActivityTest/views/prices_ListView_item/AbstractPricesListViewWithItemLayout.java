@@ -3,7 +3,6 @@ package com.unifi.federicoguerri.traineeship_android.MainActivityTest.views.pric
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.LinearLayout;
 
 import com.unifi.federicoguerri.traineeship_android.BuildConfig;
 import com.unifi.federicoguerri.traineeship_android.MainActivity;
