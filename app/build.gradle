@@ -55,7 +55,7 @@ ext {
     //App
     appCompatVersion = '27.1.0'
     constraintLayoutVersion = '1.0.2'
-    playVisionVersion='12.0.0'
+    playVisionVersion = '12.0.0'
 
     //Test
     junitVersion = '4.12'
@@ -84,4 +84,5 @@ dependencies {
 
     compile "com.google.android.gms:play-services-vision:$playVisionVersion"
 
+    implementation 'com.android.support:design:27.1.0'
 }

@@ -1,5 +1,6 @@
 package com.unifi.federicoguerri.traineeship_android;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
@@ -49,6 +50,12 @@ public class MainActivity extends AppCompatActivity {
             findViewById(R.id.pricesListViewMainActivity).setVisibility(View.INVISIBLE);
             findViewById(R.id.welcomeLayoutMainActivity).setVisibility(View.VISIBLE);
         }
+    }
+
+
+    public void startOcrScanActivity(View view) {
+        Intent intent = new Intent(this, OcrScanActivity.class);
+        startActivity(intent);
     }
 
 

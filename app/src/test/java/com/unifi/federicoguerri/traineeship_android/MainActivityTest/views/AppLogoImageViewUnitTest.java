@@ -22,27 +22,27 @@ public class AppLogoImageViewUnitTest extends AbstractMainActivityUnitTest {
     }
 
     @Test
-    public void appLogoImageView_isVisible() throws Exception {
+    public void appLogoImageView_isVisible() {
         assertEquals(View.VISIBLE,appLogoImageView.getVisibility());
     }
 
     @Test
-    public void appLogoImageView_isNotClickable() throws Exception {
+    public void appLogoImageView_isNotClickable()  {
         assertEquals(false,appLogoImageView.isClickable());
     }
 
     @Test
-    public void appLogoImageView_widthIsWrapContent() throws Exception {
+    public void appLogoImageView_widthIsWrapContent() {
         assertEquals(ViewGroup.LayoutParams.WRAP_CONTENT,appLogoImageView.getLayoutParams().width);
     }
 
     @Test
-    public void appLogoImageView_heightIsWrapContent() throws Exception {
+    public void appLogoImageView_heightIsWrapContent()  {
         assertEquals(ViewGroup.LayoutParams.WRAP_CONTENT,appLogoImageView.getLayoutParams().height);
     }
 
     @Test
-    public void appLogoImageView_drawableIsnotNull() throws Exception {
+    public void appLogoImageView_drawableIsnotNull()  {
         assertNotNull(appLogoImageView.getDrawable());
     }
 

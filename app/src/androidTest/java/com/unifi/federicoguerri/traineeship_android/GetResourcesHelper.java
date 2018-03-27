@@ -30,4 +30,24 @@ public class GetResourcesHelper {
             }
         };
     }
+
+
+    public static Matcher<View> withBackgroundTintListColorId(final int color) {
+        Checks.checkNotNull(color);
+        return new BoundedMatcher<View, View>(View.class) {
+            @Override
+            public boolean matchesSafely(View warning) {
+                try {
+                    return InstrumentationRegistry.getTargetContext().getResources().getColor(color) == warning.getBackgroundTintList().getDefaultColor();
+                }catch(NullPointerException colorWasNotSetted){
+                    return false;
+                }
+            }
+            @Override
+            public void describeTo(Description description) {
+                description.appendText("expected background tint: ");
+                description.appendText(String.valueOf(color));
+            }
+        };
+    }
 }

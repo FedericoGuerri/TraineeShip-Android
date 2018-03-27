@@ -2,6 +2,9 @@ package com.unifi.federicoguerri.traineeship_android;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
+import android.support.test.espresso.NoActivityResumedException;
+import android.support.test.espresso.action.ViewActions;
+import android.support.test.espresso.intent.Intents;
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
@@ -17,10 +20,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.intent.Intents.intended;
+import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static android.support.test.espresso.matcher.ViewMatchers.hasChildCount;
 import static android.support.test.espresso.matcher.ViewMatchers.hasTextColor;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.isRoot;
 import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
@@ -37,7 +44,7 @@ import static org.junit.Assert.assertEquals;
 public class MainActivityInstrumentedTest {
 
     @Rule
-    public ActivityTestRule<MainActivity> rule  = new ActivityTestRule<>(MainActivity.class);
+    public ActivityTestRule<MainActivity> mainActivityRule = new ActivityTestRule<>(MainActivity.class);
 
 
     @Test
@@ -157,7 +164,33 @@ public class MainActivityInstrumentedTest {
     }
 
 
+    // fabNewOcr floatingActionButton
 
+    @Test
+    public void fabNewOcr_isVisibleTest(){
+        onView(withId(R.id.fabNewOcrMainActivity)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+    }
+
+    @Test
+    public void fabNewOcr_hasBackgroundTintListColorTest(){
+        onView(withId(R.id.fabNewOcrMainActivity)).check(matches(GetResourcesHelper.withBackgroundTintListColorId(R.color.colorAccent)));
+    }
+
+    @Test
+    public void OcrScanActiviy_launchedByTappingOnFabNewOcrTest(){
+        Intents.init();
+        onView(withId(R.id.fabNewOcrMainActivity)).perform(click());
+        intended(hasComponent(OcrScanActivity.class.getName()));
+        Intents.release();
+    }
+
+
+    // General tests
+
+    @Test
+    public void supportActionBar_isVisibleTest(){
+        assertEquals(true, mainActivityRule.getActivity().getSupportActionBar().isShowing());
+    }
 
 
 
