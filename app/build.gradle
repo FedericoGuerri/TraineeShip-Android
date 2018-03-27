@@ -56,6 +56,7 @@ ext {
     appCompatVersion = '27.1.0'
     constraintLayoutVersion = '1.0.2'
     playVisionVersion = '12.0.0'
+    designVersion ='27.1.0'
 
     //Test
     junitVersion = '4.12'
@@ -63,7 +64,6 @@ ext {
     espressoVersion = '3.0.1'
     orchestratorVersion = '1.0.1'
     robolectricVersion = '3.3.2'
-
 }
 
 dependencies {
@@ -82,7 +82,7 @@ dependencies {
 
     testCompile "org.robolectric:robolectric:$robolectricVersion"
 
-    compile "com.google.android.gms:play-services-vision:$playVisionVersion"
+    implementation "com.google.android.gms:play-services-vision:$playVisionVersion"
 
-    implementation 'com.android.support:design:27.1.0'
+    implementation "com.android.support:design:$designVersion"
 }
