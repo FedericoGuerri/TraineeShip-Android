@@ -28,6 +28,9 @@ android {
     configurations.all {
         resolutionStrategy {
             force 'com.android.support:support-annotations:25.4.0'
+            force 'com.android.support:support-media-compat:27.1.0'
+            force 'com.android.support:support-v4:27.1.0'
+
         }
     }
 
@@ -52,6 +55,7 @@ ext {
     //App
     appCompatVersion = '27.1.0'
     constraintLayoutVersion = '1.0.2'
+    playVisionVersion='12.0.0'
 
     //Test
     junitVersion = '4.12'
@@ -59,11 +63,13 @@ ext {
     espressoVersion = '3.0.1'
     orchestratorVersion = '1.0.1'
     robolectricVersion = '3.3.2'
+
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "com.android.support:appcompat-v7:$appCompatVersion"
+
     implementation "com.android.support.constraint:constraint-layout:$constraintLayoutVersion"
 
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
@@ -75,5 +81,7 @@ dependencies {
     androidTestUtil "com.android.support.test:orchestrator:$orchestratorVersion"
 
     testCompile "org.robolectric:robolectric:$robolectricVersion"
+
+    compile "com.google.android.gms:play-services-vision:$playVisionVersion"
 
 }

@@ -147,6 +147,7 @@ public class MainActivityInstrumentedTest {
     public void pricesListView_isInvisibleIfHasNoChildTest(){
         onView(withId(R.id.pricesListViewMainActivity)).check(matches(withListSize(0)));
         onView(withId(R.id.pricesListViewMainActivity)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.INVISIBLE)));
+
     }
 
     @Test
