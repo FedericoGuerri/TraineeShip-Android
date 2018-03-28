@@ -39,6 +39,7 @@ android {
     }
 
     testOptions {
+        animationsDisabled = true
         if (orchestrator) {
             println("Running android test with orchestrator")
             execution "ANDROID_TEST_ORCHESTRATOR"

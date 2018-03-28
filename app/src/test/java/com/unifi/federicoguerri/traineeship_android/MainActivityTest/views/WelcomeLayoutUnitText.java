@@ -1,5 +1,6 @@
 package com.unifi.federicoguerri.traineeship_android.MainActivityTest.views;
 
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -9,8 +10,11 @@ import com.unifi.federicoguerri.traineeship_android.R;
 import junit.framework.Assert;
 
 import org.junit.Test;
+import org.robolectric.shadows.ShadowLinearLayout;
+import org.robolectric.shadows.ShadowRelativeLayout;
 
 import static org.junit.Assert.assertEquals;
+import static org.robolectric.Shadows.shadowOf;
 
 public class WelcomeLayoutUnitText extends AbstractMainActivityUnitTest {
 
@@ -22,12 +26,13 @@ public class WelcomeLayoutUnitText extends AbstractMainActivityUnitTest {
         return welcomeLayout;
     }
 
-    /*
+
     @Test
     public void welcomeLayout_hasCenterGravity(){
-        assertEquals(Gravity.CENTER,welcomeLayout.getGravity());
+        ShadowLinearLayout shadowLinearLayout=shadowOf(welcomeLayout);
+        assertEquals(Gravity.CENTER,shadowLinearLayout.getGravity());
     }
-    */
+
 
 
     @Test

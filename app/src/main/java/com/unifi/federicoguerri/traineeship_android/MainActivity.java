@@ -40,10 +40,15 @@ public class MainActivity extends AppCompatActivity {
         try {
             ArrayList<CustomDataSet> dataSets = loaderFromFile.getRecords();
 
-            //Popolating the ListView
-            CustomAdapter adapter = new CustomAdapter(dataSets, getApplicationContext());
-            ((ListView) findViewById(R.id.pricesListViewMainActivity)).setAdapter(adapter);
-            findViewById(R.id.pricesListViewMainActivity).setVisibility(View.VISIBLE);
+            if(dataSets.size()>0) {
+                //Popolating the ListView
+                CustomAdapter adapter = new CustomAdapter(dataSets, getApplicationContext());
+                ((ListView) findViewById(R.id.pricesListViewMainActivity)).setAdapter(adapter);
+                findViewById(R.id.pricesListViewMainActivity).setVisibility(View.VISIBLE);
+            }else{
+                findViewById(R.id.pricesListViewMainActivity).setVisibility(View.INVISIBLE);
+                findViewById(R.id.welcomeLayoutMainActivity).setVisibility(View.VISIBLE);
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
