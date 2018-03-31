@@ -11,7 +11,6 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 import org.robolectric.shadows.ShadowLinearLayout;
-import org.robolectric.shadows.ShadowRelativeLayout;
 
 import static org.junit.Assert.assertEquals;
 import static org.robolectric.Shadows.shadowOf;

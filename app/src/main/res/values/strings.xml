@@ -7,4 +7,5 @@
     <string name="hint_gallery_textView_mainActivity">Your scansions will be displayed here.</string>
     <string name="price_textview_listview_placeholder">price placeholder</string>
     <string name="item_imageview_pricelistview_contentdescriptor">Shows the scan miniature.</string>
+    <string name="recognition_textView_defaultvalue_ocrScanActivity">0.0</string>
 </resources>

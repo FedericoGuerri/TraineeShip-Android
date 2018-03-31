@@ -67,6 +67,11 @@ public class FabNewOcrScanUnitTest extends AbstractMainActivityUnitTest {
     }
 
     @Test
+    public void fabNewOcr_hasZeroElevation(){
+        assertEquals(0,(int)fabNewOcr.getCompatElevation());
+    }
+
+    @Test
     public void fabNewOcr_launchOcrScanActivityWithIntent()  {
         fabNewOcr.performClick();
         ShadowActivity shadowActivity = shadowOf(activity);

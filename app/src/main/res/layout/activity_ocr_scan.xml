@@ -1,9 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ocrParentLayoutOcrScanActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.unifi.federicoguerri.traineeship_android.OcrScanActivity">
+    android:background="@color/transparent_background_color"
+    android:visibility="visible">
 
-</android.support.constraint.ConstraintLayout>
+    <SurfaceView
+        android:id="@+id/ocrViewOcrScanActivity"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="false"
+        android:visibility="visible" />
+
+    <TextView
+        android:id="@+id/recognizedTextViewOcrScanActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="false"
+        android:text="@string/recognition_textView_defaultvalue_ocrScanActivity"
+        android:textColor="@color/colorAccent"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:visibility="visible" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabSaveCurrentPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/fab_margin"
+        android:clickable="true"
+        android:focusable="true"
+        android:visibility="visible"
+        app:elevation="0dp"
+        app:fabSize="normal"
+        app:srcCompat="@android:drawable/ic_menu_save" />
+</RelativeLayout>
+
