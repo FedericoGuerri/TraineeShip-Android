@@ -11,8 +11,14 @@ import org.junit.Test;
 import org.robolectric.shadows.ShadowActivity;
 import org.robolectric.shadows.ShadowIntent;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.fail;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import static org.robolectric.Shadows.shadowOf;
 
 
@@ -78,6 +84,53 @@ public class FabNewOcrScanUnitTest extends AbstractMainActivityUnitTest {
         Intent startedIntent = shadowActivity.getNextStartedActivity();
         ShadowIntent shadowIntent = shadowOf(startedIntent);
         assertEquals("OcrScanActivity",shadowIntent.getIntentClass().getSimpleName());
+    }
+
+    @Test
+    public void fabNewOcr_givesOcrScanActivityFileNameWithIntent()  {
+        fabNewOcr.performClick();
+        ShadowActivity shadowActivity = shadowOf(activity);
+        assertTrue(shadowActivity.getNextStartedActivity().hasExtra("fileName"));
+    }
+
+    @Test
+    public void fabNewOcr_givesOcrScanActivityANotEmptyFileName()  {
+        fabNewOcr.performClick();
+        ShadowActivity shadowActivity = shadowOf(activity);
+        assertFalse(shadowActivity.getNextStartedActivity().getStringExtra("fileName").isEmpty());
+    }
+
+    @Test
+    public void fabNewOcr_givesOcrScanActivityATxtFileName()  {
+        fabNewOcr.performClick();
+        ShadowActivity shadowActivity = shadowOf(activity);
+        String fileName=shadowActivity.getNextStartedActivity().getStringExtra("fileName");
+        assertEquals(".txt",fileName.substring(fileName.lastIndexOf("."),fileName.length()));
+    }
+
+    @Test
+    public void fabNewOcr_givesOcrScanActivityADataFormattedFileName() throws ParseException {
+        fabNewOcr.performClick();
+        ShadowActivity shadowActivity = shadowOf(activity);
+        String fileName=shadowActivity.getNextStartedActivity().getStringExtra("fileName");
+        fileName=fileName.substring(fileName.lastIndexOf("/")+1,fileName.lastIndexOf("."));
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss");
+        dateFormat.setLenient(false);
+        dateFormat.parse(fileName);
+    }
+
+    @Test
+    public void fabNewOcr_startsOcrScanActivityWithEnterAnimation()  {
+        fabNewOcr.performClick();
+        ShadowActivity shadowActivity = shadowOf(activity);
+        assertEquals(R.anim.new_ocr_scan_enter,shadowActivity.getPendingTransitionEnterAnimationResourceId());
+    }
+
+    @Test
+    public void fabNewOcr_startsOcrScanActivityWithExitAnimation()  {
+        fabNewOcr.performClick();
+        ShadowActivity shadowActivity = shadowOf(activity);
+        assertEquals(R.anim.new_ocr_scan_exit,shadowActivity.getPendingTransitionExitAnimationResourceId());
     }
 
     private int getColorFromResources(int colorId) {

@@ -1,6 +1,7 @@
 package com.unifi.federicoguerri.traineeship_android.OcrScanActivityTest.views;
 
 
+import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,9 +9,13 @@ import android.view.ViewGroup;
 import com.unifi.federicoguerri.traineeship_android.R;
 
 import org.junit.Test;
+import org.robolectric.shadows.ShadowActivity;
+import org.robolectric.shadows.ShadowIntent;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.robolectric.Shadows.shadowOf;
 
 public class FabSaveCurrentPrice extends AbstractOcrScanActivityUnitTest{
 
@@ -67,11 +72,29 @@ public class FabSaveCurrentPrice extends AbstractOcrScanActivityUnitTest{
         assertEquals(true, fabSavePrice.isClickable());
     }
 
+    @Test
+    public void fabSavePrice_willEndOcrScanActivity()  {
+        fabSavePrice.performClick();
+        assertTrue(activity.isFinishing());
+    }
+
+    @Test
+    public void fabSavePrice_willEndOcrScanActivityWithEnterTransition()  {
+        fabSavePrice.performClick();
+        ShadowActivity shadowActivity=shadowOf(activity);
+        assertEquals(R.anim.end_ocr_scan_enter,shadowActivity.getPendingTransitionEnterAnimationResourceId());
+    }
+
+    @Test
+    public void fabSavePrice_willEndOcrScanActivityWithExitTransition()  {
+        fabSavePrice.performClick();
+        ShadowActivity shadowActivity=shadowOf(activity);
+        assertEquals(R.anim.end_ocr_scan_exit,shadowActivity.getPendingTransitionExitAnimationResourceId());
+    }
+
 
     private int getColorFromResources(int colorId) {
         return activity.getResources().getColor(colorId);
     }
-
-
 
 }

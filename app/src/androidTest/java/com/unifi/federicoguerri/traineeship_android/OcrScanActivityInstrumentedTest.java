@@ -6,6 +6,7 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.rule.GrantPermissionRule;
 import android.support.test.runner.AndroidJUnit4;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,6 +15,8 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.hasChildCount;
 import static android.support.test.espresso.matcher.ViewMatchers.hasTextColor;
+import static android.support.test.espresso.matcher.ViewMatchers.isClickable;
+import static android.support.test.espresso.matcher.ViewMatchers.isCompletelyDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
@@ -21,9 +24,11 @@ import static junit.framework.Assert.assertEquals;
 
 @RunWith(AndroidJUnit4.class)
 public class OcrScanActivityInstrumentedTest {
+
     @Rule
     public ActivityTestRule<OcrScanActivity> ocrScanActivityRule = new ActivityTestRule<>(OcrScanActivity.class);
     @Rule public GrantPermissionRule mRuntimePermissionRule = GrantPermissionRule .grant(Manifest.permission.CAMERA);
+
 
     // parent layout
 
@@ -38,8 +43,8 @@ public class OcrScanActivityInstrumentedTest {
     }
 
     @Test
-    public void parentLayout_hasTwoChildrenTest(){
-        onView(withId(R.id.ocrParentLayoutOcrScanActivity)).check(matches(hasChildCount(2)));
+    public void parentLayout_hasThreeChildrenTest(){
+        onView(withId(R.id.ocrParentLayoutOcrScanActivity)).check(matches(hasChildCount(3)));
     }
 
 
@@ -62,9 +67,27 @@ public class OcrScanActivityInstrumentedTest {
 
 
     // ocr view
+
     @Test
     public void ocrView_isVisible(){
         onView(withId(R.id.ocrViewOcrScanActivity)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+    }
+
+    // fab save price
+
+    @Test
+    public void fabSavePrice_isCompletlyDisplayed(){
+        onView(withId(R.id.fabSaveCurrentPrice)).check(matches(isCompletelyDisplayed()));
+    }
+
+    @Test
+    public void fabSavePrice_hasBackgroundTintListColorTest(){
+        onView(withId(R.id.fabSaveCurrentPrice)).check(matches(GetResourcesHelper.withBackgroundTintListColorId(R.color.colorAccent)));
+    }
+
+    @Test
+    public void fabSavePrice_isClickable(){
+        onView(withId(R.id.fabSaveCurrentPrice)).check(matches(isClickable()));
     }
 
 

@@ -19,10 +19,13 @@
         android:id="@+id/recognizedTextViewOcrScanActivity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/fabSaveCurrentPrice"
+        android:layout_centerHorizontal="true"
+        android:alpha="0.7"
         android:clickable="false"
         android:text="@string/recognition_textView_defaultvalue_ocrScanActivity"
         android:textColor="@color/colorAccent"
-        android:textSize="18sp"
+        android:textSize="30sp"
         android:textStyle="bold"
         android:visibility="visible" />
 
@@ -35,6 +38,7 @@
         android:layout_margin="@dimen/fab_margin"
         android:clickable="true"
         android:focusable="true"
+        android:onClick="saveCurrentPrice"
         android:visibility="visible"
         app:elevation="0dp"
         app:fabSize="normal"

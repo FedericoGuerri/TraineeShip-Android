@@ -7,40 +7,41 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.util.SparseArray;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
 import android.widget.TextView;
 
-import com.google.android.gms.vision.CameraSource;
-import com.google.android.gms.vision.Detector;
-import com.google.android.gms.vision.text.TextBlock;
-import com.google.android.gms.vision.text.TextRecognizer;
+import com.unifi.federicoguerri.traineeship_android.core.DataWriterToFile;
+import com.unifi.federicoguerri.traineeship_android.core.OcrComponentsBuilder;
 
+import java.io.File;
 import java.io.IOException;
 
 public class OcrScanActivity extends AppCompatActivity {
 
     private SurfaceView ocrScanView;
-    private CameraSource myCameraSource;
-    private TextView recognizedTextView;
+    private OcrComponentsBuilder myOcrBuilder;
     private final int REQUEST_CAMERA_PERMISSION=10400;
+    private String filePath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ocr_scan);
-
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
-        recognizedTextView=findViewById(R.id.recognizedTextViewOcrScanActivity);
+
+        filePath=getIntent().getStringExtra("fileName");
+
         ocrScanView = findViewById(R.id.ocrViewOcrScanActivity);
 
-        TextRecognizer myTextRecognizer = new TextRecognizer.Builder(getApplicationContext()).build();
-        if (myTextRecognizer.isOperational()) {
-            myCameraSource = new CameraSource.Builder(getApplicationContext(), myTextRecognizer).setFacing(CameraSource.CAMERA_FACING_BACK)
-                    .setRequestedPreviewSize(1280, 1024).setRequestedFps(2.0f).setAutoFocusEnabled(true).build();
+        myOcrBuilder=new OcrComponentsBuilder(getApplicationContext());
+        if (myOcrBuilder.getTextRecognizer().isOperational()) {
+
+            myOcrBuilder.setCameraSource(1080,720);
+
             ocrScanView.getHolder().addCallback(new SurfaceHolder.Callback() {
                 @Override
                 public void surfaceCreated(SurfaceHolder surfaceHolder) {
@@ -50,7 +51,7 @@ public class OcrScanActivity extends AppCompatActivity {
                         return;
                     }
                     try {
-                        myCameraSource.start(ocrScanView.getHolder());
+                        myOcrBuilder.getCameraSource().start(ocrScanView.getHolder());
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -63,38 +64,18 @@ public class OcrScanActivity extends AppCompatActivity {
 
                 @Override
                 public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
-                    myCameraSource.stop();
+                    myOcrBuilder.getCameraSource().stop();
                 }
             });
         }else{
             Log.d("TextRecognizer","dependencies error");
         }
-        myTextRecognizer.setProcessor(new Detector.Processor<TextBlock>() {
-            @Override
-            public void release() {
 
-            }
-            @Override
-            public void receiveDetections(Detector.Detections<TextBlock> detections) {
-                final SparseArray<TextBlock> items=detections.getDetectedItems();
-                if(items.size()>0){
-                    recognizedTextView.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            StringBuilder stringBuilder=new StringBuilder();
-                            for (int i=0;i<items.size();i++){
-                                TextBlock item=items.valueAt(i);
-                                stringBuilder.append(item.getValue());
-                                stringBuilder.append("\n");
-                            }
-                            recognizedTextView.setText(stringBuilder.toString());
-                        }
-                    });
-                }
-            }
-        });
+        myOcrBuilder.setRecognizedTextView((TextView) findViewById(R.id.recognizedTextViewOcrScanActivity));
 
     }
+
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -105,7 +86,7 @@ public class OcrScanActivity extends AppCompatActivity {
                         return;
                     }
                     try {
-                        myCameraSource.start(ocrScanView.getHolder());
+                        myOcrBuilder.getCameraSource().start(ocrScanView.getHolder());
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -113,6 +94,28 @@ public class OcrScanActivity extends AppCompatActivity {
             }
 
         }
+    }
+
+
+    public void saveCurrentPrice(View view){
+        DataWriterToFile dataWriterToFile=new DataWriterToFile();
+        dataWriterToFile.setFilePath(filePath);
+        try {
+            dataWriterToFile.writeToPath(myOcrBuilder.getRecognizedTextView().getText().toString()+" - ");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        endActivity();
+    }
+
+    @Override
+    public void onBackPressed() {
+        endActivity();
+    }
+
+    private void endActivity() {
+        finish();
+        overridePendingTransition(R.anim.end_ocr_scan_enter,R.anim.end_ocr_scan_exit);
     }
 
 

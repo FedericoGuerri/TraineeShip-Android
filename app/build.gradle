@@ -30,7 +30,6 @@ android {
             force 'com.android.support:support-annotations:25.4.0'
             force 'com.android.support:support-media-compat:27.1.0'
             force 'com.android.support:support-v4:27.1.0'
-
         }
     }
 
@@ -86,4 +85,8 @@ dependencies {
     implementation "com.google.android.gms:play-services-vision:$playVisionVersion"
 
     implementation "com.android.support:design:$designVersion"
+
+    //testCompile 'org.mockito:mockito-android:2.7.22'
+    //androidTestCompile 'org.mockito:mockito-android:2.7.22'
+
 }

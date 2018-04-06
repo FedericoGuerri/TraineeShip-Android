@@ -13,7 +13,6 @@ public class ItemLayoutUnitTest extends AbstractPricesListViewWithItemLayout {
     @Override
     public View getTestingComponent() {
         itemLayout =  layoutResourceView.findViewById(R.id.itemLayoutPricesListView);
-        System.out.println(itemLayout.getChildCount());
         return itemLayout;
     }
 
