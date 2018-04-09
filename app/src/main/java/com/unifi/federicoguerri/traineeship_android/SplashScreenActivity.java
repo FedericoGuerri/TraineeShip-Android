@@ -11,10 +11,7 @@ public class SplashScreenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
-        if(getSupportActionBar()!=null){
-            getSupportActionBar().hide();
-        }
-
+        startMainActivity();
     }
 
     private void endActivity() {
@@ -27,9 +24,10 @@ public class SplashScreenActivity extends AppCompatActivity {
     }
 
 
-    public void startMainActivity(View view) {
+    public void startMainActivity() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         endActivity();
+        overridePendingTransition(R.anim.start_app_enter,R.anim.start_app_exit);
     }
 }

@@ -33,18 +33,6 @@ public class GenericBehaviorTest {
         assertEquals(true, activity.getSupportActionBar().isShowing());
     }
 
-    @Test
-    public void configurationFile_isCreated() {
-        String ExternalStorageDirectoryPath = Environment
-                .getExternalStorageDirectory()
-                .getAbsolutePath();
-        String targetPath = ExternalStorageDirectoryPath + "/Android/data/"
-                + activity.getApplicationContext().getPackageName()
-                + "/ConfigurationDir/";
-
-        File myFile = new File(targetPath + "prices.txt");
-        assertTrue(myFile.exists());
-    }
 
     @Test
     public void configurationDirectory_isCreated() {

@@ -1,48 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/splashBackgroundView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/splash_background_color"
-    android:clickable="true"
-    android:focusable="true"
-    android:onClick="startMainActivity"
-    tools:context="com.unifi.federicoguerri.traineeship_android.SplashScreenActivity">
+    android:background="@color/transparent_background_color"
+    tools:context="com.unifi.federicoguerri.traineeship_android.SplashScreenActivity"></RelativeLayout>
 
-    <ImageView
-        android:id="@+id/splashImageViewLogo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:clickable="false"
-        android:contentDescription="@string/applogo_image_view_content_descriptor"
-        android:focusable="true"
-        android:src="@mipmap/ic_launcher_round"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/splashScreenTapToStarttextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:clickable="false"
-        android:focusable="true"
-        android:text="@string/taptostart_text_view"
-        android:textColor="@color/whiteTextColor"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/splashImageViewLogo" />
-</android.support.constraint.ConstraintLayout>

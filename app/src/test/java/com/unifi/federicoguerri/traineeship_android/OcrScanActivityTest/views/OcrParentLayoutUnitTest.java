@@ -30,7 +30,7 @@ public class OcrParentLayoutUnitTest extends AbstractOcrScanActivityUnitTest{
     }
 
     @Test
-    public void backgroundView_hasBackgroundColorFromResources() throws Exception {
+    public void ocrParentLayout_hasBackgroundColorFromResources() throws Exception {
         int backgroundViewColor=getColorFromResources(R.color.transparent_background_color);
         assertEquals(backgroundViewColor,((ColorDrawable)ocrParentLayout.getBackground()).getColor());
     }
