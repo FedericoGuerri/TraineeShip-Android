@@ -6,13 +6,11 @@ import android.support.test.espresso.intent.Intents;
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.view.View;
-import android.widget.ListView;
 import android.widget.TextView;
 
-import org.hamcrest.Description;
-import org.hamcrest.Matcher;
-import org.hamcrest.TypeSafeMatcher;
+import com.unifi.federicoguerri.traineeship_android.helpers.CustomMatchers;
+import com.unifi.federicoguerri.traineeship_android.helpers.GetResourcesHelper;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,6 +27,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withContentDesc
 import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.CoreMatchers.anything;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.junit.Assert.assertEquals;
 
@@ -48,18 +47,6 @@ public class MainActivityInstrumentedTest {
     public void useAppContext() throws Exception {
         Context appContext = InstrumentationRegistry.getTargetContext();
         assertEquals("com.unifi.federicoguerri.traineeship_android", appContext.getPackageName());
-    }
-
-    public static Matcher<View> withListSize (final int size) {
-        return new TypeSafeMatcher<View>() {
-            @Override public boolean matchesSafely (final View view) {
-                return ((ListView) view).getCount () == size;
-            }
-
-            @Override public void describeTo (final Description description) {
-                description.appendText ("expected " + size + " items");
-            }
-        };
     }
 
     // hint TextView
@@ -149,9 +136,8 @@ public class MainActivityInstrumentedTest {
 
     @Test
     public void pricesListView_isInvisibleIfHasNoChildTest(){
-        onView(withId(R.id.pricesListViewMainActivity)).check(matches(withListSize(0)));
+        onView(withId(R.id.pricesListViewMainActivity)).check(matches(CustomMatchers.withListSize(0)));
         onView(withId(R.id.pricesListViewMainActivity)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.INVISIBLE)));
-
     }
 
     @Test
@@ -159,7 +145,6 @@ public class MainActivityInstrumentedTest {
         onView(withId(R.id.pricesListViewMainActivity)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.INVISIBLE)));
         onView(withId(R.id.welcomeLayoutMainActivity)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
     }
-
 
     // fabNewOcr floatingActionButton
 
@@ -181,14 +166,11 @@ public class MainActivityInstrumentedTest {
         Intents.release();
     }
 
-
     // General tests
 
     @Test
     public void supportActionBar_isVisibleTest(){
         assertEquals(true, mainActivityRule.getActivity().getSupportActionBar().isShowing());
     }
-
-
 
 }

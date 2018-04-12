@@ -6,7 +6,8 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.rule.GrantPermissionRule;
 import android.support.test.runner.AndroidJUnit4;
 
-import org.junit.Before;
+import com.unifi.federicoguerri.traineeship_android.helpers.GetResourcesHelper;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,8 +28,8 @@ public class OcrScanActivityInstrumentedTest {
 
     @Rule
     public ActivityTestRule<OcrScanActivity> ocrScanActivityRule = new ActivityTestRule<>(OcrScanActivity.class);
-    @Rule public GrantPermissionRule mRuntimePermissionRule = GrantPermissionRule .grant(Manifest.permission.CAMERA);
-
+    @Rule public GrantPermissionRule runtimePermissionCamera = GrantPermissionRule .grant(Manifest.permission.CAMERA);
+    @Rule public GrantPermissionRule runtimePermissionStorange = GrantPermissionRule .grant(Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
     // parent layout
 
@@ -53,11 +54,6 @@ public class OcrScanActivityInstrumentedTest {
     @Test
     public void recognizedTextView_isVisible(){
         onView(withId(R.id.recognizedTextViewOcrScanActivity)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
-    }
-
-    @Test
-    public void recognizedTextView_isShowingTextFromResources(){
-        onView(withId(R.id.recognizedTextViewOcrScanActivity)).check(matches(withText(R.string.recognition_textView_defaultvalue_ocrScanActivity)));
     }
 
     @Test
@@ -89,7 +85,6 @@ public class OcrScanActivityInstrumentedTest {
     public void fabSavePrice_isClickable(){
         onView(withId(R.id.fabSaveCurrentPrice)).check(matches(isClickable()));
     }
-
 
     // General tests
 

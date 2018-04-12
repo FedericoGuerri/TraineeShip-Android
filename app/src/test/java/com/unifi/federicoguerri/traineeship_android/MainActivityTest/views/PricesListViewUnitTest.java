@@ -74,6 +74,7 @@ public class PricesListViewUnitTest extends AbstractMainActivityUnitTest {
     }
 
 
+
     private int getColorFromResources(int colorId) {
         return activity.getResources().getColor(colorId);
     }

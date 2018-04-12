@@ -1,16 +1,12 @@
 package com.unifi.federicoguerri.traineeship_android.SplashActivityTest.views;
 
-import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.unifi.federicoguerri.traineeship_android.BuildConfig;
 import com.unifi.federicoguerri.traineeship_android.R;
 import com.unifi.federicoguerri.traineeship_android.SplashScreenActivity;
-
-import junit.framework.Assert;
 
 import org.junit.Before;
 import org.junit.Test;

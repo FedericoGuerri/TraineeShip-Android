@@ -5,18 +5,20 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.unifi.federicoguerri.traineeship_android.core.DataWriterToFile;
 import com.unifi.federicoguerri.traineeship_android.core.OcrComponentsBuilder;
 
-import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
 
 public class OcrScanActivity extends AppCompatActivity {
 
@@ -45,7 +47,7 @@ public class OcrScanActivity extends AppCompatActivity {
             ocrScanView.getHolder().addCallback(new SurfaceHolder.Callback() {
                 @Override
                 public void surfaceCreated(SurfaceHolder surfaceHolder) {
-                    if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                    if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                         ActivityCompat.requestPermissions(OcrScanActivity.this,new String[]{Manifest.permission.CAMERA},
                                 REQUEST_CAMERA_PERMISSION);
                         return;
@@ -97,15 +99,20 @@ public class OcrScanActivity extends AppCompatActivity {
     }
 
 
-    public void saveCurrentPrice(View view){
-        DataWriterToFile dataWriterToFile=new DataWriterToFile();
-        dataWriterToFile.setFilePath(filePath);
-        try {
-            dataWriterToFile.writeToPath(myOcrBuilder.getRecognizedTextView().getText().toString()+" - ");
-        } catch (Exception e) {
-            e.printStackTrace();
+    public void saveCurrentPrice(View view) {
+        if(!Objects.equals(myOcrBuilder.getRecognizedTextView().getText().toString(), getString(R.string.bad_recognition_get_closer_please))) {
+            DataWriterToFile dataWriterToFile = new DataWriterToFile();
+            dataWriterToFile.setFilePath(filePath);
+            try {
+                dataWriterToFile.writeToPath(myOcrBuilder.getRecognizedTextView().getText().toString() + " -");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            endActivity();
+        }else{
+            Toast toast=Toast.makeText(getApplicationContext(),getString(R.string.no_price_detected_toast),Toast.LENGTH_SHORT);
+            toast.show();
         }
-        endActivity();
     }
 
     @Override

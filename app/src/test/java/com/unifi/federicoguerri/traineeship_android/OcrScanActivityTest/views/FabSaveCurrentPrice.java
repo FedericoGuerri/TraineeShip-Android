@@ -1,16 +1,18 @@
 package com.unifi.federicoguerri.traineeship_android.OcrScanActivityTest.views;
 
 
-import android.content.Intent;
+import android.Manifest;
 import android.support.design.widget.FloatingActionButton;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.unifi.federicoguerri.traineeship_android.R;
 
 import org.junit.Test;
 import org.robolectric.shadows.ShadowActivity;
-import org.robolectric.shadows.ShadowIntent;
+import org.robolectric.shadows.ShadowApplication;
+import org.robolectric.shadows.ShadowToast;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -90,6 +92,15 @@ public class FabSaveCurrentPrice extends AbstractOcrScanActivityUnitTest{
         fabSavePrice.performClick();
         ShadowActivity shadowActivity=shadowOf(activity);
         assertEquals(R.anim.end_ocr_scan_exit,shadowActivity.getPendingTransitionExitAnimationResourceId());
+    }
+
+
+    @Test
+    public void fabSavePrice_showsToastIfNoPricesWereRecognized()  {
+        TextView recognizedTextView=activity.findViewById(R.id.recognizedTextViewOcrScanActivity);
+        recognizedTextView.setText(activity.getResources().getString(R.string.bad_recognition_get_closer_please));
+        fabSavePrice.performClick();
+        assertEquals(activity.getResources().getString(R.string.no_price_detected_toast),ShadowToast.getTextOfLatestToast());
     }
 
 

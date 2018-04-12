@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.NoSuchElementException;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertTrue;
 
@@ -44,17 +45,11 @@ public class DataLoaderFromFileUnitTest {
         assertEquals(folder.getRoot()+"/"+path,dataLoaderFromFile.getFilePath());
     }
 
-    @Test
-    public void dataLoader_createFileIfSpecifiedFileNotExists() throws IOException {
-        dataLoaderFromFile.loadFileFromPath(folder.getRoot()+"/"+path);
-        assertTrue(dataLoaderFromFile.loadFileFromPath(folder.getRoot()+"/"+path));
-    }
-
 
     @Test
-    public void dataLoader_returnTrueIfSpecifiedFileExists() throws IOException {
+    public void dataLoader_returnFalseIfSpecifiedFileExists() throws IOException {
         folder.newFile(path);
-        assertTrue(dataLoaderFromFile.loadFileFromPath(folder.getRoot()+"/"+path));
+        assertFalse(dataLoaderFromFile.loadFileFromPath(folder.getRoot()+"/"+path));
     }
 
 

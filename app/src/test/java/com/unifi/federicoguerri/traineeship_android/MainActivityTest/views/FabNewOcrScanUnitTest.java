@@ -1,5 +1,6 @@
 package com.unifi.federicoguerri.traineeship_android.MainActivityTest.views;
 
+import android.Manifest;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.view.View;
@@ -9,13 +10,13 @@ import com.unifi.federicoguerri.traineeship_android.R;
 
 import org.junit.Test;
 import org.robolectric.shadows.ShadowActivity;
+import org.robolectric.shadows.ShadowApplication;
 import org.robolectric.shadows.ShadowIntent;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.fail;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -25,10 +26,15 @@ import static org.robolectric.Shadows.shadowOf;
 public class FabNewOcrScanUnitTest extends AbstractMainActivityUnitTest {
 
     private FloatingActionButton fabNewOcr;
+    private ShadowApplication shadowApplication;
 
     @Override
     public View getTestingComponent() {
         fabNewOcr=activity.findViewById(R.id.fabNewOcrMainActivity);
+
+        shadowApplication=shadowOf(activity.getApplication());
+        shadowApplication.grantPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
         return fabNewOcr;
     }
 
@@ -132,6 +138,32 @@ public class FabNewOcrScanUnitTest extends AbstractMainActivityUnitTest {
         ShadowActivity shadowActivity = shadowOf(activity);
         assertEquals(R.anim.new_ocr_scan_exit,shadowActivity.getPendingTransitionExitAnimationResourceId());
     }
+
+    @Test
+    public void fabNewOcr_wontStartsEnterTransition_IfHasNoWritePermission()  {
+        shadowApplication.denyPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        fabNewOcr.performClick();
+        ShadowActivity shadowActivity = shadowOf(activity);
+        assertEquals(-1,shadowActivity.getPendingTransitionEnterAnimationResourceId());
+    }
+
+    @Test
+    public void fabNewOcr_wontStartsExitTransitionIfHasNoWritePermission()  {
+        shadowApplication.denyPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        fabNewOcr.performClick();
+        ShadowActivity shadowActivity = shadowOf(activity);
+        assertEquals(-1,shadowActivity.getPendingTransitionExitAnimationResourceId());
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void fabNewOcr_wontLaunchOcrScanActivityWithIntent_IfHasNoWritePermission()  {
+        shadowApplication.denyPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        fabNewOcr.performClick();
+        ShadowActivity shadowActivity = shadowOf(activity);
+        Intent startedIntent = shadowActivity.getNextStartedActivity();
+        ShadowIntent shadowIntent = shadowOf(startedIntent);
+    }
+
 
     private int getColorFromResources(int colorId) {
         return activity.getResources().getColor(colorId);

@@ -26,9 +26,6 @@ public class DataLoaderFromFile {
 
     public boolean loadFileFromPath(String filePath) throws IOException {
         this.filePath = filePath;
-        if(new File(filePath).exists()){
-            return true;
-        }
         return new File(filePath).createNewFile();
     }
 
