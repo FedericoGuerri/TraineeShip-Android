@@ -28,7 +28,7 @@ public class GenericBehaviorTest {
     private SplashScreenActivity activity;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         activity = Robolectric.buildActivity( SplashScreenActivity.class ).create().get();
     }
 
@@ -45,7 +45,7 @@ public class GenericBehaviorTest {
     }
 
     @Test
-    public void willLaunch_MainActivityWhenReady() throws Exception {
+    public void willLaunch_MainActivityWhenReady() {
         ShadowActivity shadowActivity = shadowOf(activity);
         Intent startedIntent = shadowActivity.getNextStartedActivity();
         ShadowIntent shadowIntent = shadowOf(startedIntent);

@@ -20,6 +20,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.isRoot;
 import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.CoreMatchers.anything;
 
 public class GeneralBehaviorInstrumetedTest {
 
@@ -29,6 +30,8 @@ public class GeneralBehaviorInstrumetedTest {
     @Rule public GrantPermissionRule runtimePermissionReadStorange = GrantPermissionRule .grant(Manifest.permission.READ_EXTERNAL_STORAGE);
 
     // MainActivity
+
+    // pricesList
 
     @Test
     public void pricesList_willUpdateListSize_AfterRecognizedAPrice(){
@@ -79,6 +82,76 @@ public class GeneralBehaviorInstrumetedTest {
     }
 
     @Test
+    public void pricesList_willChangeVisibility_AfterRecognizedOnePrice_ifItWasRemoved(){
+        recognizeAPrice();
+        onView(withId(R.id.itemDeletePriceImageViewitemPriceListView)).perform(click());
+        onView(withId(R.id.pricesListViewMainActivity)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.INVISIBLE)));
+    }
+
+    @Test
+    public void pricesList_wontChangeVisibility_AfterRecognizedMorePrices_ifOneWasRemoved(){
+        recognizeAPrice();
+        recognizeAPrice();
+        deleteFirstPrice();
+        onView(withId(R.id.pricesListViewMainActivity)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+    }
+
+    @Test
+    public void pricesList_canAddAndDeletePrices(){
+        recognizeAPrice();
+        deleteFirstPrice();
+        onView(withId(R.id.pricesListViewMainActivity)).check(matches(CustomMatchers.withListSize(0)));
+    }
+
+    @Test
+    public void pricesList_canAddAndDeleteMultipleTimes(){
+        recognizeAPrice();
+        deleteFirstPrice();
+        recognizeAPrice();
+        deleteFirstPrice();
+        recognizeAPrice();
+        onView(withId(R.id.pricesListViewMainActivity)).check(matches(CustomMatchers.withListSize(1)));
+    }
+
+
+    @Test
+    public void pricesList_canAddAndDelete_inDifferentOrder(){
+        recognizeAPrice();
+        recognizeAPrice();
+        deletePrice(1);
+        deletePrice(0);
+        onView(withId(R.id.pricesListViewMainActivity)).check(matches(CustomMatchers.withListSize(0)));
+    }
+
+    @Test
+    public void pricesList_visibilityWillChangeEventually_ifAddingAndRemovingPrices(){
+        recognizeAPrice();
+        recognizeAPrice();
+        recognizeAPrice();
+        recognizeAPrice();
+        deletePrice(3);
+        deletePrice(1);
+        deleteFirstPrice();
+        deleteFirstPrice();
+        onView(withId(R.id.pricesListViewMainActivity)).check(matches(ViewMatchers.withEffectiveVisibility(ViewMatchers.Visibility.INVISIBLE)));
+    }
+
+    @Test
+    public void pricesList_willChangeVisibility_AfterRecognizedMorePrices_ifAllWereRemoved(){
+        recognizeAPrice();
+        recognizeAPrice();
+        recognizeAPrice();
+        deleteFirstPrice();
+        deleteFirstPrice();
+        deleteFirstPrice();
+        onView(withId(R.id.pricesListViewMainActivity)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.INVISIBLE)));
+    }
+
+
+
+    // welcomeLayout
+
+    @Test
     public void welcomeLayout_willBeInvisible_AfterRecognizedAPrice(){
         recognizeAPrice();
         onView(withId(R.id.welcomeLayoutMainActivity)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.INVISIBLE)));
@@ -99,10 +172,61 @@ public class GeneralBehaviorInstrumetedTest {
         onView(withId(R.id.welcomeLayoutMainActivity)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.INVISIBLE)));
     }
 
+    @Test
+    public void welcomeLayout_willChangeVisibility_AfterRecognizedOnePrice_ifItWasRemoved(){
+        recognizeAPrice();
+        onView(withId(R.id.itemDeletePriceImageViewitemPriceListView)).perform(click());
+        onView(withId(R.id.welcomeLayoutMainActivity)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+    }
+
+    @Test
+    public void welcomeLayout_wontChangeVisibility_AfterRecognizedMorePrices_ifOneWasRemoved(){
+        recognizeAPrice();
+        recognizeAPrice();
+        deleteFirstPrice();
+        onView(withId(R.id.welcomeLayoutMainActivity)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.INVISIBLE)));
+    }
+
+    @Test
+    public void welcomeLayout_willChangeVisibility_AfterRecognizedMorePrices_ifAllWereRemoved(){
+        recognizeAPrice();
+        recognizeAPrice();
+        recognizeAPrice();
+        deleteFirstPrice();
+        deleteFirstPrice();
+        deleteFirstPrice();
+        onView(withId(R.id.welcomeLayoutMainActivity)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+    }
+
+    @Test
+    public void welcomeLayout_visibilityWillChangeEventually_ifAddingAndRemovingPrices(){
+        recognizeAPrice();
+        recognizeAPrice();
+        recognizeAPrice();
+        recognizeAPrice();
+        deletePrice(3);
+        deletePrice(1);
+        deleteFirstPrice();
+        deleteFirstPrice();
+        onView(withId(R.id.welcomeLayoutMainActivity)).check(matches(ViewMatchers.withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+    }
+
 
     private void recognizeAPrice() {
         onView(withId(R.id.fabNewOcrMainActivity)).perform(click());
         onView(withId(R.id.fabSaveCurrentPrice)).perform(click());
+    }
+
+    private void deleteFirstPrice() {
+        onData(anything()).inAdapterView(withId(R.id.pricesListViewMainActivity))
+                .atPosition(0)
+                .perform(click());
+    }
+
+    private void deletePrice(int index) {
+        onData(anything()).inAdapterView(withId(R.id.pricesListViewMainActivity))
+                .atPosition(index)
+                .perform(click());
     }
 
 

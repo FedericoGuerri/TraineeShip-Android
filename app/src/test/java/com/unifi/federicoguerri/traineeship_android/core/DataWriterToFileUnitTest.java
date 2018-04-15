@@ -45,14 +45,14 @@ public class DataWriterToFileUnitTest {
     public void dataWrite_withNoSpecifiedPathThrowsException() throws Exception {
         writeRecordsFileException.expect(Exception.class);
         writeRecordsFileException.expectMessage("Failed to write to file");
-        dataWriterToFile.writeToPath("message");
+        dataWriterToFile.writeToPath("message",true);
     }
 
     @Test
     public void dataWrite_writeStringToSpecifiedFile() throws Exception {
         folder.newFile(path);
         dataWriterToFile.setFilePath(folder.getRoot()+"/"+path);
-        dataWriterToFile.writeToPath("22.2");
+        dataWriterToFile.writeToPath("22.2",true);
         String readed=readFromFile();
         assertTrue(readed.contains("22.2"));
     }
@@ -62,7 +62,7 @@ public class DataWriterToFileUnitTest {
     public void dataWrite_writeStringToSpecifiedFileAddingASpace() throws Exception {
         folder.newFile(path);
         dataWriterToFile.setFilePath(folder.getRoot()+"/"+path);
-        dataWriterToFile.writeToPath("22.2");
+        dataWriterToFile.writeToPath("22.2",true);
         String readed=readFromFile();
         assertEquals("22.2 ",readed);
     }
@@ -71,8 +71,8 @@ public class DataWriterToFileUnitTest {
     public void dataWrite_shouldTerminateAllStringsWithASpace() throws Exception {
         folder.newFile(path);
         dataWriterToFile.setFilePath(folder.getRoot()+"/"+path);
-        dataWriterToFile.writeToPath("22.2");
-        dataWriterToFile.writeToPath("pathToMiniature");
+        dataWriterToFile.writeToPath("22.2",true);
+        dataWriterToFile.writeToPath("pathToMiniature",true);
         String readed=readFromFile();
         assertEquals("22.2 pathToMiniature ",readed);
     }
@@ -81,7 +81,7 @@ public class DataWriterToFileUnitTest {
     public void dataWrite_shouldNotWriteMoreSpacesToSpecifiedFile() throws Exception {
         folder.newFile(path);
         dataWriterToFile.setFilePath(folder.getRoot()+"/"+path);
-        dataWriterToFile.writeToPath("     22.2");
+        dataWriterToFile.writeToPath("     22.2",true);
         String readed=readFromFile();
         assertEquals("22.2 ",readed);
     }
@@ -90,7 +90,7 @@ public class DataWriterToFileUnitTest {
     public void dataWrite_shouldFormatStringToTerminateWithASpaceWhileThereAreMultipleSpaces() throws Exception {
         folder.newFile(path);
         dataWriterToFile.setFilePath(folder.getRoot()+"/"+path);
-        dataWriterToFile.writeToPath("     22.2 -  22.2       pathToMiniature");
+        dataWriterToFile.writeToPath("     22.2 -  22.2       pathToMiniature",true);
         String readed=readFromFile();
         assertEquals("22.2 - 22.2 pathToMiniature ",readed);
     }
@@ -99,8 +99,8 @@ public class DataWriterToFileUnitTest {
     public void dataWrite_shouldFormatMoreStringsToTerminateWithASpaceWhileThereAreMultipleSpaces() throws Exception {
         folder.newFile(path);
         dataWriterToFile.setFilePath(folder.getRoot()+"/"+path);
-        dataWriterToFile.writeToPath("     22.2 -  22.2       pathToMiniature");
-        dataWriterToFile.writeToPath("22.2        pathToMiniature");
+        dataWriterToFile.writeToPath("     22.2 -  22.2       pathToMiniature",true);
+        dataWriterToFile.writeToPath("22.2        pathToMiniature",true);
         String readed=readFromFile();
         assertEquals("22.2 - 22.2 pathToMiniature 22.2 pathToMiniature ",readed);
     }
@@ -110,11 +110,43 @@ public class DataWriterToFileUnitTest {
     public void dataWrite_shouldNotReplaceOldStringsInTheSpecifiedFile() throws Exception {
         folder.newFile(path);
         dataWriterToFile.setFilePath(folder.getRoot()+"/"+path);
-        dataWriterToFile.writeToPath("22.2old");
-        dataWriterToFile.writeToPath("22.2new");
+        dataWriterToFile.writeToPath("22.2old",true);
+        dataWriterToFile.writeToPath("22.2new",true);
         String readed=readFromFile();
         assertEquals("22.2old 22.2new ",readed);
     }
+
+    @Test
+    public void dataWrite_canAppendMessageToFile() throws Exception {
+        folder.newFile(path);
+        dataWriterToFile.setFilePath(folder.getRoot()+"/"+path);
+        dataWriterToFile.writeToPath("22.2first",true);
+        dataWriterToFile.writeToPath("22.2second",true);
+        String readed=readFromFile();
+        assertEquals("22.2first 22.2second ",readed);
+    }
+
+    @Test
+    public void dataWrite_canOverrideFileContent() throws Exception {
+        folder.newFile(path);
+        dataWriterToFile.setFilePath(folder.getRoot()+"/"+path);
+        dataWriterToFile.writeToPath("22.2first",true);
+        dataWriterToFile.writeToPath("22.2second",false);
+        String readed=readFromFile();
+        assertEquals("22.2second ",readed);
+    }
+
+    @Test
+    public void dataWrite_willOverrideAnyFileContent() throws Exception {
+        folder.newFile(path);
+        dataWriterToFile.setFilePath(folder.getRoot()+"/"+path);
+        dataWriterToFile.writeToPath("22.2first pathToMiniature 22.2 - 123.22 pathToMiniature",true);
+        dataWriterToFile.writeToPath("overrided",false);
+        String readed=readFromFile();
+        assertEquals("overrided ",readed);
+    }
+
+
 
     private String readFromFile() {
         StringBuilder contentBuilder = new StringBuilder();

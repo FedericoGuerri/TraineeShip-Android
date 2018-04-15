@@ -26,7 +26,7 @@ public class SplashBackgroundViewUnitTest {
     private RelativeLayout splashBackground;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         activity = Robolectric.buildActivity( SplashScreenActivity.class ).create().get();
         splashBackground=activity.findViewById(R.id.splashBackgroundView);
     }

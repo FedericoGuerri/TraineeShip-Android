@@ -10,6 +10,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.unifi.federicoguerri.traineeship_android.core.DataLoaderFromFile;
@@ -56,10 +57,23 @@ public class MainActivity extends AppCompatActivity {
             ArrayList<CustomDataSet> dataSets = loaderFromFile.getRecords();
 
             if(dataSets.size()>0) {
-                //Popolating the ListView
-                CustomAdapter adapter = new CustomAdapter(dataSets, getApplicationContext());
+                CustomAdapter adapter = new CustomAdapter(dataSets, getApplicationContext(),pricesPath);
                 ((ListView) findViewById(R.id.pricesListViewMainActivity)).setAdapter(adapter);
                 findViewById(R.id.pricesListViewMainActivity).setVisibility(View.VISIBLE);
+                ((ListView)findViewById(R.id.pricesListViewMainActivity)).setOnHierarchyChangeListener(new ViewGroup.OnHierarchyChangeListener() {
+                    @Override
+                    public void onChildViewAdded(View view, View view1) {
+
+                    }
+
+                    @Override
+                    public void onChildViewRemoved(View view, View view1) {
+                        if(((ListView)view).getChildCount()==0){
+                            view.setVisibility(View.INVISIBLE);
+                            findViewById(R.id.welcomeLayoutMainActivity).setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
                 findViewById(R.id.welcomeLayoutMainActivity).setVisibility(View.INVISIBLE);
             }else{
                 findViewById(R.id.pricesListViewMainActivity).setVisibility(View.INVISIBLE);

@@ -104,9 +104,13 @@ public class OcrScanActivity extends AppCompatActivity {
             DataWriterToFile dataWriterToFile = new DataWriterToFile();
             dataWriterToFile.setFilePath(filePath);
             try {
-                dataWriterToFile.writeToPath(myOcrBuilder.getRecognizedTextView().getText().toString() + " -");
+                dataWriterToFile.writeToPath(myOcrBuilder.getRecognizedTextView().getText().toString() + " noMiniature ",true);
             } catch (Exception e) {
-                e.printStackTrace();
+                if(e.getMessage().equals("Failed to write to file")) {
+                    Toast.makeText(getApplicationContext(), getString(R.string.cant_write_to_file), Toast.LENGTH_SHORT).show();
+                }else{
+                    e.printStackTrace();
+                }
             }
             endActivity();
         }else{

@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNull;
-import static junit.framework.Assert.assertTrue;
 
 @Config(constants = BuildConfig.class, sdk = Build.VERSION_CODES.LOLLIPOP_MR1)
 @RunWith(RobolectricTestRunner.class)
@@ -34,15 +33,15 @@ public class CustomAdapterUnitTest {
     private  CustomAdapter.ViewHolder viewHolder;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         activity = Robolectric.buildActivity( MainActivity.class ).create().get();
         convertView=new View(activity.getApplicationContext());
         viewHolder=new CustomAdapter.ViewHolder();
         viewHolder.priceTextView=new TextView(activity.getApplicationContext());
         viewHolder.priceTextView.setText("22.2");
         viewHolder.miniatureImageView=new ImageView(activity.getApplicationContext());
+        viewHolder.deleteImageView=new ImageView(activity.getApplicationContext());
         convertView.setTag(viewHolder);
-
     }
 
 
@@ -64,24 +63,16 @@ public class CustomAdapterUnitTest {
 
     @Test(expected = IndexOutOfBoundsException.class)
     public void customAdapterGetView_withNoRecordsThrowsException(){
-        customAdapter=new CustomAdapter(new ArrayList<CustomDataSet>(),activity.getApplicationContext());
+        customAdapter=new CustomAdapter(new ArrayList<CustomDataSet>(),activity.getApplicationContext(),null);
         customAdapter.getView(0,convertView,null);
     }
 
 
     @Test
-    public void customAdapterGetView_withNotNullViewReturnsARecycledConvertView(){
-        ArrayList<CustomDataSet> records= new ArrayList<>();
-        records.add(new CustomDataSet(22.2f,null));
-        customAdapter=new CustomAdapter(records,activity.getApplicationContext());
-        assertTrue(convertView==customAdapter.getView(0,convertView,null));
-    }
-
-    @Test
     public void customAdapterGetView_withNullViewReturnsANewView(){
         ArrayList<CustomDataSet> records= new ArrayList<>();
         records.add(new CustomDataSet(22.2f,null));
-        customAdapter=new CustomAdapter(records,activity.getApplicationContext());
+        customAdapter=new CustomAdapter(records,activity.getApplicationContext(),null);
         assertFalse(convertView==customAdapter.getView(0,null,null));
     }
 

@@ -24,7 +24,7 @@ public class GenericBehaviorTest {
     private OcrScanActivity activity;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         activity = Robolectric.buildActivity(OcrScanActivity.class).create().get();
     }
 

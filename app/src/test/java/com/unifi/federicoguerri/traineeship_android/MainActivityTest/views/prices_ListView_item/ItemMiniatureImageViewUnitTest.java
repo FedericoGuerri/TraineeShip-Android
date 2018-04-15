@@ -8,7 +8,7 @@ import com.unifi.federicoguerri.traineeship_android.R;
 
 import org.junit.Test;
 
-import static junit.framework.Assert.assertNull;
+import static junit.framework.Assert.assertNotNull;
 import static org.junit.Assert.assertEquals;
 
 
@@ -23,24 +23,24 @@ public class ItemMiniatureImageViewUnitTest extends AbstractPricesListViewWithIt
     }
 
     @Test
-    public void itemMiniatureImageView_isVisible() throws Exception {
+    public void itemMiniatureImageView_isVisible()  {
         assertEquals(View.VISIBLE, itemMiniatureImageView.getVisibility());
     }
 
 
     @Test
-    public void itemMiniatureImageView_widthIsWrapContent() throws Exception {
+    public void itemMiniatureImageView_widthIsWrapContent()  {
         assertEquals(ViewGroup.LayoutParams.WRAP_CONTENT, itemMiniatureImageView.getLayoutParams().width);
     }
 
     @Test
-    public void itemMiniatureImageView_heightIsWrapContent() throws Exception {
+    public void itemMiniatureImageView_heightIsWrapContent()  {
         assertEquals(ViewGroup.LayoutParams.WRAP_CONTENT, itemMiniatureImageView.getLayoutParams().height);
     }
 
     @Test
-    public void itemMiniatureImageView_drawableIsNull() throws Exception {
-        assertNull(itemMiniatureImageView.getDrawable());
+    public void itemMiniatureImageView_drawableIsNotNull()  {
+        assertNotNull(itemMiniatureImageView.getDrawable());
     }
 
     @Test

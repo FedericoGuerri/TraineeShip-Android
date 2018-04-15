@@ -19,13 +19,18 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.robolectric.Shadows.shadowOf;
 
-public class FabSaveCurrentPrice extends AbstractOcrScanActivityUnitTest{
+public class FabSaveCurrentPriceUnitTest extends AbstractOcrScanActivityUnitTest{
 
     private FloatingActionButton fabSavePrice;
+    private ShadowApplication shadowApplication;
 
     @Override
     public View getTestingComponent() {
         fabSavePrice =activity.findViewById(R.id.fabSaveCurrentPrice);
+
+        shadowApplication=shadowOf(activity.getApplication());
+        shadowApplication.grantPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
         return fabSavePrice;
     }
 
@@ -75,9 +80,15 @@ public class FabSaveCurrentPrice extends AbstractOcrScanActivityUnitTest{
     }
 
     @Test
-    public void fabSavePrice_willEndOcrScanActivity()  {
+    public void fabSavePrice_willEndOcrScanActivity(){
         fabSavePrice.performClick();
         assertTrue(activity.isFinishing());
+    }
+
+    @Test
+    public void fabSavePrice_willShowToastMessage_ifCantWriteToFile(){
+        fabSavePrice.performClick();
+        assertEquals(getStringFromResources(R.string.cant_write_to_file),ShadowToast.getTextOfLatestToast());
     }
 
     @Test
@@ -94,7 +105,6 @@ public class FabSaveCurrentPrice extends AbstractOcrScanActivityUnitTest{
         assertEquals(R.anim.end_ocr_scan_exit,shadowActivity.getPendingTransitionExitAnimationResourceId());
     }
 
-
     @Test
     public void fabSavePrice_showsToastIfNoPricesWereRecognized()  {
         TextView recognizedTextView=activity.findViewById(R.id.recognizedTextViewOcrScanActivity);
@@ -103,6 +113,9 @@ public class FabSaveCurrentPrice extends AbstractOcrScanActivityUnitTest{
         assertEquals(activity.getResources().getString(R.string.no_price_detected_toast),ShadowToast.getTextOfLatestToast());
     }
 
+    private String getStringFromResources(int stringId) {
+        return activity.getResources().getString(stringId);
+    }
 
     private int getColorFromResources(int colorId) {
         return activity.getResources().getColor(colorId);

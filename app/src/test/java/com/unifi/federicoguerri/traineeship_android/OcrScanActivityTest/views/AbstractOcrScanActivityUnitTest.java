@@ -25,7 +25,7 @@ public abstract class AbstractOcrScanActivityUnitTest {
     private View testingComponent;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         activity = Robolectric.buildActivity( OcrScanActivity.class ).create().get();
         testingComponent=getTestingComponent();
     }

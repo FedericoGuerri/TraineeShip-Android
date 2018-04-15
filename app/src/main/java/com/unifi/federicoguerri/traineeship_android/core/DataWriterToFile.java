@@ -7,9 +7,9 @@ public class DataWriterToFile {
 
     private String filePath;
 
-    public void writeToPath(String message) throws Exception {
+    public void writeToPath(String message, boolean append) throws Exception {
         try {
-            BufferedWriter out = new BufferedWriter(new FileWriter(filePath,true));
+            BufferedWriter out = new BufferedWriter(new FileWriter(filePath,append));
             message= message.trim().replaceAll(" +", " ");
             out.write(message+" ");
             out.close();
