@@ -41,7 +41,7 @@ before_install:
 script:
   - ./gradlew build jacocoTestReport assembleAndroidTest
   - echo no | android create avd --force -n test -t android-22 --abi armeabi-v7a
-  - emulator -avd test -no-window &
+  - emulator -avd test -no-window -camera-back emulated -camera-front emulated -memory 2048 -writable-system &
   - android-wait-for-emulator
   - adb shell settings put global window_animation_scale 0 &
   - adb shell settings put global transition_animation_scale 0 &
