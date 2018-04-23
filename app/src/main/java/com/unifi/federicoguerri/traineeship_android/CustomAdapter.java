@@ -1,6 +1,7 @@
 package com.unifi.federicoguerri.traineeship_android;
 
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,6 +39,11 @@ public class CustomAdapter extends ArrayAdapter<CustomDataSet> {
         dataWriterToFile.setFilePath(filePath);
     }
 
+    public void setData(ArrayList<CustomDataSet> data) {
+        this.data = data;
+    }
+
+
     public static class ViewHolder {
         public TextView priceTextView;
         public ImageView miniatureImageView;
@@ -59,7 +65,11 @@ public class CustomAdapter extends ArrayAdapter<CustomDataSet> {
             rowView.setTag(viewHolder);
         }
         final ViewHolder holder = (ViewHolder) rowView.getTag();
-        holder.miniatureImageView.setImageDrawable(dataSet.getMiniature());
+        if(dataSet.getMiniature()!=null) {
+            holder.miniatureImageView.setImageBitmap(dataSet.getMiniature());
+        }else{
+            holder.miniatureImageView.setImageBitmap(BitmapFactory.decodeResource(mContext.getResources(),R.drawable.no_miniature_placeholder));
+        }
         holder.priceTextView.setText(String.valueOf(dataSet.getPrice()));
         final View finalRowView = rowView;
         holder.deleteImageView.setOnClickListener(new View.OnClickListener() {
@@ -93,5 +103,13 @@ public class CustomAdapter extends ArrayAdapter<CustomDataSet> {
         }
 
         return contentBuilder.toString().substring(0,contentBuilder.toString().length()-1);
+    }
+
+    public float getTotal(){
+        float total=0.0f;
+        for(CustomDataSet item: data){
+            total=total+item.getPrice();
+        }
+        return total;
     }
 }

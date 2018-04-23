@@ -1,5 +1,6 @@
 package com.unifi.federicoguerri.traineeship_android.MainActivityTest.views.prices_ListView_item;
 
+import android.graphics.Typeface;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -48,13 +49,18 @@ public class ItemPriceTextViewUnitTest extends AbstractPricesListViewWithItemLay
 
 
     @Test
-    public void itemPriceTextView_hasTextSize14(){
-        assertEquals(14,(int)itemPriceTextView.getTextSize());
+    public void itemPriceTextView_hasSpecifiedTextSize(){
+        assertEquals(18,(int)itemPriceTextView.getTextSize());
     }
 
     @Test
     public void itemPriceTextView_childOfItemLayoutPricesListView(){
         assertEquals(R.id.itemLayoutPricesListView,((View)itemPriceTextView.getParent()).getId());
+    }
+
+    @Test
+    public void itemPriceTextView_hasBoldText(){
+        assertEquals(Typeface.BOLD,itemPriceTextView.getTypeface().getStyle());
     }
 
 

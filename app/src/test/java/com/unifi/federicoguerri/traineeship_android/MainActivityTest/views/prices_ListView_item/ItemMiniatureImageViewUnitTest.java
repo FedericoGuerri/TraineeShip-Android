@@ -1,7 +1,6 @@
 package com.unifi.federicoguerri.traineeship_android.MainActivityTest.views.prices_ListView_item;
 
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.unifi.federicoguerri.traineeship_android.R;
@@ -29,13 +28,13 @@ public class ItemMiniatureImageViewUnitTest extends AbstractPricesListViewWithIt
 
 
     @Test
-    public void itemMiniatureImageView_widthIsWrapContent()  {
-        assertEquals(ViewGroup.LayoutParams.WRAP_CONTENT, itemMiniatureImageView.getLayoutParams().width);
+    public void itemMiniatureImageView_widthIsInDP()  {
+        assertEquals(100, itemMiniatureImageView.getLayoutParams().width);
     }
 
     @Test
-    public void itemMiniatureImageView_heightIsWrapContent()  {
-        assertEquals(ViewGroup.LayoutParams.WRAP_CONTENT, itemMiniatureImageView.getLayoutParams().height);
+    public void itemMiniatureImageView_heightIsInDP()  {
+        assertEquals(150, itemMiniatureImageView.getLayoutParams().height);
     }
 
     @Test
@@ -47,4 +46,5 @@ public class ItemMiniatureImageViewUnitTest extends AbstractPricesListViewWithIt
     public void itemMiniatureImageView_childOfItemLayout(){
         assertEquals(R.id.itemLayoutPricesListView,((View) itemMiniatureImageView.getParent()).getId());
     }
+
 }

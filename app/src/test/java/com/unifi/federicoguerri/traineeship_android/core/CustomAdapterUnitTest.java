@@ -1,5 +1,6 @@
 package com.unifi.federicoguerri.traineeship_android.core;
 
+import android.content.Context;
 import android.os.Build;
 import android.view.View;
 import android.widget.ImageView;
@@ -30,11 +31,11 @@ public class CustomAdapterUnitTest {
     private CustomAdapter customAdapter;
     private MainActivity activity;
     private View convertView;
-    private  CustomAdapter.ViewHolder viewHolder;
+    private CustomAdapter.ViewHolder viewHolder;
 
     @Before
     public void setUp() {
-        activity = Robolectric.buildActivity( MainActivity.class ).create().get();
+        activity = Robolectric.buildActivity( MainActivity.class ).create().start().get();
         convertView=new View(activity.getApplicationContext());
         viewHolder=new CustomAdapter.ViewHolder();
         viewHolder.priceTextView=new TextView(activity.getApplicationContext());
@@ -57,7 +58,7 @@ public class CustomAdapterUnitTest {
     }
 
     @Test
-    public void viewHolderMiniatureImageView_hasNullDrawablet(){
+    public void viewHolderMiniatureImageView_hasNullDrawable(){
         assertNull(viewHolder.miniatureImageView.getDrawable());
     }
 
@@ -76,6 +77,22 @@ public class CustomAdapterUnitTest {
         assertFalse(convertView==customAdapter.getView(0,null,null));
     }
 
+    @Test
+    public void customAdapter_getTotalwillReturnAPriceValue(){
+        ArrayList<CustomDataSet> records= new ArrayList<>();
+        records.add(new CustomDataSet(22.2f,null));
+        customAdapter=new CustomAdapter(records,activity.getApplicationContext(),null);
+        assertEquals(22.2f,customAdapter.getTotal());
+    }
 
+    @Test
+    public void customAdapter_getTotalwillReturnASumOfRecognizedPrices(){
+        ArrayList<CustomDataSet> records= new ArrayList<>();
+        records.add(new CustomDataSet(22.2f,null));
+        records.add(new CustomDataSet(22.2f,null));
+        records.add(new CustomDataSet(0.0f,null));
+        customAdapter=new CustomAdapter(records,activity.getApplicationContext(),null);
+        assertEquals(44.4f,customAdapter.getTotal());
+    }
 
 }

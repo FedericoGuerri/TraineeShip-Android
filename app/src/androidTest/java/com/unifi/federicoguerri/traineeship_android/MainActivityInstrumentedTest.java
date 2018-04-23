@@ -22,6 +22,7 @@ import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static android.support.test.espresso.matcher.ViewMatchers.hasChildCount;
 import static android.support.test.espresso.matcher.ViewMatchers.hasTextColor;
+import static android.support.test.espresso.matcher.ViewMatchers.isCompletelyDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
@@ -170,6 +171,16 @@ public class MainActivityInstrumentedTest {
     @Test
     public void supportActionBar_isVisibleTest(){
         assertEquals(true, mainActivityRule.getActivity().getSupportActionBar().isShowing());
+    }
+
+    @Test
+    public void pricesTotal_isCompletelyDisplayed(){
+        onView(withId(R.id.menuitem_total_mainactivity)).check(matches(isCompletelyDisplayed()));
+    }
+
+    @Test
+    public void pricesTotal_hasTextFromResources(){
+        onView(withText(R.string.menuitem_total_default_mainactivity)).check(matches(isCompletelyDisplayed()));
     }
 
 }

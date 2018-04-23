@@ -2,6 +2,7 @@ package com.unifi.federicoguerri.traineeship_android.OcrScanActivityTest.views;
 
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.support.design.widget.FloatingActionButton;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,11 +10,16 @@ import android.widget.TextView;
 
 import com.unifi.federicoguerri.traineeship_android.R;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 import org.robolectric.shadows.ShadowActivity;
+import org.robolectric.shadows.ShadowAlertDialog;
 import org.robolectric.shadows.ShadowApplication;
+import org.robolectric.shadows.ShadowDialog;
 import org.robolectric.shadows.ShadowToast;
 
+import static junit.framework.Assert.assertFalse;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -23,6 +29,10 @@ public class FabSaveCurrentPriceUnitTest extends AbstractOcrScanActivityUnitTest
 
     private FloatingActionButton fabSavePrice;
     private ShadowApplication shadowApplication;
+
+    @Rule
+    public TemporaryFolder folder= new TemporaryFolder();
+
 
     @Override
     public View getTestingComponent() {
@@ -79,28 +89,96 @@ public class FabSaveCurrentPriceUnitTest extends AbstractOcrScanActivityUnitTest
         assertEquals(true, fabSavePrice.isClickable());
     }
 
+
+    // tapping on fab will show miniature dialog
+
+    @Test
+    public void fabSavePrice_willShowADialog(){
+        fabSavePrice.performClick();
+        assertTrue(ShadowDialog.getLatestDialog().isShowing());
+    }
+
+    @Test
+    public void fabSavePrice_willShowADialog_thatCanBeClosed(){
+        tapOnFabAndPressDialogNegativeButton();
+        assertFalse(ShadowDialog.getLatestDialog().isShowing());
+    }
+
+    @Test
+    public void fabSavePrice_willShowDialogWith_positiveButton(){
+        fabSavePrice.performClick();
+        assertNotNull(ShadowAlertDialog.getLatestAlertDialog().getButton(AlertDialog.BUTTON_POSITIVE));
+    }
+
+    @Test
+    public void fabSavePrice_willShowDialog_thatIsDismissedWhenTappingOnPositiveButton(){
+        tapOnFabAndPressDialogPositiveButton();
+        assertFalse(ShadowDialog.getLatestDialog().isShowing());
+    }
+
+    @Test
+    public void fabSavePrice_willShowDialog_thatIsDismissedWhenTappingOnNegativeButton(){
+        tapOnFabAndPressDialogNegativeButton();
+        assertFalse(ShadowDialog.getLatestDialog().isShowing());
+    }
+
+    @Test
+    public void fabSavePrice_willShowDialogWith_negativeButton(){
+        fabSavePrice.performClick();
+        assertNotNull(ShadowAlertDialog.getLatestAlertDialog().getButton(AlertDialog.BUTTON_NEGATIVE));
+    }
+
+    @Test
+    public void fabSavePrice_willShowDialogWith_positiveButtonTextFromResources(){
+        fabSavePrice.performClick();
+        assertEquals(getStringFromResources(R.string.affermative),ShadowAlertDialog.getLatestAlertDialog().getButton(AlertDialog.BUTTON_POSITIVE).getText().toString());
+    }
+
+    @Test
+    public void fabSavePrice_willShowDialogWith_negativeButtonTextFromResources(){
+        fabSavePrice.performClick();
+        assertEquals(getStringFromResources(R.string.negative),ShadowAlertDialog.getLatestAlertDialog().getButton(AlertDialog.BUTTON_NEGATIVE).getText().toString());
+    }
+
+    @Test
+    public void fabSavePrice_willShowDialogWith_titleFromResources(){
+        fabSavePrice.performClick();
+        ShadowAlertDialog shadowAlertDialog=shadowOf(ShadowAlertDialog.getLatestAlertDialog());
+        assertEquals(getStringFromResources(R.string.miniature_dialog_title),shadowAlertDialog.getTitle().toString());
+    }
+
+    @Test
+    public void fabSavePrice_willShowDialogWith_messageFromResources(){
+        fabSavePrice.performClick();
+        ShadowAlertDialog shadowAlertDialog=shadowOf(ShadowAlertDialog.getLatestAlertDialog());
+        assertEquals(getStringFromResources(R.string.miniature_dialog_message),shadowAlertDialog.getMessage().toString());
+    }
+
+
+    // tapping on fab and press dialog's negative button
+
     @Test
     public void fabSavePrice_willEndOcrScanActivity(){
-        fabSavePrice.performClick();
+        tapOnFabAndPressDialogNegativeButton();
         assertTrue(activity.isFinishing());
     }
 
     @Test
     public void fabSavePrice_willShowToastMessage_ifCantWriteToFile(){
-        fabSavePrice.performClick();
+        tapOnFabAndPressDialogNegativeButton();
         assertEquals(getStringFromResources(R.string.cant_write_to_file),ShadowToast.getTextOfLatestToast());
     }
 
     @Test
     public void fabSavePrice_willEndOcrScanActivityWithEnterTransition()  {
-        fabSavePrice.performClick();
+        tapOnFabAndPressDialogNegativeButton();
         ShadowActivity shadowActivity=shadowOf(activity);
         assertEquals(R.anim.end_ocr_scan_enter,shadowActivity.getPendingTransitionEnterAnimationResourceId());
     }
 
     @Test
     public void fabSavePrice_willEndOcrScanActivityWithExitTransition()  {
-        fabSavePrice.performClick();
+        tapOnFabAndPressDialogNegativeButton();
         ShadowActivity shadowActivity=shadowOf(activity);
         assertEquals(R.anim.end_ocr_scan_exit,shadowActivity.getPendingTransitionExitAnimationResourceId());
     }
@@ -111,6 +189,66 @@ public class FabSaveCurrentPriceUnitTest extends AbstractOcrScanActivityUnitTest
         recognizedTextView.setText(activity.getResources().getString(R.string.bad_recognition_get_closer_please));
         fabSavePrice.performClick();
         assertEquals(activity.getResources().getString(R.string.no_price_detected_toast),ShadowToast.getTextOfLatestToast());
+    }
+
+    // tapping on fab and press dialog's positive button
+
+    @Test
+    public void fabSavePrice_wontEndOcrScanActivity(){
+        tapOnFabAndPressDialogPositiveButton();
+        assertFalse(activity.isFinishing());
+    }
+
+    @Test
+    public void fabSavePrice_willChangeBackgroundTintList(){
+        tapOnFabAndPressDialogPositiveButton();
+        assertEquals(getColorFromResources(R.color.fab_miniature_color),fabSavePrice.getBackgroundTintList().getDefaultColor());
+    }
+
+    /*
+    @Test
+    public void fabSavePrice_resetBackgroundTintList_afterTakingTheMiniature(){
+        Intent intent = new Intent();
+        intent.putExtra("fileName","some/directory/configuration.txt");
+        activity = Robolectric.buildActivity(OcrScanActivity.class, intent).create().get();
+        fabSavePrice =activity.findViewById(R.id.fabSaveCurrentPrice);
+        tapOnFabAndPressDialogPositiveButton();
+        fabSavePrice.performClick();
+        assertEquals(getColorFromResources(R.color.colorAccent),fabSavePrice.getBackgroundTintList().getDefaultColor());
+    }
+
+    @Test
+    public void fabSavePrice_willShowToastMessage_afterTakingTheMiniature_ifCantWriteToFile(){
+        Intent intent = new Intent();
+        intent.putExtra("fileName","some/directory/configuration.txt");
+        activity = Robolectric.buildActivity(OcrScanActivity.class, intent).create().get();
+        fabSavePrice =activity.findViewById(R.id.fabSaveCurrentPrice);
+        tapOnFabAndPressDialogPositiveButton();
+        fabSavePrice.performClick();
+        assertEquals(activity.getResources().getString(R.string.cant_write_to_file),ShadowToast.getTextOfLatestToast());
+    }
+
+    @Test
+    public void fabSavePrice_willShowToastMessage_afterTakingTheMiniature_ifGetDirectoryPath(){
+        Intent intent = new Intent();
+        intent.putExtra("fileName",folder.getRoot());
+        activity = Robolectric.buildActivity(OcrScanActivity.class, intent).create().get();
+        fabSavePrice =activity.findViewById(R.id.fabSaveCurrentPrice);
+        tapOnFabAndPressDialogPositiveButton();
+        fabSavePrice.performClick();
+        assertEquals(activity.getResources().getString(R.string.cant_write_to_file),ShadowToast.getTextOfLatestToast());
+    }
+    */
+
+
+    private void tapOnFabAndPressDialogPositiveButton(){
+        fabSavePrice.performClick();
+        ShadowAlertDialog.getLatestAlertDialog().getButton(AlertDialog.BUTTON_POSITIVE).performClick();
+    }
+
+    private void tapOnFabAndPressDialogNegativeButton(){
+        fabSavePrice.performClick();
+        ShadowAlertDialog.getLatestAlertDialog().getButton(AlertDialog.BUTTON_NEGATIVE).performClick();
     }
 
     private String getStringFromResources(int stringId) {

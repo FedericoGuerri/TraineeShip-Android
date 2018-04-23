@@ -30,8 +30,8 @@ public class PricesListViewUnitTest extends AbstractMainActivityUnitTest {
     }
 
     @Test
-    public void pricesList_widthWrapContent(){
-        assertEquals(ViewGroup.LayoutParams.WRAP_CONTENT,pricesList.getLayoutParams().width);
+    public void pricesList_widthMatchParent(){
+        assertEquals(ViewGroup.LayoutParams.MATCH_PARENT,pricesList.getLayoutParams().width);
     }
 
     @Test

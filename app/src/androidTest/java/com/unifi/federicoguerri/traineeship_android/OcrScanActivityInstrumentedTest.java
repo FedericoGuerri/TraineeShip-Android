@@ -85,6 +85,7 @@ public class OcrScanActivityInstrumentedTest {
         onView(withId(R.id.fabSaveCurrentPrice)).check(matches(isClickable()));
     }
 
+
     // General tests
 
     @Test

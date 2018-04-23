@@ -64,6 +64,7 @@ ext {
     espressoVersion = '3.0.1'
     orchestratorVersion = '1.0.1'
     robolectricVersion = '3.3.2'
+    //mockitoVersion='2.7.22'
 }
 
 dependencies {
@@ -86,7 +87,7 @@ dependencies {
 
     implementation "com.android.support:design:$designVersion"
 
-    //testCompile 'org.mockito:mockito-android:2.7.22'
-    //androidTestCompile 'org.mockito:mockito-android:2.7.22'
+    //testCompile "org.mockito:mockito-android:$mockitoVersion"
+    //androidTestCompile "org.mockito:mockito-android:$mockitoVersion"
 
 }

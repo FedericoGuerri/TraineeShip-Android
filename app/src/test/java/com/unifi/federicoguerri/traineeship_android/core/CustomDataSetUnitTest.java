@@ -1,6 +1,6 @@
 package com.unifi.federicoguerri.traineeship_android.core;
 
-import android.graphics.drawable.Drawable;
+import android.graphics.Bitmap;
 
 import com.unifi.federicoguerri.traineeship_android.CustomDataSet;
 
@@ -15,7 +15,7 @@ public class CustomDataSetUnitTest {
 
     private CustomDataSet customDataSet;
     private Float price=22.2f;
-    private Drawable miniature=null;
+    private Bitmap miniature=null;
 
     @Before
     public void createObjectWithConstructor(){

@@ -1,7 +1,8 @@
 package com.unifi.federicoguerri.traineeship_android.core;
 
 
-import android.graphics.drawable.Drawable;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 import com.unifi.federicoguerri.traineeship_android.CustomDataSet;
 
@@ -77,12 +78,15 @@ public class DataLoaderFromFile {
             }catch (NoSuchElementException e ){
                 throw new NoSuchElementException("Failed To read a miniature");
             }
-            Drawable miniature=null;
+            Bitmap miniature=null;
             if(!stringMiniaturePath.equals("noMiniature")){
-                miniature = Drawable.createFromPath(stringMiniaturePath);
+                BitmapFactory.Options option = new BitmapFactory.Options();
+                option.inPreferredConfig = Bitmap.Config.ARGB_8888;
+                miniature=BitmapFactory.decodeFile(stringMiniaturePath);
             }
             try {
                 loadedData.add(new CustomDataSet(Float.valueOf(stringPrice),miniature));
+
             }catch (NumberFormatException e){
                 throw new NumberFormatException("Failed To read a price");
             }

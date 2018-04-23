@@ -5,10 +5,18 @@
     <string name="hint_textView_mainActivity">Tap on + to add a new import.</string>
     <string name="welcome_textView_mainActivity">Welcome!</string>
     <string name="hint_gallery_textView_mainActivity">Your scansions will be displayed here.</string>
-    <string name="price_textview_listview_placeholder">price placeholder</string>
+    <string name="price_textview_listview_placeholder">-.-</string>
     <string name="item_imageview_pricelistview_contentdescriptor">Shows the scan miniature.</string>
     <string name="recognition_textView_defaultvalue_ocrScanActivity">0.0</string>
     <string name="bad_recognition_get_closer_please">Get closer, please.</string>
     <string name="no_price_detected_toast">No price detected.</string>
     <string name="cant_write_to_file">Error while saving price!</string>
+    <string name="affermative">YES</string>
+    <string name="negative">NO</string>
+    <string name="miniature_dialog_title">Miniature</string>
+    <string name="miniature_dialog_message">Do you want to add miniature?</string>
+    <string name="take_photo_to_product">Take a photo of product.</string>
+    <string name="itemdelete_imageview_pricelistview_contentdescriptor">Tap to delete.</string>
+    <string name="menuitem_total_default_mainactivity">0.0</string>
+
 </resources>

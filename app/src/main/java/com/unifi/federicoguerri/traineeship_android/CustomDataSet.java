@@ -1,13 +1,13 @@
 package com.unifi.federicoguerri.traineeship_android;
 
-import android.graphics.drawable.Drawable;
+import android.graphics.Bitmap;
 
 public class CustomDataSet {
 
     private Float price;
-    private Drawable miniature;
+    private Bitmap miniature;
 
-    public CustomDataSet(Float price, Drawable miniature) {
+    public CustomDataSet(Float price, Bitmap miniature) {
         this.price=price;
         this.miniature=miniature;
     }
@@ -16,7 +16,7 @@ public class CustomDataSet {
         return price;
     }
 
-    public Drawable getMiniature() {
+    public Bitmap getMiniature() {
         return miniature;
     }
 }
