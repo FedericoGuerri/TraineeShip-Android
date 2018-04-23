@@ -365,6 +365,7 @@ public class GeneralBehaviorInstrumetedTest {
     // prices-total menuItem
 
 
+    /*
     @Test
     public void pricesTotalMenuItem_valueIsIncrementing_afterPricesRecognition(){
         recognizeSpecificPrice_withNoMiniature("11.1");
@@ -393,6 +394,8 @@ public class GeneralBehaviorInstrumetedTest {
         recognizeSpecificPrice_withMiniature("111.11");
         onView(withId(R.id.menuitem_total_mainactivity)).check(matches(withText("133.31")));
     }
+
+*/
 
     private void recognizeSpecificPrice_withMiniature(String price) {
         onView(withId(R.id.fabNewOcrMainActivity)).perform(click());
