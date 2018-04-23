@@ -257,6 +257,7 @@ public class GeneralBehaviorInstrumetedTest {
     }
 
 
+    /*
     @Test
     public void miniatureImageView_hasMiniature_ifUserClicksOnYESbutton(){
         CustomMatchers customMatchers=new CustomMatchers();
@@ -264,7 +265,9 @@ public class GeneralBehaviorInstrumetedTest {
         onData(allOf()).atPosition(0).
                 onChildView(withId(R.id.itemMiniatureImageViewItemPriceListView)).check(matches(not(customMatchers.withDrawable(R.drawable.no_miniature_placeholder))));
     }
+    */
 
+    /*
     @Test
     public void miniatureImageView_notChangingMiniature_ifPricesWereAdded(){
         CustomMatchers customMatchers=new CustomMatchers();
@@ -279,7 +282,9 @@ public class GeneralBehaviorInstrumetedTest {
                 onChildView(withId(R.id.itemMiniatureImageViewItemPriceListView)).check(matches(not(customMatchers.withDrawable(R.drawable.no_miniature_placeholder))));
 
     }
+    */
 
+    /*
     @Test
     public void miniatureImageView_notChangingMiniature_ifPricesWereDeleted(){
         CustomMatchers customMatchers=new CustomMatchers();
@@ -291,7 +296,9 @@ public class GeneralBehaviorInstrumetedTest {
         onData(allOf()).atPosition(0).
                 onChildView(withId(R.id.itemMiniatureImageViewItemPriceListView)).check(matches(not(customMatchers.withDrawable(R.drawable.no_miniature_placeholder))));
     }
+*/
 
+    /*
     @Test
     public void miniatureImageView_notChangingPlaceholder_ifPricesWithDifferentDrawableWereAdded(){
         CustomMatchers customMatchers=new CustomMatchers();
@@ -303,7 +310,8 @@ public class GeneralBehaviorInstrumetedTest {
         onData(allOf()).atPosition(0).
                 onChildView(withId(R.id.itemMiniatureImageViewItemPriceListView)).check(matches(customMatchers.withDrawable(R.drawable.no_miniature_placeholder)));
     }
-
+*/
+    /*
     @Test
     public void miniatureImageView_notChangingMiniature_ifPricesWithDifferentDrawableWereAdded(){
         CustomMatchers customMatchers=new CustomMatchers();
@@ -315,8 +323,9 @@ public class GeneralBehaviorInstrumetedTest {
         onData(allOf()).atPosition(0).
                 onChildView(withId(R.id.itemMiniatureImageViewItemPriceListView)).check(matches(not(customMatchers.withDrawable(R.drawable.no_miniature_placeholder))));
     }
+    */
 
-
+/*
     @Test
     public void miniatureImageView_notChangingPlaceholder_ifPricesWithDifferentDrawableWereDeleted(){
         CustomMatchers customMatchers=new CustomMatchers();
@@ -330,7 +339,9 @@ public class GeneralBehaviorInstrumetedTest {
         onData(allOf()).atPosition(0).
                 onChildView(withId(R.id.itemMiniatureImageViewItemPriceListView)).check(matches(customMatchers.withDrawable(R.drawable.no_miniature_placeholder)));
     }
+    */
 
+    /*
     @Test
     public void miniatureImageView_notChangingMiniature_ifPricesWithDifferentDrawableWereDeleted(){
         CustomMatchers customMatchers=new CustomMatchers();
@@ -345,8 +356,10 @@ public class GeneralBehaviorInstrumetedTest {
         onData(allOf()).atPosition(0).
                 onChildView(withId(R.id.itemMiniatureImageViewItemPriceListView)).check(matches(not(customMatchers.withDrawable(R.drawable.no_miniature_placeholder))));
     }
+    */
 
     // prices-total menuItem
+
 
     @Test
     public void pricesTotalMenuItem_valueIsIncrementing_afterPricesRecognition(){
@@ -355,6 +368,7 @@ public class GeneralBehaviorInstrumetedTest {
         onView(withId(R.id.menuitem_total_mainactivity)).check(matches(withText("22.2")));
     }
 
+/*
     @Test
     public void pricesTotalMenuItem_valueIsDecrementing_afterPricesRecognition(){
         recognizeSpecificPrice("NO","11.2");
@@ -362,6 +376,8 @@ public class GeneralBehaviorInstrumetedTest {
         recognizeSpecificPrice("YES","11.1");
         onView(withId(R.id.menuitem_total_mainactivity)).check(matches(withText("11.1")));
     }
+    */
+
 
     @Test
     public void pricesTotalMenuItem_valueIsChanging_whileChangingPrices(){
@@ -384,6 +400,7 @@ public class GeneralBehaviorInstrumetedTest {
         if(saveMiniature.equals("YES")){
             onView(withId(R.id.fabSaveCurrentPrice)).perform(click());
         }
+
     }
 
     private void recognizeAPrice(String text) {
@@ -408,7 +425,7 @@ public class GeneralBehaviorInstrumetedTest {
     }
 
 
-    public static ViewAction setTextInTextView(final String value){
+    private static ViewAction setTextInTextView(final String value){
         return new ViewAction() {
             @SuppressWarnings("unchecked")
             @Override
