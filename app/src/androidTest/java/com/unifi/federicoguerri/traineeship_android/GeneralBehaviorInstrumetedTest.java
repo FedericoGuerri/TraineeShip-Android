@@ -363,7 +363,6 @@ public class GeneralBehaviorInstrumetedTest {
         onView(withId(R.id.menuitem_total_mainactivity)).check(matches(withText("11.1")));
     }
 
-    /*
     @Test
     public void pricesTotalMenuItem_valueIsChanging_whileChangingPrices(){
         recognizeSpecificPrice("NO","22.2");
@@ -374,7 +373,8 @@ public class GeneralBehaviorInstrumetedTest {
         recognizeSpecificPrice("YES","111.11");
         onView(withId(R.id.menuitem_total_mainactivity)).check(matches(withText("133.31")));
     }
-    */
+
+
 
     private void recognizeSpecificPrice(String saveMiniature,String price) {
         onView(withId(R.id.fabNewOcrMainActivity)).perform(click());
