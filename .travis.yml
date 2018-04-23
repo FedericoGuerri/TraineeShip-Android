@@ -51,8 +51,6 @@ script:
   - adb devices
   - sleep 5
   - adb shell input keyevent 82 &
-  
-after_script:
   - ./gradlew connectedCheck
 
 after_success:
