@@ -5,7 +5,7 @@ sudo: required
 env:
   global:
     - MALLOC_ARENA_MAX=2
-    - ADB_INSTALL_TIMEOUT=4
+    - ADB_INSTALL_TIMEOUT=6
 
 android:
   components:
@@ -51,6 +51,8 @@ script:
   - adb devices
   - sleep 5
   - adb shell input keyevent 82 &
+  
+after_script:
   - ./gradlew connectedCheck
 
 after_success:
