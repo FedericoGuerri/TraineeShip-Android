@@ -5,7 +5,7 @@ sudo: required
 env:
   global:
     - MALLOC_ARENA_MAX=2
-    - ADB_INSTALL_TIMEOUT=10
+    - ADB_INSTALL_TIMEOUT=8
 
 android:
   components:
@@ -42,7 +42,7 @@ before_install:
 script:
   - sdkmanager "system-images;android-24;default;armeabi-v7a"
   - ./gradlew build jacocoTestReport assembleAndroidTest
-  - echo no | android create avd --force -n test -k "system-images;android-24;default;armeabi-v7a"
+  - echo no | android create avd --force -n test -t "system-images;android-24;default;armeabi-v7a"
   #- echo no | android create avd --force -n test -t android-24 --abi armeabi-v7a
   - emulator -avd test -no-window -camera-back emulated -camera-front emulated -memory 2048 -writable-system &
   - adb wait-for-device
