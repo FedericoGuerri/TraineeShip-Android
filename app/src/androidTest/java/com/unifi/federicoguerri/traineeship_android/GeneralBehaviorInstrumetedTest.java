@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.unifi.federicoguerri.traineeship_android.helpers.CustomMatchers;
 
 import org.hamcrest.Matcher;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -42,6 +43,14 @@ public class GeneralBehaviorInstrumetedTest {
     @Rule public GrantPermissionRule runtimePermissionReadStorange = GrantPermissionRule .grant(Manifest.permission.READ_EXTERNAL_STORAGE);
 
     // MainActivity
+    @Before
+    public void setUp(){
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 
     // pricesList
 
@@ -445,7 +454,6 @@ public class GeneralBehaviorInstrumetedTest {
 
             @Override
             public void perform(UiController uiController, View view) {
-                uiController.loopMainThreadUntilIdle();
                 ((TextView) view).setText(value);
             }
 
