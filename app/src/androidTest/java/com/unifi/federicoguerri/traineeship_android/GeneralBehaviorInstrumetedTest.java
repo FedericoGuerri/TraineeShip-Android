@@ -2,9 +2,13 @@ package com.unifi.federicoguerri.traineeship_android;
 
 
 import android.Manifest;
+import android.app.Instrumentation;
+import android.support.test.InstrumentationRegistry;
+import android.support.test.espresso.Espresso;
 import android.support.test.espresso.UiController;
 import android.support.test.espresso.ViewAction;
 import android.support.test.espresso.matcher.ViewMatchers;
+import android.support.test.internal.runner.InstrumentationConnection;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.rule.GrantPermissionRule;
 import android.view.View;
@@ -363,44 +367,47 @@ public class GeneralBehaviorInstrumetedTest {
 
     @Test
     public void pricesTotalMenuItem_valueIsIncrementing_afterPricesRecognition(){
-        recognizeSpecificPrice("NO","11.1");
-        recognizeSpecificPrice("YES","11.1");
+        recognizeSpecificPrice_withNoMiniature("11.1");
+        recognizeSpecificPrice_withMiniature("11.1");
         onView(withId(R.id.menuitem_total_mainactivity)).check(matches(withText("22.2")));
     }
 
-/*
+
     @Test
     public void pricesTotalMenuItem_valueIsDecrementing_afterPricesRecognition(){
-        recognizeSpecificPrice("NO","11.2");
+        recognizeSpecificPrice_withNoMiniature("11.2");
         deleteFirstPrice();
-        recognizeSpecificPrice("YES","11.1");
+        recognizeSpecificPrice_withMiniature("11.1");
         onView(withId(R.id.menuitem_total_mainactivity)).check(matches(withText("11.1")));
     }
-    */
+
 
 
     @Test
     public void pricesTotalMenuItem_valueIsChanging_whileChangingPrices(){
-        recognizeSpecificPrice("NO","22.2");
-        recognizeSpecificPrice("YES","11.2");
+        recognizeSpecificPrice_withNoMiniature("22.2");
+        recognizeSpecificPrice_withMiniature("11.2");
         deleteFirstPrice();
-        recognizeSpecificPrice("NO","22.2");
+        recognizeSpecificPrice_withNoMiniature("22.2");
         deleteFirstPrice();
-        recognizeSpecificPrice("YES","111.11");
+        recognizeSpecificPrice_withMiniature("111.11");
         onView(withId(R.id.menuitem_total_mainactivity)).check(matches(withText("133.31")));
     }
 
-
-
-    private void recognizeSpecificPrice(String saveMiniature,String price) {
+    private void recognizeSpecificPrice_withMiniature(String price) {
         onView(withId(R.id.fabNewOcrMainActivity)).perform(click());
         onView(withId(R.id.recognizedTextViewOcrScanActivity)).perform(setTextInTextView(price));
         onView(withId(R.id.fabSaveCurrentPrice)).perform(click());
-        onView(withText(saveMiniature)).perform(click());
-        if(saveMiniature.equals("YES")){
-            onView(withId(R.id.fabSaveCurrentPrice)).perform(click());
-        }
+        onView(withText("YES")).perform(click());
+        onView(withId(R.id.fabSaveCurrentPrice)).perform(click());
+    }
 
+
+    private void recognizeSpecificPrice_withNoMiniature(String price) {
+        onView(withId(R.id.fabNewOcrMainActivity)).perform(click());
+        onView(withId(R.id.recognizedTextViewOcrScanActivity)).perform(setTextInTextView(price));
+        onView(withId(R.id.fabSaveCurrentPrice)).perform(click());
+        onView(withText("NO")).perform(click());
     }
 
     private void recognizeAPrice(String text) {
@@ -435,6 +442,7 @@ public class GeneralBehaviorInstrumetedTest {
 
             @Override
             public void perform(UiController uiController, View view) {
+                uiController.loopMainThreadUntilIdle();
                 ((TextView) view).setText(value);
             }
 
