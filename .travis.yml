@@ -24,12 +24,6 @@ licenses:
     - 'android-sdk-license-.+'
     - 'google-gdk-license-.+'
 
-
-before_install:
-  - yes | sdkmanager "platforms;android-22"
-  - yes | sdkmanager "platforms;android-27"
-  - pip install --user codecov
-
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
@@ -38,6 +32,11 @@ cache:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
     - $HOME/.android/build-cache
+
+before_install:
+  - yes | sdkmanager "platforms;android-22"
+  - yes | sdkmanager "platforms;android-27"
+  - pip install --user codecov
 
 script:
   - ./gradlew build jacocoTestReport assembleAndroidTest
