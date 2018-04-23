@@ -5,7 +5,7 @@ sudo: required
 env:
   global:
     - MALLOC_ARENA_MAX=2
-    - ADB_INSTALL_TIMEOUT=8
+    - ADB_INSTALL_TIMEOUT=10
 
 android:
   components:
@@ -13,12 +13,12 @@ android:
     - platform-tools
     - tools
     - build-tools-27.0.2
-    - android-26
+    - android-24
     - extra-google-google_play_services
     - extra-google-m2repository
     - extra-android-m2repository
-    - addon-google_apis-google-26
-    - sys-img-armeabi-v7a-android-26
+    - addon-google_apis-google-24
+    - sys-img-armeabi-v7a-android-24
 
 licenses:
     - 'android-sdk-preview-license-52d11cd2'
@@ -41,7 +41,7 @@ before_install:
 
 script:
   - ./gradlew build jacocoTestReport assembleAndroidTest
-  - echo no | android create avd --force -n test -t android-26 --abi armeabi-v7a
+  - echo no | android create avd --force -n test -t android-24 --abi armeabi-v7a
   - emulator -avd test -no-window -camera-back emulated -camera-front emulated -memory 2048 -writable-system &
   - adb wait-for-device
   - adb remount
