@@ -3,6 +3,10 @@ jdk: oraclejdk8
 
 env:
   - ANDROID_HOME=$HOME/android-sdk
+  
+android:
+  components:
+    - sys-img-armeabi-v7a-android-23
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
