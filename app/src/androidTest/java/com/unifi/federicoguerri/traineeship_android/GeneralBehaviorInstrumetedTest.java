@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.unifi.federicoguerri.traineeship_android.helpers.CustomMatchers;
 
 import org.hamcrest.Matcher;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -37,20 +38,12 @@ import static org.hamcrest.core.AllOf.allOf;
 
 public class GeneralBehaviorInstrumetedTest {
 
-    @Rule public ActivityTestRule<SplashScreenActivity> splashActivityRule = new ActivityTestRule<>(SplashScreenActivity.class);
+    @Rule public ActivityTestRule<MainActivity> splashActivityRule = new ActivityTestRule<>(MainActivity.class);
     @Rule public GrantPermissionRule runtimePermissionCamera = GrantPermissionRule .grant(Manifest.permission.CAMERA);
     @Rule public GrantPermissionRule runtimePermissionWriteStorange = GrantPermissionRule .grant(Manifest.permission.WRITE_EXTERNAL_STORAGE);
     @Rule public GrantPermissionRule runtimePermissionReadStorange = GrantPermissionRule .grant(Manifest.permission.READ_EXTERNAL_STORAGE);
 
     // MainActivity
-    @Before
-    public void setUp(){
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
 
     // pricesList
 
@@ -269,8 +262,8 @@ public class GeneralBehaviorInstrumetedTest {
                 onChildView(withId(R.id.itemMiniatureImageViewItemPriceListView)).check(matches(customMatchers.withDrawable(R.drawable.no_miniature_placeholder)));
     }
 
-
-    /*
+/*
+    // failing tests!
     @Test
     public void miniatureImageView_hasMiniature_ifUserClicksOnYESbutton(){
         CustomMatchers customMatchers=new CustomMatchers();
@@ -278,9 +271,7 @@ public class GeneralBehaviorInstrumetedTest {
         onData(allOf()).atPosition(0).
                 onChildView(withId(R.id.itemMiniatureImageViewItemPriceListView)).check(matches(not(customMatchers.withDrawable(R.drawable.no_miniature_placeholder))));
     }
-    */
 
-    /*
     @Test
     public void miniatureImageView_notChangingMiniature_ifPricesWereAdded(){
         CustomMatchers customMatchers=new CustomMatchers();
@@ -295,9 +286,7 @@ public class GeneralBehaviorInstrumetedTest {
                 onChildView(withId(R.id.itemMiniatureImageViewItemPriceListView)).check(matches(not(customMatchers.withDrawable(R.drawable.no_miniature_placeholder))));
 
     }
-    */
 
-    /*
     @Test
     public void miniatureImageView_notChangingMiniature_ifPricesWereDeleted(){
         CustomMatchers customMatchers=new CustomMatchers();
@@ -309,9 +298,7 @@ public class GeneralBehaviorInstrumetedTest {
         onData(allOf()).atPosition(0).
                 onChildView(withId(R.id.itemMiniatureImageViewItemPriceListView)).check(matches(not(customMatchers.withDrawable(R.drawable.no_miniature_placeholder))));
     }
-*/
 
-    /*
     @Test
     public void miniatureImageView_notChangingPlaceholder_ifPricesWithDifferentDrawableWereAdded(){
         CustomMatchers customMatchers=new CustomMatchers();
@@ -323,8 +310,7 @@ public class GeneralBehaviorInstrumetedTest {
         onData(allOf()).atPosition(0).
                 onChildView(withId(R.id.itemMiniatureImageViewItemPriceListView)).check(matches(customMatchers.withDrawable(R.drawable.no_miniature_placeholder)));
     }
-*/
-    /*
+
     @Test
     public void miniatureImageView_notChangingMiniature_ifPricesWithDifferentDrawableWereAdded(){
         CustomMatchers customMatchers=new CustomMatchers();
@@ -336,9 +322,9 @@ public class GeneralBehaviorInstrumetedTest {
         onData(allOf()).atPosition(0).
                 onChildView(withId(R.id.itemMiniatureImageViewItemPriceListView)).check(matches(not(customMatchers.withDrawable(R.drawable.no_miniature_placeholder))));
     }
-    */
 
-/*
+
+
     @Test
     public void miniatureImageView_notChangingPlaceholder_ifPricesWithDifferentDrawableWereDeleted(){
         CustomMatchers customMatchers=new CustomMatchers();
@@ -352,9 +338,7 @@ public class GeneralBehaviorInstrumetedTest {
         onData(allOf()).atPosition(0).
                 onChildView(withId(R.id.itemMiniatureImageViewItemPriceListView)).check(matches(customMatchers.withDrawable(R.drawable.no_miniature_placeholder)));
     }
-    */
 
-    /*
     @Test
     public void miniatureImageView_notChangingMiniature_ifPricesWithDifferentDrawableWereDeleted(){
         CustomMatchers customMatchers=new CustomMatchers();
@@ -369,6 +353,7 @@ public class GeneralBehaviorInstrumetedTest {
         onData(allOf()).atPosition(0).
                 onChildView(withId(R.id.itemMiniatureImageViewItemPriceListView)).check(matches(not(customMatchers.withDrawable(R.drawable.no_miniature_placeholder))));
     }
+
     */
 
     // prices-total menuItem
@@ -404,7 +389,7 @@ public class GeneralBehaviorInstrumetedTest {
         onView(withId(R.id.menuitem_total_mainactivity)).check(matches(withText("133.31")));
     }
 
-*/
+    */
 
     private void recognizeSpecificPrice_withMiniature(String price) {
         onView(withId(R.id.fabNewOcrMainActivity)).perform(click());
@@ -430,6 +415,7 @@ public class GeneralBehaviorInstrumetedTest {
             onView(withId(R.id.fabSaveCurrentPrice)).perform(click());
         }
     }
+
 
     private void deleteFirstPrice() {
         onData(allOf()).atPosition(0).
