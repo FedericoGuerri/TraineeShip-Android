@@ -34,8 +34,8 @@ cache:
     - $HOME/.android/build-cache
 
 before_install:
-  #- yes | sdkmanager "platforms;android-22"
   - yes | sdkmanager "platforms;android-25"
+  - yes | sdkmanager "platforms;android-27"
   - pip install --user codecov
 
 script:
