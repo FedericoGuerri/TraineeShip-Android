@@ -6,8 +6,6 @@ env:
   global:
     - MALLOC_ARENA_MAX=2
     - ADB_INSTALL_TIMEOUT=16
-#env:
-#  - ANDROID_HOME=$HOME/android-sdk
   
 android:
   components:
@@ -20,7 +18,7 @@ android:
     - extra-google-google_play_services
     - extra-google-m2repository
     - extra-android-m2repository
-    - addon-google_apis-google-22
+    - addon-google_apis-google-24
     - sys-img-armeabi-v7a-android-24
    
    
@@ -28,37 +26,6 @@ licenses:
     - 'android-sdk-preview-license-52d11cd2'
     - 'android-sdk-license-.+'
     - 'google-gdk-license-.+'
-
-
-before_cache:
-  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
-  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
-
-cache:
-  directories:
-    # Sdk directories
-    #- $HOME/android-sdk-dl
-    #- $HOME/android-sdk
-
-    # Gradle
-    - $HOME/.gradle/caches/
-    - $HOME/.gradle/wrapper/
-
-    # Android build cache
-    - $HOME/.android/build-cache
-
-install:
-  # Download and unzip the Android SDK tools (if not already there thanks to the cache mechanism)
-  # Latest version available here: https://developer.android.com/studio/index.html#downloads
-  #- if test ! -e $HOME/android-sdk-dl/sdk-tools.zip ; then curl https://dl.google.com/android/repository/sdk-tools-linux-3859397.zip > $HOME/android-sdk-dl/sdk-tools.zip ; fi
-  #- unzip -qq -n $HOME/android-sdk-dl/sdk-tools.zip -d $HOME/android-sdk
-
-  # Install or update Android SDK components (will not do anything if already up to date thanks to the cache mechanism)
-  #- echo y | $HOME/android-sdk/tools/bin/sdkmanager 'tools' > /dev/null
-  #- echo y | $HOME/android-sdk/tools/bin/sdkmanager 'platform-tools' > /dev/null
-  #- echo y | $HOME/android-sdk/tools/bin/sdkmanager 'build-tools;26.0.1' > /dev/null
-  #- echo y | $HOME/android-sdk/tools/bin/sdkmanager 'platforms;android-26' > /dev/null
-  #- echo y | $HOME/android-sdk/tools/bin/sdkmanager 'extras;google;m2repository' > /dev/null
 
 before_install:
   - yes | sdkmanager "platforms;android-24"
@@ -75,7 +42,7 @@ script:
   - adb shell settings put global transition_animation_scale 0 &
   - adb shell settings put global animator_duration_scale 0 &
   - adb devices
-  - adb shell input keyevent 82 &
+  #- adb shell input keyevent 82 &
   - ./gradlew connectedCheck
 
 after_success:
