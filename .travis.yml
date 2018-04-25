@@ -46,9 +46,6 @@ cache:
 
     # Android build cache
     - $HOME/.android/build-cache
-    
-before_install: 
-  - echo yes | android update sdk --all --filter build-tools-27.0.2 --no-ui --force
 
 install:
   # Download and unzip the Android SDK tools (if not already there thanks to the cache mechanism)
@@ -72,7 +69,7 @@ script:
   - ./gradlew build jacocoTestReport assembleAndroidTest
   - android list targets
   - echo no | android create avd --force -n test -t android-24 --abi armeabi-v7a
-  - emulator -avd test -no-window -camera-back emulated -camera-front emulated &
+  - emulator -avd test -camera-back emulated -camera-front emulated &
   - android-wait-for-emulator
   - adb shell settings put global window_animation_scale 0 &
   - adb shell settings put global transition_animation_scale 0 &
