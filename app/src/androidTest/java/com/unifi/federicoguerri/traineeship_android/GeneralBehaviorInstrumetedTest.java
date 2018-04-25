@@ -25,6 +25,7 @@ import org.junit.Test;
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.pressBack;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom;
@@ -262,7 +263,7 @@ public class GeneralBehaviorInstrumetedTest {
                 onChildView(withId(R.id.itemMiniatureImageViewItemPriceListView)).check(matches(customMatchers.withDrawable(R.drawable.no_miniature_placeholder)));
     }
 
-/*
+
     // failing tests!
     @Test
     public void miniatureImageView_hasMiniature_ifUserClicksOnYESbutton(){
@@ -354,12 +355,12 @@ public class GeneralBehaviorInstrumetedTest {
                 onChildView(withId(R.id.itemMiniatureImageViewItemPriceListView)).check(matches(not(customMatchers.withDrawable(R.drawable.no_miniature_placeholder))));
     }
 
-    */
+
 
     // prices-total menuItem
 
 
-    /*
+
     @Test
     public void pricesTotalMenuItem_valueIsIncrementing_afterPricesRecognition(){
         recognizeSpecificPrice_withNoMiniature("11.1");
@@ -389,11 +390,19 @@ public class GeneralBehaviorInstrumetedTest {
         onView(withId(R.id.menuitem_total_mainactivity)).check(matches(withText("133.31")));
     }
 
-    */
+
+
+
 
     private void recognizeSpecificPrice_withMiniature(String price) {
         onView(withId(R.id.fabNewOcrMainActivity)).perform(click());
         onView(withId(R.id.recognizedTextViewOcrScanActivity)).perform(setTextInTextView(price));
+        closeSoftKeyboard();
+        try {
+            Thread.sleep(1500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         onView(withId(R.id.fabSaveCurrentPrice)).perform(click());
         onView(withText("YES")).perform(click());
         onView(withId(R.id.fabSaveCurrentPrice)).perform(click());
@@ -403,6 +412,12 @@ public class GeneralBehaviorInstrumetedTest {
     private void recognizeSpecificPrice_withNoMiniature(String price) {
         onView(withId(R.id.fabNewOcrMainActivity)).perform(click());
         onView(withId(R.id.recognizedTextViewOcrScanActivity)).perform(setTextInTextView(price));
+        closeSoftKeyboard();
+        try {
+            Thread.sleep(1500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         onView(withId(R.id.fabSaveCurrentPrice)).perform(click());
         onView(withText("NO")).perform(click());
     }
