@@ -46,6 +46,9 @@ cache:
 
     # Android build cache
     - $HOME/.android/build-cache
+    
+before_install: 
+  - echo yes | android update sdk --all --filter build-tools-27.0.2 --no-ui --force
 
 install:
   # Download and unzip the Android SDK tools (if not already there thanks to the cache mechanism)
