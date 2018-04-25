@@ -431,11 +431,11 @@ public class GeneralBehaviorInstrumetedTest {
     }
 
     private void recognizeAPrice(String text) {
-        onView(withId(R.id.fabNewOcrMainActivity)).inRoot(isPlatformPopup()).perform(click());
-        onView(withId(R.id.fabSaveCurrentPrice)).inRoot(isPlatformPopup()).perform(click());
+        onView(withId(R.id.fabNewOcrMainActivity)).perform(click());
+        onView(withId(R.id.fabSaveCurrentPrice)).perform(click());
         onView(withText(text)).perform(click());
         if(text.equals("YES")){
-            onView(withId(R.id.fabSaveCurrentPrice)).inRoot(isPlatformPopup()).perform(click());
+            onView(withId(R.id.fabSaveCurrentPrice)).perform(click());
         }
     }
 
