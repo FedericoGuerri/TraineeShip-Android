@@ -1,8 +1,13 @@
 language: android
 jdk: oraclejdk8
+sudo: required
 
 env:
-  - ANDROID_HOME=$HOME/android-sdk
+  global:
+    - MALLOC_ARENA_MAX=2
+    - ADB_INSTALL_TIMEOUT=4
+#env:
+#  - ANDROID_HOME=$HOME/android-sdk
   
 android:
   components:
@@ -32,8 +37,8 @@ before_cache:
 cache:
   directories:
     # Sdk directories
-    - $HOME/android-sdk-dl
-    - $HOME/android-sdk
+    #- $HOME/android-sdk-dl
+    #- $HOME/android-sdk
 
     # Gradle
     - $HOME/.gradle/caches/
@@ -64,7 +69,7 @@ script:
   - ./gradlew build jacocoTestReport assembleAndroidTest
   - android list targets
   - echo no | android create avd --force -n test -t android-24 --abi armeabi-v7a
-  - emulator -avd test -no-window &
+  - emulator -avd test -no-window -camera-back emulated -camera-front emulated &
   - android-wait-for-emulator
   - adb shell settings put global window_animation_scale 0 &
   - adb shell settings put global transition_animation_scale 0 &
