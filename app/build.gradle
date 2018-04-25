@@ -81,7 +81,7 @@ dependencies {
 
     androidTestUtil "com.android.support.test:orchestrator:$orchestratorVersion"
 
-    testCompile "org.robolectric:robolectric:$robolectricVersion"
+    testImplementation "org.robolectric:robolectric:$robolectricVersion"
 
     implementation "com.google.android.gms:play-services-vision:$playVisionVersion"
 
