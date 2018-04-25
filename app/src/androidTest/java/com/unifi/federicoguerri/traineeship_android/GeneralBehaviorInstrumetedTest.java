@@ -24,6 +24,7 @@ import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.pressBack;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.RootMatchers.isPlatformPopup;
 import static android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.isRoot;
@@ -430,11 +431,11 @@ public class GeneralBehaviorInstrumetedTest {
     }
 
     private void recognizeAPrice(String text) {
-        onView(withId(R.id.fabNewOcrMainActivity)).perform(click());
-        onView(withId(R.id.fabSaveCurrentPrice)).perform(click());
+        onView(withId(R.id.fabNewOcrMainActivity)).inRoot(isPlatformPopup()).perform(click());
+        onView(withId(R.id.fabSaveCurrentPrice)).inRoot(isPlatformPopup()).perform(click());
         onView(withText(text)).perform(click());
         if(text.equals("YES")){
-            onView(withId(R.id.fabSaveCurrentPrice)).perform(click());
+            onView(withId(R.id.fabSaveCurrentPrice)).inRoot(isPlatformPopup()).perform(click());
         }
     }
 
