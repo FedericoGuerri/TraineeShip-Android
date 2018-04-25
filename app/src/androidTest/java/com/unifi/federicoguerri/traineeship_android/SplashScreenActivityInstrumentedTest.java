@@ -5,7 +5,9 @@ import android.support.test.espresso.NoMatchingViewException;
 import android.support.test.espresso.action.ViewActions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.view.WindowManager;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,6 +27,17 @@ public class SplashScreenActivityInstrumentedTest {
     @Rule
     public ActivityTestRule<SplashScreenActivity> splashScreenRule = new ActivityTestRule<>(SplashScreenActivity.class);
 
+    @Before
+    public void unlockScreen() {
+        Runnable wakeUpDevice = new Runnable() {
+            public void run() {
+                splashScreenRule.getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON |
+                        WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED |
+                        WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+            }
+        };
+        splashScreenRule.getActivity().runOnUiThread(wakeUpDevice);
+    }
 
     // background view
 

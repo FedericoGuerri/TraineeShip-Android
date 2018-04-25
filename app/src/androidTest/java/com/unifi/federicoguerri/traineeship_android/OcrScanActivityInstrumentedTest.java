@@ -5,9 +5,11 @@ import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.rule.GrantPermissionRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.view.WindowManager;
 
 import com.unifi.federicoguerri.traineeship_android.helpers.GetResourcesHelper;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,6 +33,17 @@ public class OcrScanActivityInstrumentedTest {
     @Rule public GrantPermissionRule runtimePermissionStorange = GrantPermissionRule .grant(Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
     // parent layout
+    @Before
+    public void unlockScreen() {
+        Runnable wakeUpDevice = new Runnable() {
+            public void run() {
+                ocrScanActivityRule.getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON |
+                        WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED |
+                        WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+            }
+        };
+        ocrScanActivityRule.getActivity().runOnUiThread(wakeUpDevice);
+    }
 
     @Test
     public void parentLayout_isVisibleTest(){

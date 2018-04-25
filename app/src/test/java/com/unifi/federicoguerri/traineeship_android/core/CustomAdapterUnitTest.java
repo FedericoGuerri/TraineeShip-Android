@@ -1,6 +1,5 @@
 package com.unifi.federicoguerri.traineeship_android.core;
 
-import android.content.Context;
 import android.os.Build;
 import android.view.View;
 import android.widget.ImageView;

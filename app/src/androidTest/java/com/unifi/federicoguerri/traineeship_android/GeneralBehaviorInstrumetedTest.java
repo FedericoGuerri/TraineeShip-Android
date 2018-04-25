@@ -2,22 +2,18 @@ package com.unifi.federicoguerri.traineeship_android;
 
 
 import android.Manifest;
-import android.app.Instrumentation;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.espresso.Espresso;
 import android.support.test.espresso.UiController;
 import android.support.test.espresso.ViewAction;
 import android.support.test.espresso.matcher.ViewMatchers;
-import android.support.test.internal.runner.InstrumentationConnection;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.rule.GrantPermissionRule;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.unifi.federicoguerri.traineeship_android.helpers.CustomMatchers;
 
 import org.hamcrest.Matcher;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -44,6 +40,17 @@ public class GeneralBehaviorInstrumetedTest {
     @Rule public GrantPermissionRule runtimePermissionWriteStorange = GrantPermissionRule .grant(Manifest.permission.WRITE_EXTERNAL_STORAGE);
     @Rule public GrantPermissionRule runtimePermissionReadStorange = GrantPermissionRule .grant(Manifest.permission.READ_EXTERNAL_STORAGE);
 
+    @Before
+    public void unlockScreen() {
+        Runnable wakeUpDevice = new Runnable() {
+            public void run() {
+                splashActivityRule.getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON |
+                        WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED |
+                        WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+            }
+        };
+        splashActivityRule.getActivity().runOnUiThread(wakeUpDevice);
+    }
     // MainActivity
 
     // pricesList

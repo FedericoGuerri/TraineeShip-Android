@@ -6,11 +6,13 @@ import android.support.test.espresso.intent.Intents;
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.unifi.federicoguerri.traineeship_android.helpers.CustomMatchers;
 import com.unifi.federicoguerri.traineeship_android.helpers.GetResourcesHelper;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -42,6 +44,17 @@ public class MainActivityInstrumentedTest {
     @Rule
     public ActivityTestRule<MainActivity> mainActivityRule = new ActivityTestRule<>(MainActivity.class);
 
+    @Before
+    public void unlockScreen() {
+        Runnable wakeUpDevice = new Runnable() {
+            public void run() {
+                mainActivityRule.getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON |
+                        WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED |
+                        WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+            }
+        };
+        mainActivityRule.getActivity().runOnUiThread(wakeUpDevice);
+    }
 
     @Test
     public void useAppContext() throws Exception {
