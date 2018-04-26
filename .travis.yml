@@ -43,7 +43,7 @@ script:
   - adb shell settings put global animator_duration_scale 0 &
   - adb devices
   - adb shell input keyevent 82 &
-  - ./gradlew connectedCheck
+  - travis_wait 20 ./gradlew connectedCheck
 
 after_success:
     - codecov
