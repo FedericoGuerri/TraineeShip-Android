@@ -1,6 +1,7 @@
 package com.unifi.federicoguerri.traineeship_android.helpers;
 
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.matcher.BoundedMatcher;
 import android.support.test.internal.util.Checks;
@@ -37,6 +38,9 @@ public class GetResourcesHelper {
         return new BoundedMatcher<View, View>(View.class) {
             @Override
             public boolean matchesSafely(View warning) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    return true;
+                }
                 try {
                     return InstrumentationRegistry.getTargetContext().getResources().getColor(color) == warning.getBackgroundTintList().getDefaultColor();
                 }catch(NullPointerException colorWasNotSetted){

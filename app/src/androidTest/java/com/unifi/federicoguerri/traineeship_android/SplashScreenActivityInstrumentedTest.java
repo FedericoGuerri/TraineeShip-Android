@@ -27,18 +27,6 @@ public class SplashScreenActivityInstrumentedTest {
     @Rule
     public ActivityTestRule<SplashScreenActivity> splashScreenRule = new ActivityTestRule<>(SplashScreenActivity.class);
 
-    @Before
-    public void unlockScreen() {
-        Runnable wakeUpDevice = new Runnable() {
-            public void run() {
-                splashScreenRule.getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON |
-                        WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED |
-                        WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-            }
-        };
-        splashScreenRule.getActivity().runOnUiThread(wakeUpDevice);
-    }
-
     // background view
 
     @Test(expected = NoMatchingViewException.class)

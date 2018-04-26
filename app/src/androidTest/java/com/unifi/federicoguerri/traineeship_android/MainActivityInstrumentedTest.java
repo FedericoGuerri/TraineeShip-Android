@@ -44,17 +44,6 @@ public class MainActivityInstrumentedTest {
     @Rule
     public ActivityTestRule<MainActivity> mainActivityRule = new ActivityTestRule<>(MainActivity.class);
 
-    @Before
-    public void unlockScreen() {
-        Runnable wakeUpDevice = new Runnable() {
-            public void run() {
-                mainActivityRule.getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON |
-                        WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED |
-                        WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-            }
-        };
-        mainActivityRule.getActivity().runOnUiThread(wakeUpDevice);
-    }
 
     @Test
     public void useAppContext() throws Exception {
