@@ -38,7 +38,7 @@ public class GetResourcesHelper {
         return new BoundedMatcher<View, View>(View.class) {
             @Override
             public boolean matchesSafely(View warning) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
                     return true;
                 }
                 try {

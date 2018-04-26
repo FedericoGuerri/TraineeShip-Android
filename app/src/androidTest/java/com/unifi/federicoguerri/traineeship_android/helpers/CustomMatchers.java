@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 
+import com.unifi.federicoguerri.traineeship_android.R;
+
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
@@ -32,7 +34,7 @@ public class CustomMatchers {
             @Override public boolean matchesSafely (final View view) {
                 ImageView imageView = (ImageView) view;
                 Resources resources = view.getContext().getResources();
-                Drawable expectedDrawable = view.getContext().getDrawable(drawable_id);
+                Drawable expectedDrawable = resources.getDrawable(drawable_id,null);
                 if (expectedDrawable == null) {
                     return false;
                 }
