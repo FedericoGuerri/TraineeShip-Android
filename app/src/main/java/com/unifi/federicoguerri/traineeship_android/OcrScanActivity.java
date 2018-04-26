@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Camera;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -54,8 +55,9 @@ public class OcrScanActivity extends AppCompatActivity {
 
         myOcrBuilder=new OcrComponentsBuilder(getApplicationContext());
         if (myOcrBuilder.getTextRecognizer().isOperational()) {
-
+            
             myOcrBuilder.setCameraSource(1080,720);
+
 
             ocrScanView.getHolder().addCallback(new SurfaceHolder.Callback() {
                 @Override
@@ -130,6 +132,7 @@ public class OcrScanActivity extends AppCompatActivity {
 
                     Bitmap bitmap=BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                     String miniaturePath=saveMiniatureFile(Bitmap.createScaledBitmap(bitmap,350,450,true));
+
                     saveDataToFile(miniaturePath);
 
                     endActivity();
@@ -198,7 +201,7 @@ public class OcrScanActivity extends AppCompatActivity {
         FileOutputStream out;
         try {
             out = new FileOutputStream(filename);
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 80, out);
             out.close();
         } catch (Exception e) {
             Toast.makeText(this,getString(R.string.cant_write_to_file),Toast.LENGTH_SHORT).show();
