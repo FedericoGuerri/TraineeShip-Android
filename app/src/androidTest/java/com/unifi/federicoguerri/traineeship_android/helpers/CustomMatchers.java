@@ -4,6 +4,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
+import android.support.test.InstrumentationRegistry;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -33,8 +34,7 @@ public class CustomMatchers {
         return new TypeSafeMatcher<View>() {
             @Override public boolean matchesSafely (final View view) {
                 ImageView imageView = (ImageView) view;
-                Resources resources = view.getContext().getResources();
-                Drawable expectedDrawable = resources.getDrawable(drawable_id,null);
+                Drawable expectedDrawable = InstrumentationRegistry.getTargetContext().getResources().getDrawable(drawable_id,null);
                 if (expectedDrawable == null) {
                     return false;
                 }
