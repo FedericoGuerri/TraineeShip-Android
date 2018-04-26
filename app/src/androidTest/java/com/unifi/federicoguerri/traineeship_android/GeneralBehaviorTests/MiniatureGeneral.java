@@ -1,26 +1,15 @@
 package com.unifi.federicoguerri.traineeship_android.GeneralBehaviorTests;
 
 
-import android.Manifest;
-import android.support.test.rule.ActivityTestRule;
-import android.support.test.rule.GrantPermissionRule;
-import android.view.WindowManager;
-
-import com.unifi.federicoguerri.traineeship_android.MainActivity;
 import com.unifi.federicoguerri.traineeship_android.R;
 import com.unifi.federicoguerri.traineeship_android.helpers.CustomMatchers;
 
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
 
 import static android.support.test.espresso.Espresso.onData;
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.core.AllOf.allOf;
 
 public class MiniatureGeneral extends AbstractGeneral{
