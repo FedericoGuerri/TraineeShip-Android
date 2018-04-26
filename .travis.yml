@@ -5,7 +5,7 @@ sudo: required
 env:
   global:
     - MALLOC_ARENA_MAX=2
-    - ADB_INSTALL_TIMEOUT=16
+    - ADB_INSTALL_TIMEOUT=10
   
 android:
   components:
@@ -13,13 +13,13 @@ android:
     - platform-tools
     - tools
     - build-tools-27.0.2
-    - android-22
+    - android-19
     #- android-24
     - extra-google-google_play_services
     - extra-google-m2repository
     - extra-android-m2repository
-    - addon-google_apis-google-22
-    - sys-img-armeabi-v7a-android-22
+    - addon-google_apis-google-19
+    - sys-img-armeabi-v7a-android-19
    
    
 licenses:
@@ -28,14 +28,14 @@ licenses:
     - 'google-gdk-license-.+'
 
 before_install:
-  - yes | sdkmanager "platforms;android-22"
+  - yes | sdkmanager "platforms;android-19"
   - yes | sdkmanager "platforms;android-27"
   - pip install --user codecov
 
 script:
   - ./gradlew build jacocoTestReport assembleAndroidTest
   - android list targets
-  - echo no | android create avd --force -n test -t android-22 --abi armeabi-v7a
+  - echo no | android create avd --force -n test -t android-19 --abi armeabi-v7a
   - emulator -avd test -no-window &#-camera-back emulated -camera-front emulated &
   - android-wait-for-emulator
   - adb shell settings put global window_animation_scale 0 &
