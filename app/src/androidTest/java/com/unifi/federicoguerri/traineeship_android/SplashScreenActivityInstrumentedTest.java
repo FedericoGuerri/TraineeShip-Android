@@ -5,9 +5,7 @@ import android.support.test.espresso.NoMatchingViewException;
 import android.support.test.espresso.action.ViewActions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.view.WindowManager;
 
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
