@@ -50,7 +50,7 @@ script:
   - adb shell settings put global transition_animation_scale 0 &
   - adb shell settings put global animator_duration_scale 0 &
   - adb devices
-  – sleep 300
+  #– sleep 300
   - adb shell input keyevent 82 &
   - ./gradlew connectedCheck
 
