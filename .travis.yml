@@ -6,7 +6,7 @@ env:
   global:
     - MALLOC_ARENA_MAX=2
     - ADB_INSTALL_TIMEOUT=10
-  
+    
 android:
   components:
     - tools
@@ -38,7 +38,7 @@ before_install:
   - yes | sdkmanager "platforms;android-27"
   - pip install --user codecov
 
-#run jacoco and instrumentation tests
+#Run jacoco and instrumentation tests
 script:
   - ./gradlew clean
   - ./gradlew build jacocoTestReport assembleAndroidTest
@@ -54,9 +54,11 @@ script:
   - adb shell input keyevent 82 &
   - ./gradlew connectedCheck
 
+#Update coverage to codeCov
 after_success:
     - codecov
     
+#Address for notifications
 notifications:
     email:
       recipients:
