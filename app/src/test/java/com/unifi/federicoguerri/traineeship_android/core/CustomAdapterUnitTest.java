@@ -6,8 +6,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.unifi.federicoguerri.traineeship_android.BuildConfig;
-import com.unifi.federicoguerri.traineeship_android.CustomAdapter;
-import com.unifi.federicoguerri.traineeship_android.CustomDataSet;
 import com.unifi.federicoguerri.traineeship_android.MainActivity;
 
 import org.junit.Before;

@@ -2,8 +2,6 @@ package com.unifi.federicoguerri.traineeship_android.core;
 
 import android.graphics.Bitmap;
 
-import com.unifi.federicoguerri.traineeship_android.CustomDataSet;
-
 import org.junit.Before;
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package com.unifi.federicoguerri.traineeship_android;
+package com.unifi.federicoguerri.traineeship_android.core;
 
 import android.content.Context;
 import android.graphics.BitmapFactory;
@@ -10,8 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.unifi.federicoguerri.traineeship_android.core.DataWriterToFile;
-import com.unifi.federicoguerri.traineeship_android.core.RecordRemoverFromString;
+import com.unifi.federicoguerri.traineeship_android.R;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

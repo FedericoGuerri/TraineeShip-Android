@@ -4,8 +4,6 @@ package com.unifi.federicoguerri.traineeship_android.core;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
-import com.unifi.federicoguerri.traineeship_android.CustomDataSet;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;

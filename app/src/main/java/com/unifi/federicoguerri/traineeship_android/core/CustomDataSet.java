@@ -1,4 +1,4 @@
-package com.unifi.federicoguerri.traineeship_android;
+package com.unifi.federicoguerri.traineeship_android.core;
 
 import android.graphics.Bitmap;
 
