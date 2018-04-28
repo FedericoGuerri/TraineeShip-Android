@@ -5,7 +5,7 @@ sudo: required
 env:
   global:
     - MALLOC_ARENA_MAX=2
-    - ADB_INSTALL_TIMEOUT=6
+    - ADB_INSTALL_TIMEOUT=10
   
 android:
   components:
@@ -25,7 +25,7 @@ android:
     
     #Emulator image
     - sys-img-armeabi-v7a-android-24
-   
+    - sys-img-armeabi-v7a-addon-google_apis-google-22
    
 licenses:
     - 'android-sdk-preview-license-52d11cd2'
