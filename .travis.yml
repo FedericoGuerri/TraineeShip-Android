@@ -40,16 +40,17 @@ before_install:
 
 #run jacoco and instrumentation tests
 script:
+  - ./gradlew clean
   - ./gradlew build jacocoTestReport assembleAndroidTest
   - android list targets
   - echo no | android create avd --force -n test -t android-24 --abi armeabi-v7a
-  - emulator -avd test -no-audio -no-window -camera-back emulated -camera-front emulated &
+  - emulator -avd test -no-window -camera-back emulated -camera-front emulated &
   - android-wait-for-emulator
   - adb shell settings put global window_animation_scale 0 &
   - adb shell settings put global transition_animation_scale 0 &
   - adb shell settings put global animator_duration_scale 0 &
   - adb devices
-  – sleep 800
+  – sleep 300
   - adb shell input keyevent 82 &
   - ./gradlew connectedCheck
 
