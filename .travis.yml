@@ -30,6 +30,7 @@ android:
   - addon-google_apis-google-25 # google play services
   - sys-img-armeabi-v7a-addon-google_apis-google-$ANDROID_API_LEVEL
   - sys-img-armeabi-v7a-android-$EMULATOR_API_LEVEL # the fix!
+  - sys-img-armeabi-v7a-google_apis-22
 
  licenses:
   - android-sdk-preview-license-.+
@@ -43,6 +44,7 @@ before_install:
   - chmod +x gradlew
   - echo y | android update sdk --no-ui --all --filter "tool,extra-android-m2repository,extra-android-support,extra-google-google_play_services,extra-google-m2repository"
   - echo y | $ANDROID_HOME/tools/bin/sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout-solver;1.0.2"
+  - echo y | android update sdk --no-ui --all --filter "sys-img-armeabi-v7a-google_apis-24"
 # - ./gradlew dependencies || true # DON'T ADD unless you are getting "Install missing components using SDK manager"
 #Source: https://medium.com/@oldergod/constraint-layout-and-circleci-travis-d50342696d2
   - pip install --user codecov
