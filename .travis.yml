@@ -16,7 +16,7 @@ env:
     - ANDROID_API=25
     - EMULATOR_API=24
     - ANDROID_BUILD_TOOLS=27.0.2
-    - ADB_INSTALL_TIMEOUT=5 # minutes
+    - ADB_INSTALL_TIMEOUT=10 # minutes
 
 android:
  components:
@@ -30,7 +30,6 @@ android:
   - addon-google_apis-google-25 # google play services
   - sys-img-armeabi-v7a-addon-google_apis-google-$ANDROID_API_LEVEL
   - sys-img-armeabi-v7a-android-$EMULATOR_API_LEVEL # the fix!
-  - sys-img-armeabi-v7a-google_apis-22
 
  licenses:
   - android-sdk-preview-license-.+
@@ -44,7 +43,6 @@ before_install:
   - chmod +x gradlew
   - echo y | android update sdk --no-ui --all --filter "tool,extra-android-m2repository,extra-android-support,extra-google-google_play_services,extra-google-m2repository"
   - echo y | $ANDROID_HOME/tools/bin/sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout-solver;1.0.2"
-  #- echo y | android update sdk --no-ui --all --filter "sys-img-armeabi-v7a-google_apis-24"
 # - ./gradlew dependencies || true # DON'T ADD unless you are getting "Install missing components using SDK manager"
 #Source: https://medium.com/@oldergod/constraint-layout-and-circleci-travis-d50342696d2
   - pip install --user codecov
@@ -52,7 +50,6 @@ before_install:
 before_script:
   - echo "y" | android update sdk -a --no-ui --filter android-24
   - echo "y" | android update sdk -a --no-ui --filter sys-img-armeabi-v7a-android-24
-  - android list targets | grep -E '^id:' | awk -F '"' '{$1=""; print $2}' # list all targets
   - android list targets
   - ./gradlew build jacocoTestReport assembleAndroidTest
   - echo no | android create avd --force -n test -t android-24 --abi armeabi-v7a
