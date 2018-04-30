@@ -61,9 +61,12 @@ before_script:
   - adb shell settings put global window_animation_scale 0 &
   - adb shell settings put global transition_animation_scale 0 &
   - adb shell settings put global animator_duration_scale 0 &
+  
+  # Tapping on "OK" button of dialog
   - adb shell input tap 347 470 &
   - adb shell input tap 359 480 &
   - adb shell input tap 375 495 &
+  
   - adb shell input keyevent 82 &
 
 script:
