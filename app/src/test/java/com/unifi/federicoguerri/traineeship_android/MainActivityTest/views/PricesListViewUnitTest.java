@@ -5,9 +5,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.unifi.federicoguerri.traineeship_android.R;
 import com.unifi.federicoguerri.traineeship_android.core.CustomAdapter;
 import com.unifi.federicoguerri.traineeship_android.core.CustomDataSet;
-import com.unifi.federicoguerri.traineeship_android.R;
 
 import org.junit.Test;
 import org.robolectric.Shadows;
