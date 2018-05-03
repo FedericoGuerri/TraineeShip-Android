@@ -7,6 +7,7 @@ public class RecordRemoverFromString {
         if(data.startsWith(" ")){
             data=data.substring(1);
         }
+        index=index*2;
         String[] records = data.split(" ");
         StringBuilder stringBuilder=new StringBuilder();
         for(int i=0;i<records.length;i++){

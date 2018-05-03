@@ -30,14 +30,15 @@ public class RecordRemoverFromStringUnitTest {
 
     @Test
     public void recordRemover_canDeleteSecondRecord(){
-        String data="22.2 noMiniature 0.0 noMiniature ";
+        String data="22.2 noMiniature 0.0 noMiniature1 ";
         assertEquals("22.2 noMiniature ", recordRemoverFromString.remove(data,1));
     }
 
+
     @Test
     public void recordRemover_canDeleteARecordWithinOthers(){
-        String data="22.2 noMiniature 0.0 noMiniature 22.3 noMiniature ";
-        assertEquals("22.2 noMiniature 22.3 noMiniature ", recordRemoverFromString.remove(data,1));
+        String data="22.2 noMiniature 0.0 noMiniature1 22.3 noMiniature2 ";
+        assertEquals("22.2 noMiniature 22.3 noMiniature2 ", recordRemoverFromString.remove(data,1));
     }
 
     @Test
@@ -79,7 +80,7 @@ public class RecordRemoverFromStringUnitTest {
     @Test
     public void recordRemover_willRemoveSpaceIfFirstCharacter(){
         String data=" 22.2 noMiniature 0.0 noMiniature ";
-        assertEquals("22.2 noMiniature ", recordRemoverFromString.remove(data,1));
+        assertEquals("0.0 noMiniature ", recordRemoverFromString.remove(data,0));
     }
 
 }

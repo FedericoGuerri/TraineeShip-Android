@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
                 ((ListView)findViewById(R.id.pricesListViewMainActivity)).setOnHierarchyChangeListener(new ViewGroup.OnHierarchyChangeListener() {
                     @Override
                     public void onChildViewAdded(View view, View view1) {
-                        totalItem.setTitle(String.valueOf(new DecimalFormat("##.##").format(adapter.getTotal())));
+                        totalItem.setTitle(formatTotalPrice());
                     }
 
                     @Override
@@ -71,8 +71,17 @@ public class MainActivity extends AppCompatActivity {
                             view.setVisibility(View.INVISIBLE);
                             findViewById(R.id.welcomeLayoutMainActivity).setVisibility(View.VISIBLE);
                         }
-                        totalItem.setTitle(String.valueOf(new DecimalFormat("##.##").format(adapter.getTotal())));
+                        totalItem.setTitle(formatTotalPrice());
                     }
+
+                    private String formatTotalPrice(){
+                        String total=String.valueOf(new DecimalFormat("##.##").format(adapter.getTotal()));
+                        if(total.equals("0")){
+                            total="0.0";
+                        }
+                        return total;
+                    }
+
                 });
                 findViewById(R.id.welcomeLayoutMainActivity).setVisibility(View.INVISIBLE);
             }else{

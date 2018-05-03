@@ -53,35 +53,37 @@ public class CustomAdapter extends ArrayAdapter<CustomDataSet> {
     @Override
     public View getView(final int position, final View convertView, @NonNull final ViewGroup parent) {
         View rowView = convertView;
-        final CustomDataSet dataSet=getItem(position);
+        final CustomDataSet dataSet= data.get(position);
+        ViewHolder viewHolder=null;
         if (rowView == null) {
             LayoutInflater inflater = LayoutInflater.from(mContext);
-            rowView = inflater.inflate(R.layout.item_price_listview, null);
-            ViewHolder viewHolder = new ViewHolder();
+            rowView = inflater.inflate(R.layout.item_price_listview, parent, false);
+            viewHolder = new ViewHolder();
             viewHolder.priceTextView = rowView.findViewById(R.id.itemPriceTextViewPricesListView);
             viewHolder.miniatureImageView = rowView.findViewById(R.id.itemMiniatureImageViewItemPriceListView);
             viewHolder.deleteImageView=rowView.findViewById(R.id.itemDeletePriceImageViewitemPriceListView);
             rowView.setTag(viewHolder);
-        }
-        final ViewHolder holder = (ViewHolder) rowView.getTag();
-        if(dataSet.getMiniature()!=null) {
-            holder.miniatureImageView.setImageBitmap(dataSet.getMiniature());
         }else{
-            holder.miniatureImageView.setImageBitmap(BitmapFactory.decodeResource(mContext.getResources(),R.drawable.no_miniature_placeholder));
+            viewHolder = (ViewHolder) rowView.getTag();
         }
-        holder.priceTextView.setText(String.valueOf(dataSet.getPrice()));
-        final View finalRowView = rowView;
-        holder.deleteImageView.setOnClickListener(new View.OnClickListener() {
+
+        if(dataSet.getMiniature()!=null) {
+            viewHolder.miniatureImageView.setImageBitmap(dataSet.getMiniature());
+        }else{
+            viewHolder.miniatureImageView.setImageBitmap(BitmapFactory.decodeResource(mContext.getResources(),R.drawable.no_miniature_placeholder));
+        }
+        viewHolder.priceTextView.setText(String.valueOf(dataSet.getPrice()));
+        viewHolder.deleteImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                int removingIndex = data.indexOf(dataSet);
                 try {
-                    String modifiedData= recordRemoverFromString.remove(readFromFile(),position);
+                    String modifiedData= recordRemoverFromString.remove(readFromFile(),removingIndex);
                     dataWriterToFile.writeToPath(modifiedData,false);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                parent.removeViewInLayout(finalRowView);
-                data.remove(position);
+                remove(dataSet);
                 customAdapter.notifyDataSetChanged();
             }
         });

@@ -84,7 +84,6 @@ public class DataLoaderFromFile {
             }
             try {
                 loadedData.add(new CustomDataSet(Float.valueOf(stringPrice),miniature));
-
             }catch (NumberFormatException e){
                 throw new NumberFormatException("Failed To read a price");
             }
