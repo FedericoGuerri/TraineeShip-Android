@@ -31,11 +31,6 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.junit.Assert.assertEquals;
 
-/**
- * Instrumented test, which will execute on an Android device.
- *
- * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
- */
 @RunWith(AndroidJUnit4.class)
 public class MainActivityInstrumentedTest {
 
@@ -44,19 +39,19 @@ public class MainActivityInstrumentedTest {
 
 
     @Test
-    public void useAppContext() throws Exception {
+    public void useAppContext() {
         Context appContext = InstrumentationRegistry.getTargetContext();
         assertEquals("com.unifi.federicoguerri.traineeship_android", appContext.getPackageName());
     }
 
     // hint TextView
     @Test
-    public void hintTextView_isATextViewTest() throws Exception {
+    public void hintTextView_isATextViewTest() {
         onView(withId(R.id.hintTextViewMainActivity)).check(matches(instanceOf(TextView.class)));
     }
 
     @Test
-    public void hintTextView_isColorAccentTest() throws Exception {
+    public void hintTextView_isColorAccentTest(){
         onView(withId(R.id.hintTextViewMainActivity)).check(matches(hasTextColor(R.color.hint_textView_mainActivity)));
     }
 
@@ -67,12 +62,12 @@ public class MainActivityInstrumentedTest {
 
     // welcome TextView
     @Test
-    public void welcomeTextView_isATextViewTest() throws Exception {
+    public void welcomeTextView_isATextViewTest()  {
         onView(withId(R.id.welcomeTextViewMainActivity)).check(matches(instanceOf(TextView.class)));
     }
 
     @Test
-    public void welcomeTextView_isColorAccentTest() throws Exception {
+    public void welcomeTextView_isColorAccentTest() {
         onView(withId(R.id.welcomeTextViewMainActivity)).check(matches(hasTextColor(R.color.welcome_textView_mainActivity)));
     }
 
@@ -83,12 +78,12 @@ public class MainActivityInstrumentedTest {
 
     // hint gallery TextView
     @Test
-    public void hintGalleryTextView_isATextViewTest() throws Exception {
+    public void hintGalleryTextView_isATextViewTest()  {
         onView(withId(R.id.hintGalleryTextViewMainActivity)).check(matches(instanceOf(TextView.class)));
     }
 
     @Test
-    public void hintGalleryTextView_isColorAccentTest() throws Exception {
+    public void hintGalleryTextView_isColorAccentTest() {
         onView(withId(R.id.hintGalleryTextViewMainActivity)).check(matches(hasTextColor(R.color.hint_textView_mainActivity)));
     }
 

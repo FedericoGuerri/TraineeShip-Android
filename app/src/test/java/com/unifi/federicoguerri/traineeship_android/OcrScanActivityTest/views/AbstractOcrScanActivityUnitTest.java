@@ -4,6 +4,7 @@ import android.os.Build;
 import android.view.View;
 
 import com.unifi.federicoguerri.traineeship_android.BuildConfig;
+import com.unifi.federicoguerri.traineeship_android.CustomShadows.ShadowTextRecognizer;
 import com.unifi.federicoguerri.traineeship_android.OcrScanActivity;
 
 import org.junit.Before;
@@ -15,7 +16,7 @@ import org.robolectric.annotation.Config;
 
 import static junit.framework.Assert.assertNotNull;
 
-@Config(constants = BuildConfig.class, sdk = Build.VERSION_CODES.LOLLIPOP_MR1)
+@Config(constants = BuildConfig.class, sdk = Build.VERSION_CODES.LOLLIPOP_MR1, shadows = {ShadowTextRecognizer.class})
 @RunWith(RobolectricTestRunner.class)
 
 public abstract class AbstractOcrScanActivityUnitTest {

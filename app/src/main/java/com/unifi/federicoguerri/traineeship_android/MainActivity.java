@@ -3,6 +3,7 @@ package com.unifi.federicoguerri.traineeship_android;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -11,7 +12,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.unifi.federicoguerri.traineeship_android.core.CustomAdapter;
@@ -57,20 +57,10 @@ public class MainActivity extends AppCompatActivity {
             ArrayList<CustomDataSet> dataSets = loaderFromFile.getRecords();
             if(dataSets.size()>0) {
                 final CustomAdapter adapter = new CustomAdapter(dataSets, getApplicationContext(),pricesPath);
-                ((ListView) findViewById(R.id.pricesListViewMainActivity)).setAdapter(adapter);
-                findViewById(R.id.pricesListViewMainActivity).setVisibility(View.VISIBLE);
-                ((ListView)findViewById(R.id.pricesListViewMainActivity)).setOnHierarchyChangeListener(new ViewGroup.OnHierarchyChangeListener() {
+                adapter.registerDataSetObserver(new DataSetObserver() {
                     @Override
-                    public void onChildViewAdded(View view, View view1) {
-                        totalItem.setTitle(formatTotalPrice());
-                    }
-
-                    @Override
-                    public void onChildViewRemoved(View view, View view1) {
-                        if(((ListView)view).getChildCount()==0){
-                            view.setVisibility(View.INVISIBLE);
-                            findViewById(R.id.welcomeLayoutMainActivity).setVisibility(View.VISIBLE);
-                        }
+                    public void onChanged() {
+                        super.onChanged();
                         totalItem.setTitle(formatTotalPrice());
                     }
 
@@ -81,8 +71,9 @@ public class MainActivity extends AppCompatActivity {
                         }
                         return total;
                     }
-
                 });
+                ((ListView) findViewById(R.id.pricesListViewMainActivity)).setAdapter(adapter);
+                findViewById(R.id.pricesListViewMainActivity).setVisibility(View.VISIBLE);
                 findViewById(R.id.welcomeLayoutMainActivity).setVisibility(View.INVISIBLE);
             }else{
                 findViewById(R.id.pricesListViewMainActivity).setVisibility(View.INVISIBLE);

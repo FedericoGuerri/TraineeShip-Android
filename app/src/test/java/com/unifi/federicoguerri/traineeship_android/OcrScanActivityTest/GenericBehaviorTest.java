@@ -47,4 +47,6 @@ public class GenericBehaviorTest {
         assertEquals(R.anim.end_ocr_scan_exit,shadowActivity.getPendingTransitionExitAnimationResourceId());
     }
 
+
+
 }

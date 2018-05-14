@@ -3,21 +3,28 @@ package com.unifi.federicoguerri.traineeship_android;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,6 +48,7 @@ public class OcrScanActivity extends AppCompatActivity {
     private boolean isGettingMiniature=false;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,9 +63,9 @@ public class OcrScanActivity extends AppCompatActivity {
 
         myOcrBuilder=new OcrComponentsBuilder(getApplicationContext());
         if (myOcrBuilder.getTextRecognizer().isOperational()) {
-            
-            myOcrBuilder.setCameraSource(1080,720);
 
+            myOcrBuilder.setCameraSource(new CameraSource.Builder(getApplicationContext(), myOcrBuilder.getTextRecognizer()).setFacing(CameraSource.CAMERA_FACING_BACK)
+                    .setRequestedPreviewSize(1280, 720).setRequestedFps(2.0f).setAutoFocusEnabled(true).build());
 
             ocrScanView.getHolder().addCallback(new SurfaceHolder.Callback() {
                 @Override
@@ -89,9 +97,21 @@ public class OcrScanActivity extends AppCompatActivity {
         }
 
         myOcrBuilder.setRecognizedTextView((TextView) findViewById(R.id.recognizedTextViewOcrScanActivity));
-
+        resizeTargetingView();
     }
 
+    private void resizeTargetingView() {
+        DisplayMetrics displayMetrics=new DisplayMetrics();
+        WindowManager windowManager=(WindowManager) getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
+        assert windowManager != null;
+        windowManager.getDefaultDisplay().getMetrics(displayMetrics);
+
+        ViewGroup.LayoutParams params=(findViewById(R.id.textTargetingLayout)).getLayoutParams();
+        params.height=(displayMetrics.heightPixels)/3;
+        params.width=(displayMetrics.widthPixels);
+
+
+    }
 
 
     @Override
@@ -124,45 +144,66 @@ public class OcrScanActivity extends AppCompatActivity {
             }
         }else{
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                ((FloatingActionButton)findViewById(R.id.fabSaveCurrentPrice)).setImageResource(R.drawable.ic_format_text);
                 findViewById(R.id.fabSaveCurrentPrice).setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(this,R.color.colorAccent)));
             }
             isGettingMiniature=false;
-
+            findViewById(R.id.textTargetingLayout).setVisibility(View.VISIBLE);
             myOcrBuilder.getCameraSource().takePicture(null, new CameraSource.PictureCallback() {
                 @Override
                 public void onPictureTaken(byte[] bytes) {
-
-                    Bitmap bitmap=BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                    String miniaturePath=saveMiniatureFile(Bitmap.createScaledBitmap(bitmap,350,450,true));
-
-                    saveDataToFile(miniaturePath);
-
+                    Bitmap bitmap= BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                    String miniaturePath=saveMiniatureFile(Bitmap.createScaledBitmap(bitmap,350,450,true),filePath);
+                    //String miniaturePath=saveMiniatureFile(bitmap,filePath);
+                    saveDataToFile(miniaturePath,filePath);
                     endActivity();
                 }
             });
-
-
         }
     }
 
+    private String saveMiniatureFile(Bitmap bitmap, String filePath){
+        String filename="noMiniature";
+        try {
+            String configurationDir = filePath.substring(0, filePath.lastIndexOf(File.separator));
+            @SuppressLint("SimpleDateFormat") String timeStamp = new SimpleDateFormat("yyyy_MMdd_HH_mm_ss").format(new Date());
+            filename=configurationDir + File.separator + "miniature_"+ timeStamp + ".png";
+        }catch (Exception e){
+            Toast.makeText(this,getText(R.string.cant_write_to_file),Toast.LENGTH_SHORT).show();
+            return filename;
+        }
 
-    private void saveDataToFile(String miniaturePath) {
+        FileOutputStream out;
+        try {
+            out = new FileOutputStream(filename);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 80, out);
+            out.close();
+        } catch (Exception e) {
+            Toast.makeText(this,getText(R.string.cant_write_to_file),Toast.LENGTH_SHORT).show();
+        }
+        return filename;
+    }
+
+    private void saveDataToFile(String miniaturePath,String filePath) {
         DataWriterToFile dataWriterToFile = new DataWriterToFile();
         dataWriterToFile.setFilePath(filePath);
         try {
-            dataWriterToFile.writeToPath(myOcrBuilder.getRecognizedTextView().getText().toString() +" "+ miniaturePath+" ",true);
+            dataWriterToFile.writeToPath(myOcrBuilder.getRecognizedTextView().getText().toString().replace(",",".") +" "+ miniaturePath+" ",true);
         } catch (Exception e) {
             if(e.getMessage().equals("Failed to write to file")) {
-                Toast.makeText(getApplicationContext(), getString(R.string.cant_write_to_file), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getText(R.string.cant_write_to_file), Toast.LENGTH_SHORT).show();
             }else{
                 e.printStackTrace();
             }
         }
-        endActivity();
     }
 
 
+
+
+
     private void showMiniatureDialog() {
+        myOcrBuilder.setDetecting(false);
         AlertDialog.Builder builder=new AlertDialog.Builder(this);
         builder.setTitle(getString(R.string.miniature_dialog_title));
         builder.setMessage(getString(R.string.miniature_dialog_message));
@@ -174,44 +215,38 @@ public class OcrScanActivity extends AppCompatActivity {
                 });
         builder.setNegativeButton(getString(R.string.negative), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
+                        saveDataToFile("noMiniature",filePath);
+                        endActivity();
                         dialog.dismiss();
-                        saveDataToFile("noMiniature");
                     }
         });
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+        alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialogInterface) {
+                if(!isGettingMiniature){
+                    myOcrBuilder.setDetecting(true);
+                }else{
+                    myOcrBuilder.setDetecting(false);
+                }
+
+            }
+        });
     }
 
 
     private void getMiniature() {
+        findViewById(R.id.textTargetingLayout).setVisibility(View.INVISIBLE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            ((FloatingActionButton)findViewById(R.id.fabSaveCurrentPrice)).setImageResource(R.drawable.ic_camera);
             findViewById(R.id.fabSaveCurrentPrice).setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(this,R.color.fab_miniature_color)));
         }
         isGettingMiniature=true;
         Toast.makeText(getApplicationContext(), getString(R.string.take_photo_to_product), Toast.LENGTH_SHORT).show();
     }
 
-    private String saveMiniatureFile(Bitmap bitmap){
-        String filename="noMiniature";
-        try {
-            String configurationDir = filePath.substring(0, filePath.lastIndexOf(File.separator));
-            @SuppressLint("SimpleDateFormat") String timeStamp = new SimpleDateFormat("yyyy_MMdd_HH_mm_ss").format(new Date());
-            filename=configurationDir + File.separator + "miniature_"+ timeStamp + ".png";
-        }catch (Exception e){
-            Toast.makeText(this,getString(R.string.cant_write_to_file),Toast.LENGTH_SHORT).show();
-            return filename;
-        }
 
-        FileOutputStream out;
-        try {
-            out = new FileOutputStream(filename);
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 80, out);
-            out.close();
-        } catch (Exception e) {
-            Toast.makeText(this,getString(R.string.cant_write_to_file),Toast.LENGTH_SHORT).show();
-        }
-        return filename;
-    }
 
 
     @Override
@@ -220,9 +255,32 @@ public class OcrScanActivity extends AppCompatActivity {
     }
 
     private void endActivity() {
+        findViewById(R.id.fabSaveCurrentPrice).setEnabled(false);
         finish();
         overridePendingTransition(R.anim.end_ocr_scan_enter,R.anim.end_ocr_scan_exit);
     }
 
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        new CountDownTimer(2000,1000){
+            @Override
+            public void onTick(long l) {
 
+            }
+            @Override
+            public void onFinish() {
+                int[] l = new int[2];
+                findViewById(R.id.textTargetingLayout).getLocationOnScreen(l);
+                int x = l[0];
+                int y = l[1];
+                myOcrBuilder.setRectBounds(new Rect(x,y,findViewById(R.id.textTargetingLayout).getWidth(),y+findViewById(R.id.textTargetingLayout).getHeight()));
+                myOcrBuilder.setTextViewCoordinates(myOcrBuilder.getRecognizedTextView().getX()-findViewById(R.id.textTargetingLayout).getWidth()/3,myOcrBuilder.getRecognizedTextView().getY());
+            }
+        }.start();
+    }
+
+    public OcrComponentsBuilder getMyOcrBuilder() {
+        return myOcrBuilder;
+    }
 }

@@ -7,7 +7,7 @@ import org.junit.rules.ExpectedException;
 
 import static junit.framework.Assert.assertEquals;
 
-public class PriceBuilderUnitTest{
+public class PriceBuilderUnitTest {
 
     private PriceBuilder priceBuilder;
 
@@ -102,6 +102,28 @@ public class PriceBuilderUnitTest{
         assertEquals("",priceBuilder.getPrice());
     }
 
+    @Test
+    public void priceBuilder_returnsTheMostProbablePriceFormattedRecognition_whenInFirstPosition() throws Exception {
+        readPrice("33,99someWords1111");
+        assertEquals("33,99",priceBuilder.getPrice());
+    }
 
+    @Test
+    public void priceBuilder_returnsTheMostProbablePriceFormattedRecognition_whenInLastPosition() throws Exception {
+        readPrice("11111someWords33,99");
+        assertEquals("33,99",priceBuilder.getPrice());
+    }
+
+    @Test
+    public void priceBuilder_returnsPriceWithLessNumbers_atCommaLeft() throws Exception {
+        readPrice("1111,1someWords3,99some*__33,01");
+        assertEquals("3,99",priceBuilder.getPrice());
+    }
+
+    @Test
+    public void priceBuilder_returnsPriceWithLessNumbers_atCommaRight_ifSameNumbersAtCommaLeft() throws Exception {
+        readPrice("0,1234Words3,99some*__33,0");
+        assertEquals("3,99",priceBuilder.getPrice());
+    }
 
 }

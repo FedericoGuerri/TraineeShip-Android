@@ -8,7 +8,7 @@
     <string name="price_textview_listview_placeholder">-.-</string>
     <string name="item_imageview_pricelistview_contentdescriptor">Shows the scan miniature.</string>
     <string name="recognition_textView_defaultvalue_ocrScanActivity">0.0</string>
-    <string name="bad_recognition_get_closer_please">Get closer, please.</string>
+    <string name="bad_recognition_get_closer_please">Fit price in the rectangle.</string>
     <string name="no_price_detected_toast">No price detected.</string>
     <string name="cant_write_to_file">Error while saving price!</string>
     <string name="affermative">YES</string>

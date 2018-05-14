@@ -1,6 +1,7 @@
 package com.unifi.federicoguerri.traineeship_android.core;
 
 
+import android.graphics.Rect;
 import android.os.Build;
 import android.widget.TextView;
 
@@ -17,8 +18,10 @@ import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNull;
+import static junit.framework.Assert.assertTrue;
 
 @Config(constants = BuildConfig.class, sdk = Build.VERSION_CODES.LOLLIPOP_MR1)
 @RunWith(RobolectricTestRunner.class)
@@ -70,21 +73,52 @@ public class OcrComponentsBuilderUnitTest {
 
     @Test
     public void ocrComponentsBuilder_canBuildCameraSource(){
-        ocrBuilder.setCameraSource(720,480);
+        ocrBuilder.setCameraSource(new CameraSource.Builder(activity.getApplicationContext(), ocrBuilder.getTextRecognizer()).setFacing(CameraSource.CAMERA_FACING_BACK)
+                .setRequestedPreviewSize(1080, 720).setRequestedFps(2.0f).setAutoFocusEnabled(true).build());
         assertNotNull(ocrBuilder.getCameraSource());
     }
 
     @Test
     public void ocrComponentsBuilder_returnACameraSource(){
-        ocrBuilder.setCameraSource(720,480);
+        ocrBuilder.setCameraSource(new CameraSource.Builder(activity.getApplicationContext(), ocrBuilder.getTextRecognizer()).setFacing(CameraSource.CAMERA_FACING_BACK)
+                .setRequestedPreviewSize(1080, 720).setRequestedFps(2.0f).setAutoFocusEnabled(true).build());
         assertEquals(CameraSource.class,ocrBuilder.getCameraSource().getClass());
     }
 
     @Test
     public void ocrComponentsBuilder_cameraSourceUsingFrontalCamera(){
-        ocrBuilder.setCameraSource(720,480);
+        ocrBuilder.setCameraSource(new CameraSource.Builder(activity.getApplicationContext(), ocrBuilder.getTextRecognizer()).setFacing(CameraSource.CAMERA_FACING_BACK)
+                .setRequestedPreviewSize(1080, 720).setRequestedFps(2.0f).setAutoFocusEnabled(true).build());
         assertEquals(CameraSource.CAMERA_FACING_BACK,ocrBuilder.getCameraSource().getCameraFacing());
     }
 
+    @Test
+    public void ocrComponentsBuilder_canStoreRectangleBounds(){
+        ocrBuilder.setRectBounds(new Rect(0,0,30,100));
+        assertNotNull(ocrBuilder.getRectBounds());
+    }
+
+    @Test
+    public void ocrComponentsBuilder_returnsRectangleBounds(){
+        ocrBuilder.setRectBounds(new Rect(0,0,30,100));
+        assertEquals(Rect.class,ocrBuilder.getRectBounds().getClass());
+    }
+
+    @Test
+    public void ocrComponentsBuilder_canStoreCorrectRectangleBounds(){
+        ocrBuilder.setRectBounds(new Rect(0,0,30,100));
+        assertEquals(new Rect(0,0,30,100),ocrBuilder.getRectBounds());
+    }
+
+    @Test
+    public void ocrComponentsBuilder_hasOcrRecognitionEnabledByDefault(){
+        assertTrue(ocrBuilder.isDetecting());
+    }
+
+    @Test
+    public void ocrComponentsBuilder_canDisableOcrRecognition(){
+        ocrBuilder.setDetecting(false);
+        assertFalse(ocrBuilder.isDetecting());
+    }
 
 }

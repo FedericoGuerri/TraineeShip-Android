@@ -3,16 +3,19 @@ package com.unifi.federicoguerri.traineeship_android.OcrScanActivityTest.views;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.unifi.federicoguerri.traineeship_android.OcrScanActivity;
 import com.unifi.federicoguerri.traineeship_android.R;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
+import org.robolectric.Robolectric;
 import org.robolectric.shadows.ShadowActivity;
 import org.robolectric.shadows.ShadowAlertDialog;
 import org.robolectric.shadows.ShadowApplication;
@@ -40,6 +43,7 @@ public class FabSaveCurrentPriceUnitTest extends AbstractOcrScanActivityUnitTest
 
         shadowApplication=shadowOf(activity.getApplication());
         shadowApplication.grantPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        shadowApplication.grantPermissions(Manifest.permission.CAMERA);
 
         return fabSavePrice;
     }
@@ -87,6 +91,12 @@ public class FabSaveCurrentPriceUnitTest extends AbstractOcrScanActivityUnitTest
     @Test
     public void fabSavePrice_isClickable() {
         assertEquals(true, fabSavePrice.isClickable());
+    }
+
+    @Test
+    public void fabSavePrice_isNotEnableWhenActivityEnds() {
+        tapOnFabAndPressDialogNegativeButton();
+        assertEquals(false, fabSavePrice.isEnabled());
     }
 
 
@@ -154,6 +164,32 @@ public class FabSaveCurrentPriceUnitTest extends AbstractOcrScanActivityUnitTest
         assertEquals(getStringFromResources(R.string.miniature_dialog_message),shadowAlertDialog.getMessage().toString());
     }
 
+    @Test
+    public void fabSavePrice_willStopOcrRecognition(){
+        fabSavePrice.performClick();
+        assertFalse(activity.getMyOcrBuilder().isDetecting());
+    }
+
+    @Test
+    public void fabSavePrice_willStopOcrRecognition_andRenableItAfterDialogIsDismissed_withNegativeButton(){
+        tapOnFabAndPressDialogNegativeButton();
+        assertTrue(activity.getMyOcrBuilder().isDetecting());
+    }
+
+    @Test
+    public void fabSavePrice_willStopOcrRecognition_whileTakingMiniature(){
+        tapOnFabAndPressDialogPositiveButton();
+        assertFalse(activity.getMyOcrBuilder().isDetecting());
+    }
+
+
+    @Test
+    public void fabSavePrice_willNotRenableOcrRecognition_AfterTakingMiniature() {
+        tapOnFabAndPressDialogPositiveButton();
+        fabSavePrice.performClick();
+        assertFalse(activity.getMyOcrBuilder().isDetecting());
+    }
+
 
     // tapping on fab and press dialog's negative button
 
@@ -205,7 +241,22 @@ public class FabSaveCurrentPriceUnitTest extends AbstractOcrScanActivityUnitTest
         assertEquals(getColorFromResources(R.color.fab_miniature_color),fabSavePrice.getBackgroundTintList().getDefaultColor());
     }
 
-    /*
+
+    @Test
+    public void fabSavePrice_willHideTextTargetingLayout_whileSavingMiniature(){
+        tapOnFabAndPressDialogPositiveButton();
+        assertEquals(View.INVISIBLE,activity.findViewById(R.id.textTargetingLayout).getVisibility());
+    }
+
+
+    @Test
+    public void fabSavePrice_willShowAgainTextTargetingLayout_afterSavingMiniature(){
+        tapOnFabAndPressDialogPositiveButton();
+        fabSavePrice.performClick();
+        assertEquals(View.VISIBLE,shadowOf(activity).findViewById(R.id.textTargetingLayout).getVisibility());
+    }
+
+
     @Test
     public void fabSavePrice_resetBackgroundTintList_afterTakingTheMiniature(){
         Intent intent = new Intent();
@@ -217,6 +268,7 @@ public class FabSaveCurrentPriceUnitTest extends AbstractOcrScanActivityUnitTest
         assertEquals(getColorFromResources(R.color.colorAccent),fabSavePrice.getBackgroundTintList().getDefaultColor());
     }
 
+    /*
     @Test
     public void fabSavePrice_willShowToastMessage_afterTakingTheMiniature_ifCantWriteToFile(){
         Intent intent = new Intent();
@@ -231,12 +283,12 @@ public class FabSaveCurrentPriceUnitTest extends AbstractOcrScanActivityUnitTest
     @Test
     public void fabSavePrice_willShowToastMessage_afterTakingTheMiniature_ifGetDirectoryPath(){
         Intent intent = new Intent();
-        intent.putExtra("fileName",folder.getRoot());
+        intent.putExtra("fileName","some/directory/configuration.txt");
         activity = Robolectric.buildActivity(OcrScanActivity.class, intent).create().get();
         fabSavePrice =activity.findViewById(R.id.fabSaveCurrentPrice);
         tapOnFabAndPressDialogPositiveButton();
         fabSavePrice.performClick();
-        assertEquals(activity.getResources().getString(R.string.cant_write_to_file),ShadowToast.getTextOfLatestToast());
+        assertEquals(getStringFromResources(R.string.cant_write_to_file),ShadowToast.getTextOfLatestToast());
     }
     */
 

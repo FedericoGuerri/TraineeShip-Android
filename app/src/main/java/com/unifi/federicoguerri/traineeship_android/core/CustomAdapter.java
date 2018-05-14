@@ -26,6 +26,7 @@ public class CustomAdapter extends ArrayAdapter<CustomDataSet> {
     private RecordRemoverFromString recordRemoverFromString;
     private DataWriterToFile dataWriterToFile;
 
+    private float total=0;
 
     public CustomAdapter(ArrayList<CustomDataSet> data, Context context,String filePath) {
         super(context, R.layout.item_price_listview, data);
@@ -54,7 +55,7 @@ public class CustomAdapter extends ArrayAdapter<CustomDataSet> {
     public View getView(final int position, final View convertView, @NonNull final ViewGroup parent) {
         View rowView = convertView;
         final CustomDataSet dataSet= data.get(position);
-        ViewHolder viewHolder=null;
+        ViewHolder viewHolder;
         if (rowView == null) {
             LayoutInflater inflater = LayoutInflater.from(mContext);
             rowView = inflater.inflate(R.layout.item_price_listview, parent, false);
@@ -63,6 +64,7 @@ public class CustomAdapter extends ArrayAdapter<CustomDataSet> {
             viewHolder.miniatureImageView = rowView.findViewById(R.id.itemMiniatureImageViewItemPriceListView);
             viewHolder.deleteImageView=rowView.findViewById(R.id.itemDeletePriceImageViewitemPriceListView);
             rowView.setTag(viewHolder);
+            customAdapter.notifyDataSetChanged();
         }else{
             viewHolder = (ViewHolder) rowView.getTag();
         }

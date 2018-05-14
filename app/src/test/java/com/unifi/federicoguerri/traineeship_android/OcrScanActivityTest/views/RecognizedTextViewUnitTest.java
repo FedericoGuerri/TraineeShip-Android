@@ -29,7 +29,7 @@ public class RecognizedTextViewUnitTest extends AbstractOcrScanActivityUnitTest 
 
     @Test
     public void recognizedTextView_hasTextSize18(){
-        assertEquals(30,(int)recognizedTextView.getTextSize());
+        assertEquals(27,(int)recognizedTextView.getTextSize());
     }
 
 
@@ -71,7 +71,7 @@ public class RecognizedTextViewUnitTest extends AbstractOcrScanActivityUnitTest 
 
 
     @Test
-    public void recognizedTextView_has0_8Alpha(){
+    public void recognizedTextView_hasCustomAlpha(){
         assertEquals(0.7f,recognizedTextView.getAlpha());
     }
 

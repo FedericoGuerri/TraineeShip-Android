@@ -6,6 +6,7 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.rule.GrantPermissionRule;
 import android.support.test.runner.AndroidJUnit4;
 
+import com.unifi.federicoguerri.traineeship_android.helpers.CustomMatchers;
 import com.unifi.federicoguerri.traineeship_android.helpers.GetResourcesHelper;
 
 import org.junit.Rule;
@@ -13,6 +14,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.hasChildCount;
 import static android.support.test.espresso.matcher.ViewMatchers.hasTextColor;
@@ -20,6 +22,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.isClickable;
 import static android.support.test.espresso.matcher.ViewMatchers.isCompletelyDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static junit.framework.Assert.assertEquals;
 
 @RunWith(AndroidJUnit4.class)
@@ -44,7 +47,7 @@ public class OcrScanActivityInstrumentedTest {
 
     @Test
     public void parentLayout_hasThreeChildrenTest(){
-        onView(withId(R.id.ocrParentLayoutOcrScanActivity)).check(matches(hasChildCount(3)));
+        onView(withId(R.id.ocrParentLayoutOcrScanActivity)).check(matches(hasChildCount(4)));
     }
 
 
@@ -81,8 +84,22 @@ public class OcrScanActivityInstrumentedTest {
     }
 
     @Test
+    public void fabSavePrice_hasDefaultDrawable(){
+        CustomMatchers customMatchers=new CustomMatchers();
+        onView(withId(R.id.fabSaveCurrentPrice)).check(matches(customMatchers.withDrawable(R.drawable.ic_format_text)));
+    }
+
+    @Test
     public void fabSavePrice_isClickable(){
         onView(withId(R.id.fabSaveCurrentPrice)).check(matches(isClickable()));
+    }
+
+    @Test
+    public void fabSavePrice_willChangeDrawableWhileTakingMiniature(){
+        onView(withId(R.id.fabSaveCurrentPrice)).perform(click());
+        onView(withText("YES")).perform(click());
+        CustomMatchers customMatchers=new CustomMatchers();
+        onView(withId(R.id.fabSaveCurrentPrice)).check(matches(customMatchers.withDrawable(R.drawable.ic_camera)));
     }
 
 
@@ -92,5 +109,6 @@ public class OcrScanActivityInstrumentedTest {
     public void supportActionBar_isInvisibleTest(){
         assertEquals(false, ocrScanActivityRule.getActivity().getSupportActionBar().isShowing());
     }
+
 
 }
