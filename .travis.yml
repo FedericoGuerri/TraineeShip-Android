@@ -1,16 +1,22 @@
 language: android
 jdk: - oraclejdk8
+sudo: false
 
 env:
   global:
     - ADB_INSTALL_TIMEOUT=8
-
-sudo: false
-
 cache:
   directories:
     - $HOME/.gradle
-
+    
+android:
+  components:
+    - build-tools-27.0.2
+    - extra-google-google_play_services
+    - extra-google-m2repository
+    - extra-android-m2repository
+    - addon-google_apis-google-22
+    
 before_install:
   # Install SDK license so Android Gradle plugin can install deps.
   - mkdir "$ANDROID_HOME/licenses" || true
@@ -40,12 +46,10 @@ before_script:
   - adb shell input keyevent 82 &
 
 script: 
-  - ./gradlew connectedCheck --stacktrace
-
-
+  - ./gradlew connectedCheck
 
 after_success:
-    - codecov
+  - codecov
     
 notifications:
     email:
