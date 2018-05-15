@@ -10,6 +10,7 @@ import com.unifi.federicoguerri.traineeship_android.core.CustomAdapter;
 import com.unifi.federicoguerri.traineeship_android.core.CustomDataSet;
 
 import org.junit.Test;
+import org.mockito.Mockito;
 import org.robolectric.Shadows;
 import org.robolectric.shadows.ShadowListView;
 
@@ -47,7 +48,7 @@ public class PricesListViewUnitTest extends AbstractMainActivityUnitTest {
     }
 
     @Test
-    public void pricesList_hasBackgroundColorFromResources() throws Exception {
+    public void pricesList_hasBackgroundColorFromResources() {
         int pricesListViewColor=getColorFromResources(R.color.transparent_background_color);
         assertEquals(pricesListViewColor,((ColorDrawable)pricesList.getBackground()).getColor());
     }
@@ -101,6 +102,7 @@ public class PricesListViewUnitTest extends AbstractMainActivityUnitTest {
         shadowListView.populateItems();
         assertEquals(0,shadowListView.findIndexOfItemContainingText("22.2"));
     }
+
 
     private int getColorFromResources(int colorId) {
         return activity.getResources().getColor(colorId);

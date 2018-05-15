@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.unifi.federicoguerri.traineeship_android.core.CustomAdapter;
@@ -63,13 +64,25 @@ public class MainActivity extends AppCompatActivity {
                         super.onChanged();
                         totalItem.setTitle(formatTotalPrice());
                     }
-
                     private String formatTotalPrice(){
                         String total=String.valueOf(new DecimalFormat("##.##").format(adapter.getTotal()));
                         if(total.equals("0")){
                             total="0.0";
                         }
                         return total;
+                    }
+                });
+                ((ListView)findViewById(R.id.pricesListViewMainActivity)).setOnHierarchyChangeListener(new ViewGroup.OnHierarchyChangeListener() {
+                    @Override
+                    public void onChildViewAdded(View view, View view1) {
+                    }
+
+                    @Override
+                    public void onChildViewRemoved(View view, View view1) {
+                        if(((ListView)view).getChildCount()==0){
+                            view.setVisibility(View.INVISIBLE);
+                            findViewById(R.id.welcomeLayoutMainActivity).setVisibility(View.VISIBLE);
+                        }
                     }
                 });
                 ((ListView) findViewById(R.id.pricesListViewMainActivity)).setAdapter(adapter);
