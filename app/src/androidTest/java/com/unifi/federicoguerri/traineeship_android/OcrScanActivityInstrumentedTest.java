@@ -94,6 +94,7 @@ public class OcrScanActivityInstrumentedTest {
         onView(withId(R.id.fabSaveCurrentPrice)).check(matches(isClickable()));
     }
 
+    /*
     @Test
     public void fabSavePrice_willChangeDrawableWhileTakingMiniature(){
         onView(withId(R.id.fabSaveCurrentPrice)).perform(click());
@@ -101,6 +102,7 @@ public class OcrScanActivityInstrumentedTest {
         CustomMatchers customMatchers=new CustomMatchers();
         onView(withId(R.id.fabSaveCurrentPrice)).check(matches(customMatchers.withDrawable(R.drawable.ic_camera)));
     }
+    */
 
 
     // General tests
