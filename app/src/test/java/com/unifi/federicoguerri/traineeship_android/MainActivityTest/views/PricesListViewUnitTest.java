@@ -10,7 +10,6 @@ import com.unifi.federicoguerri.traineeship_android.core.CustomAdapter;
 import com.unifi.federicoguerri.traineeship_android.core.CustomDataSet;
 
 import org.junit.Test;
-import org.mockito.Mockito;
 import org.robolectric.Shadows;
 import org.robolectric.shadows.ShadowListView;
 
