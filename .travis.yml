@@ -47,7 +47,7 @@ before_script:
   - adb shell input keyevent 82 &
 
 script: 
-  - ./gradlew connectedCheck
+  - travis_wait ./gradlew connectedCheck
 
 after_success:
   - codecov
