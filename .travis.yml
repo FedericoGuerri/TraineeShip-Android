@@ -32,7 +32,7 @@ before_install:
   #Install codecov for coverage
   - pip install --user codecov
   
-  - android list targets
+  - android list target
   
   # Create and start emulator for the script.
   - echo no | avdmanager create avd --force -n test -k "system-images;android-24;google_apis;x86"
