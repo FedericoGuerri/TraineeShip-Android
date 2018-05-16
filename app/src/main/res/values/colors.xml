@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#3f51b5</color>
-    <color name="splash_background_color">#3f51b5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#ff4081</color>
     <color name="fab_miniature_color">#4069ff</color>
-    <color name="whiteTextColor">#ffffff</color>
     <color name="hint_textView_mainActivity">#000000</color>
     <color name="welcome_textView_mainActivity">#000000</color>
     <color name="transparent_background_color">#00000000</color>

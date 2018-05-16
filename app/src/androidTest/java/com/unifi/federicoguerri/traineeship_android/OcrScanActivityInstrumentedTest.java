@@ -38,10 +38,6 @@ public class OcrScanActivityInstrumentedTest {
         onView(withId(R.id.ocrParentLayoutOcrScanActivity)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
     }
 
-    @Test
-    public void parentLayout_hasBackgroundColorTest(){
-        onView(withId(R.id.ocrParentLayoutOcrScanActivity)).check(matches(GetResourcesHelper.withBackgroundColorId(R.color.transparent_background_color)));
-    }
 
     @Test
     public void parentLayout_hasThreeChildrenTest(){

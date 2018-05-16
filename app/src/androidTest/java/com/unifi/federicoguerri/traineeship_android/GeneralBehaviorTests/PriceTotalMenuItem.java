@@ -1,16 +1,19 @@
 package com.unifi.federicoguerri.traineeship_android.GeneralBehaviorTests;
 
 
+import android.support.test.runner.AndroidJUnit4;
+
 import com.unifi.federicoguerri.traineeship_android.R;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
-
+@RunWith(AndroidJUnit4.class)
 public class PriceTotalMenuItem extends AbstractGeneral{
 
     // prices-total menuItem

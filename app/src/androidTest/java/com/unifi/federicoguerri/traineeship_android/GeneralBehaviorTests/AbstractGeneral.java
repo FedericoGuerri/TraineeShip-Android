@@ -11,6 +11,7 @@ import com.unifi.federicoguerri.traineeship_android.helpers.GenericHelper;
 import org.junit.Before;
 import org.junit.Rule;
 
+
 public class AbstractGeneral {
 
     @Rule
