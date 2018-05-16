@@ -29,7 +29,7 @@ public abstract class AbstractPricesListViewWithItemLayout  {
     private View testingComponent;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp(){
         ActivityController<MainActivity> activityController = Robolectric.buildActivity(MainActivity.class);
         layoutResourceView =  LayoutInflater.from(activityController.get()).inflate(R.layout.item_price_listview, null);
         testingComponent=getTestingComponent();

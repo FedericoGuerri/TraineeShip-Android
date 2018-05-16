@@ -29,7 +29,6 @@ public class OcrParentLayoutUnitTest extends AbstractOcrScanActivityUnitTest{
     }
 
 
-
     @Test
     public void ocrParentLayout_hasMatchParentWidth(){
         assertEquals(ViewGroup.LayoutParams.MATCH_PARENT,ocrParentLayout.getLayoutParams().width);
@@ -38,11 +37,6 @@ public class OcrParentLayoutUnitTest extends AbstractOcrScanActivityUnitTest{
     @Test
     public void ocrParentLayout_hasMatchParentHeight(){
         assertEquals(ViewGroup.LayoutParams.MATCH_PARENT,ocrParentLayout.getLayoutParams().height);
-    }
-
-
-    private int getColorFromResources(int colorId) {
-        return activity.getResources().getColor(colorId);
     }
 
 

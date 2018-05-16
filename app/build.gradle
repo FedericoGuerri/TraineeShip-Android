@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
-apply plugin: 'jacoco-android'
+//apply plugin: 'jacoco-android'
+apply from: "$rootDir/jacoco.gradle"
 
 android {
     compileSdkVersion 27
@@ -92,7 +93,7 @@ dependencies {
 
     implementation "com.android.support:design:$designVersion"
 
-    testCompile "org.mockito:mockito-android:$mockitoVersion"
+    testImplementation "org.mockito:mockito-android:$mockitoVersion"
     androidTestImplementation "org.mockito:mockito-android:$mockitoVersion"
 
 }

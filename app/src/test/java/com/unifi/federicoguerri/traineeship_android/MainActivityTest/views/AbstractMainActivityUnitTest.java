@@ -26,8 +26,8 @@ public abstract class AbstractMainActivityUnitTest {
     private View testingComponent;
 
     @Before
-    public void setUp() throws Exception {
-        activity = Robolectric.buildActivity( MainActivity.class ).create().get();
+    public void setUp() {
+        activity = Robolectric.buildActivity( MainActivity.class ).create().visible().get();
         testingComponent=getTestingComponent();
     }
 

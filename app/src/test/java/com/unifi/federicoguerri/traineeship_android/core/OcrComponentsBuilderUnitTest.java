@@ -30,7 +30,6 @@ public class OcrComponentsBuilderUnitTest {
     private OcrComponentsBuilder ocrBuilder;
     private OcrScanActivity activity;
 
-
     @Before
     public void init(){
         activity = Robolectric.buildActivity( OcrScanActivity.class ).create().get();

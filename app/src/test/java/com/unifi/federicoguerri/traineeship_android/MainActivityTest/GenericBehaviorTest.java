@@ -27,7 +27,7 @@ public class GenericBehaviorTest {
     private MainActivity activity;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp(){
         activity = Robolectric.buildActivity(MainActivity.class).create().visible().get();
     }
 
