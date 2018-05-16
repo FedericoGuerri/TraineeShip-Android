@@ -4,58 +4,55 @@ sudo: required
 
 env:
   global:
-    - MALLOC_ARENA_MAX=2
-    - ADB_INSTALL_TIMEOUT=14
-  
+    - ADB_INSTALL_TIMEOUT=8
+    
+cache:
+  directories:
+    - $HOME/.gradle
+    
 android:
   components:
-    - tools
-    - platform-tools
-    - tools
     - build-tools-27.0.2
-    - android-22
-    #- android-24
     - extra-google-google_play_services
     - extra-google-m2repository
     - extra-android-m2repository
-    - addon-google_apis-google-22
-    - sys-img-armeabi-v7a-android-22
-   
-   
-licenses:
-    - 'android-sdk-preview-license-52d11cd2'
-    - 'android-sdk-license-.+'
-    - 'google-gdk-license-.+'
-
+    - addon-google_apis-google-24
+    
 before_install:
-  - yes | sdkmanager "platforms;android-22"
-  - yes | sdkmanager "platforms;android-27"
+  # Install SDK license so Android Gradle plugin can install deps.
+  - mkdir "$ANDROID_HOME/licenses" || true
+  - echo "d56f5187479451eabf01fb78af6dfcb131a6481e" > "$ANDROID_HOME/licenses/android-sdk-license"
+  
+  # Install the rest of tools.
+  - sdkmanager tools
+  
+  # Install the system image.
+  - sdkmanager "system-images;android-24;google_apis;x86"
+  
+  #Install codecov for coverage
   - pip install --user codecov
+  
+  - android list target
+  
+  # Create and start emulator for the script.
+  - echo no | avdmanager create avd --force -n test -k "system-images;android-24;google_apis;x86"
+  - $ANDROID_HOME/emulator/emulator -avd test -no-audio -no-window &
 
-script:
+install: 
   - ./gradlew build jacocoTestReport assembleAndroidTest
-  - android list targets
-  - echo no | android create avd --force -n test -t android-22 --abi armeabi-v7a
-  - emulator -avd test -no-window &#-camera-back emulated -camera-front emulated &
+
+before_script:
   - android-wait-for-emulator
   - adb shell settings put global window_animation_scale 0 &
   - adb shell settings put global transition_animation_scale 0 &
   - adb shell settings put global animator_duration_scale 0 &
-  - adb devices
-  
-   # Tapping on "WAIT" button of dialog
-  - adb shell input tap 297 478 &
-  - adb shell input tap 305 484 &
-  - adb shell input tap 320 490 &
   - adb shell input keyevent 82 &
-  
+
+script: 
   - travis_wait ./gradlew connectedCheck
 
 after_success:
-    - codecov
-    
-after_failure: 
-    - "cat $TRAVIS_BUILD_DIR/app/build/outputs/lint-results-debug.xml"
+  - codecov
     
 notifications:
     email:
