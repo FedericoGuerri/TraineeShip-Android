@@ -57,4 +57,4 @@ notifications:
       recipients:
         - fede95gg@gmail.com
       on_success: change
-      on_failure: never
+      on_failure: change
