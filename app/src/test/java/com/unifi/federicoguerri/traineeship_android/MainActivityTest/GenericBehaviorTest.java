@@ -1,5 +1,7 @@
 package com.unifi.federicoguerri.traineeship_android.MainActivityTest;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.view.MenuItem;
 
@@ -26,6 +28,7 @@ import static org.robolectric.Shadows.shadowOf;
 public class GenericBehaviorTest {
     private MainActivity activity;
 
+
     @Before
     public void setUp(){
         activity = Robolectric.buildActivity(MainActivity.class).create().visible().get();
@@ -37,12 +40,15 @@ public class GenericBehaviorTest {
     }
 
     @Test
-    public void configurationDirectory_isCreated() {
+    public void configurationDirectory_isCreated_afterPermissionIsGranted() {
+        int writePermission=10800;
+        activity.onRequestPermissionsResult(writePermission,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},new int[]{PackageManager.PERMISSION_GRANTED});
         File directory = new File(activity.getFilesDir()
                 + "/Android/data/"
                 + activity.getApplicationContext().getPackageName()
                 + "/ConfigurationDir");
         assertTrue(directory.exists());
+        directory.delete();
     }
 
     @Test
@@ -68,6 +74,8 @@ public class GenericBehaviorTest {
         MenuItem item= shadowOf(activity).getOptionsMenu().findItem(R.id.menuitem_total_mainactivity);
         assertEquals(false,item.isEnabled());
     }
+
+
 
 
 }

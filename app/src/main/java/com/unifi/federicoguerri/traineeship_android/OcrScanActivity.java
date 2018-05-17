@@ -20,7 +20,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +29,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.vision.CameraSource;
 import com.unifi.federicoguerri.traineeship_android.core.DataWriterToFile;
+import com.unifi.federicoguerri.traineeship_android.core.MySurfaceHolderCallback;
 import com.unifi.federicoguerri.traineeship_android.core.OcrComponentsBuilder;
 
 import java.io.File;
@@ -67,31 +67,7 @@ public class OcrScanActivity extends AppCompatActivity {
             myOcrBuilder.setCameraSource(new CameraSource.Builder(getApplicationContext(), myOcrBuilder.getTextRecognizer()).setFacing(CameraSource.CAMERA_FACING_BACK)
                     .setRequestedPreviewSize(1280, 720).setRequestedFps(2.0f).setAutoFocusEnabled(true).build());
 
-            ocrScanView.getHolder().addCallback(new SurfaceHolder.Callback() {
-                @Override
-                public void surfaceCreated(SurfaceHolder surfaceHolder) {
-                    if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                        ActivityCompat.requestPermissions(OcrScanActivity.this,new String[]{Manifest.permission.CAMERA},
-                                REQUEST_CAMERA_PERMISSION);
-                        return;
-                    }
-                    try {
-                        myOcrBuilder.getCameraSource().start(ocrScanView.getHolder());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                @Override
-                public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
-
-                }
-
-                @Override
-                public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
-                    myOcrBuilder.getCameraSource().stop();
-                }
-            });
+            ocrScanView.getHolder().addCallback(new MySurfaceHolderCallback(this,myOcrBuilder,ocrScanView.getHolder(),REQUEST_CAMERA_PERMISSION));
         }else{
             Log.d("TextRecognizer","dependencies error");
         }
