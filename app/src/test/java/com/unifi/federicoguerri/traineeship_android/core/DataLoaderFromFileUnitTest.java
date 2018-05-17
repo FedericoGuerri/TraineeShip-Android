@@ -21,6 +21,7 @@ import static junit.framework.Assert.assertTrue;
 public class DataLoaderFromFileUnitTest {
 
     private final String path = "file.txt";
+
     private DataLoaderFromFile dataLoaderFromFile;
 
     @Rule
@@ -75,7 +76,7 @@ public class DataLoaderFromFileUnitTest {
 
     @Test
     public void dataLoader_throwsExceptionIfFilePathWasNotSpecified() throws Exception {
-        readRecordsFileException.expect(NullPointerException.class);
+        readRecordsFileException.expect(Exception.class);
         readRecordsFileException.expectMessage("Failed To read from file");
         assertEquals(0,dataLoaderFromFile.getRecords().size());
     }
@@ -127,6 +128,7 @@ public class DataLoaderFromFileUnitTest {
         writeToFileSpecifiedFromField("       22.2 noMiniature 22.2  noMiniature ");
         assertEquals("22.2",String.valueOf(dataLoaderFromFile.getRecords().get(0).getPrice()));
     }
+
 
     private void writeToFileSpecifiedFromField(String data) throws Exception {
         folder.newFile(path);

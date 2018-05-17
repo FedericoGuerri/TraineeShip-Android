@@ -44,29 +44,22 @@ public class DataLoaderFromFile {
         BufferedReader reader;
         try {
             reader = new BufferedReader(new FileReader(filePath));
-        } catch (NullPointerException e) {
-            throw new NullPointerException("Failed To read from file");
-        }
-        String read;
-        while ((read = reader.readLine()) != null) {
-            String[] splittedLine = read.split("\\s+");
-            for (String record : splittedLine) {
-                if(record.contains(" ")){
-                    record=record.replaceAll(" ","");
-                }
-                if(!record.equals("")) {
-                    records.add(record);
+            String read;
+            while ((read = reader.readLine()) != null) {
+                String[] splittedLine = read.split("\\s+");
+                for (String record : splittedLine) {
+                    if(!record.equals("")) {
+                        records.add(record);
+                    }
                 }
             }
-        }
-        try {
             reader.close();
         } catch (Exception e) {
-            throw new Exception("Failed To close file");
+            throw new Exception("Failed To read from file");
         }
     }
 
-    private void loadDataFromReadRecords() throws Exception{
+    private void loadDataFromReadRecords(){
         Iterator<String> iterator=records.iterator();
         while (iterator.hasNext()){
             String stringPrice=iterator.next();

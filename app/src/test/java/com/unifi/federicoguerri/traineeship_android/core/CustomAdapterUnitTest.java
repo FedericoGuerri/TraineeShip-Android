@@ -11,20 +11,31 @@ import com.unifi.federicoguerri.traineeship_android.MainActivity;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNull;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyBoolean;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.when;
 
 @Config(constants = BuildConfig.class, sdk = Build.VERSION_CODES.LOLLIPOP_MR1)
 @RunWith(RobolectricTestRunner.class)
 public class CustomAdapterUnitTest {
 
+    @Mock
+    DataWriterToFile dataWriterToFile;
+    @InjectMocks
     private CustomAdapter customAdapter;
     private MainActivity activity;
     private View convertView;
@@ -91,5 +102,6 @@ public class CustomAdapterUnitTest {
         customAdapter=new CustomAdapter(records,activity.getApplicationContext(),null);
         assertEquals(44.4f,customAdapter.getTotal());
     }
+
 
 }

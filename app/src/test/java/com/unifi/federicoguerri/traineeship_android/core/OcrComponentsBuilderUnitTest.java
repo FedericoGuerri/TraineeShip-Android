@@ -3,25 +3,36 @@ package com.unifi.federicoguerri.traineeship_android.core;
 
 import android.graphics.Rect;
 import android.os.Build;
+import android.util.SparseArray;
 import android.widget.TextView;
 
 import com.google.android.gms.vision.CameraSource;
+import com.google.android.gms.vision.Detector;
+import com.google.android.gms.vision.text.TextBlock;
 import com.google.android.gms.vision.text.TextRecognizer;
 import com.unifi.federicoguerri.traineeship_android.BuildConfig;
 import com.unifi.federicoguerri.traineeship_android.OcrScanActivity;
+import com.unifi.federicoguerri.traineeship_android.R;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertTrue;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @Config(constants = BuildConfig.class, sdk = Build.VERSION_CODES.LOLLIPOP_MR1)
 @RunWith(RobolectricTestRunner.class)
@@ -29,11 +40,15 @@ public class OcrComponentsBuilderUnitTest {
 
     private OcrComponentsBuilder ocrBuilder;
     private OcrScanActivity activity;
+    private TextView textView;
+    private int defaultRectValue=220;
+    private TextBlock textBlock;
 
     @Before
     public void init(){
-        activity = Robolectric.buildActivity( OcrScanActivity.class ).create().get();
+        activity = Robolectric.buildActivity( OcrScanActivity.class ).create().visible().get();
         ocrBuilder=new OcrComponentsBuilder(activity.getApplicationContext());
+        textView=new TextView(activity.getBaseContext());
     }
 
     @Test
@@ -118,6 +133,112 @@ public class OcrComponentsBuilderUnitTest {
     public void ocrComponentsBuilder_canDisableOcrRecognition(){
         ocrBuilder.setDetecting(false);
         assertFalse(ocrBuilder.isDetecting());
+    }
+
+    //Recognizer behavior
+
+    private SparseArray<TextBlock> mockSparseArray(String values, int size){
+        String[] splittedValues=values.split(" ");
+
+        SparseArray<TextBlock> mockedArray = Mockito.mock(SparseArray.class);
+        textBlock= Mockito.mock(TextBlock.class);
+        when(textBlock.getBoundingBox()).thenReturn(new Rect(100,33,0,0));
+        ArrayList<TextBlock> temp=new ArrayList<>();
+
+        for (String value : splittedValues) {
+            TextBlock nestedTextBlock = Mockito.mock(TextBlock.class);
+            when(nestedTextBlock.getValue()).thenReturn(value);
+            temp.add(nestedTextBlock);
+        }
+        when(textBlock.getComponents()).thenReturn((List)temp);
+        when(mockedArray.get(anyInt())).thenReturn(textBlock);
+        when(mockedArray.size()).thenReturn(size);
+
+        return mockedArray;
+    }
+
+    private void initTextBuilderRunner(String valuesWithSpacesBetween,int arraySize){
+        ocrBuilder.setRecognizedTextView(textView);
+        ocrBuilder.setTextViewCoordinates(120f,22f);
+        ocrBuilder.setRectBounds(new Rect(defaultRectValue, defaultRectValue, defaultRectValue, defaultRectValue));
+
+        Detector.Detections<TextBlock> detections= Mockito.mock(Detector.Detections.class);
+        SparseArray<TextBlock> array=mockSparseArray(valuesWithSpacesBetween,arraySize);
+        when(detections.getDetectedItems()).thenReturn(array);
+        ocrBuilder.receiveDetections(detections);
+    }
+
+    @Test
+    public void textViewHasCorrectPrice(){
+        initTextBuilderRunner("no 1,1 price",1);
+        assertEquals("1,1",textView.getText());
+    }
+
+    @Test
+    public void textView_hasTextBlockXCoordinates_ifPriceWasDetected(){
+        initTextBuilderRunner("no 1,1 prices",1);
+        assertEquals(100f,textView.getX());
+    }
+
+    @Test
+    public void textView_hasTextBlockYCoordinates_ifPriceWasDetected(){
+        initTextBuilderRunner("no 1,1 prices",1);
+        assertEquals(33f,textView.getY());
+    }
+
+    @Test
+    public void textView_hasDefaultXCoordinates_ifPriceWasDetected_andNoValueMatchPrice(){
+        initTextBuilderRunner("no 1.1 prices",1);
+        assertEquals(defaultRectValue,(int)textView.getX());
+    }
+
+    @Test
+    public void textView_hasDefaultYCoordinates_ifPriceWasDetected_andNoValueMatchPrice(){
+        initTextBuilderRunner("no 1.1 prices",1);
+        assertEquals(defaultRectValue,(int)textView.getY());
+    }
+
+    @Test
+    public void textView_hasTextFromResources(){
+        initTextBuilderRunner("no prices at all",1);
+        assertEquals(activity.getText(R.string.bad_recognition_get_closer_please),textView.getText());
+    }
+
+    @Test
+    public void textView_hasOriginalXCoordinates_ifNoPricesWereDetected(){
+        initTextBuilderRunner("no prices at all",1);
+        assertEquals(120f,textView.getX());
+    }
+
+    @Test
+    public void textView_hasOriginalYCoordinates_ifNoPricesWereDetected(){
+        initTextBuilderRunner("no prices at all",1);
+        assertEquals(22f,textView.getY());
+    }
+
+    @Test
+    public void textView_hasBounds_fromTextBlock(){
+        initTextBuilderRunner("no 1,1 price",1);
+        verify(textBlock).getBoundingBox();
+    }
+
+    @Test
+    public void ocrBuilder_wontRecognizeText_ifNotDetecting(){
+        ocrBuilder.setDetecting(false);
+        initTextBuilderRunner("22,2",1);
+        assertEquals("",textView.getText());
+    }
+
+    @Test
+    public void ocrBuilder_wontRecognizeText_ifSparseArraySizeIsZero(){
+        ocrBuilder.setDetecting(true);
+        initTextBuilderRunner("22,2",0);
+        assertEquals("",textView.getText());
+    }
+
+    @Test
+    public void ocrBuilder_implementsRelease_withNoActualCode(){
+        ocrBuilder.release();
     }
 
 }

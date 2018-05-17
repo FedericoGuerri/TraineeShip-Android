@@ -12,7 +12,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
-import org.robolectric.Shadows;
 import org.robolectric.annotation.Config;
 
 import java.io.File;
@@ -20,6 +19,7 @@ import java.io.File;
 import static junit.framework.Assert.assertNotNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.robolectric.Shadows.shadowOf;
 
 @Config(constants = BuildConfig.class, sdk = Build.VERSION_CODES.LOLLIPOP_MR1)
 @RunWith(RobolectricTestRunner.class)
@@ -47,26 +47,27 @@ public class GenericBehaviorTest {
 
     @Test
     public void isUsing_customMenu() {
-        Shadows.shadowOf(activity).getOptionsMenu();
-        assertNotNull(Shadows.shadowOf(activity).getOptionsMenu());
+        shadowOf(activity).getOptionsMenu();
+        assertNotNull(shadowOf(activity).getOptionsMenu());
     }
 
     @Test
     public void isUsing_menuItem() {
-        MenuItem item= Shadows.shadowOf(activity).getOptionsMenu().findItem(R.id.menuitem_total_mainactivity);
+        MenuItem item= shadowOf(activity).getOptionsMenu().findItem(R.id.menuitem_total_mainactivity);
         assertEquals(activity.getString(R.string.menuitem_total_default_mainactivity),item.getTitle().toString());
     }
 
     @Test
     public void isUsing_visibleMenuItem() {
-        MenuItem item= Shadows.shadowOf(activity).getOptionsMenu().findItem(R.id.menuitem_total_mainactivity);
+        MenuItem item= shadowOf(activity).getOptionsMenu().findItem(R.id.menuitem_total_mainactivity);
         assertEquals(true,item.isVisible());
     }
 
     @Test
     public void isUsing_notEnabledMenuItem() {
-        MenuItem item= Shadows.shadowOf(activity).getOptionsMenu().findItem(R.id.menuitem_total_mainactivity);
+        MenuItem item= shadowOf(activity).getOptionsMenu().findItem(R.id.menuitem_total_mainactivity);
         assertEquals(false,item.isEnabled());
     }
+
 
 }

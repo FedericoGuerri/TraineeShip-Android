@@ -26,8 +26,6 @@ public class CustomAdapter extends ArrayAdapter<CustomDataSet> {
     private RecordRemoverFromString recordRemoverFromString;
     private DataWriterToFile dataWriterToFile;
 
-    private float total=0;
-
     public CustomAdapter(ArrayList<CustomDataSet> data, Context context,String filePath) {
         super(context, R.layout.item_price_listview, data);
         this.mContext=context;
@@ -37,10 +35,6 @@ public class CustomAdapter extends ArrayAdapter<CustomDataSet> {
         recordRemoverFromString =new RecordRemoverFromString();
         dataWriterToFile=new DataWriterToFile();
         dataWriterToFile.setFilePath(filePath);
-    }
-
-    public void setData(ArrayList<CustomDataSet> data) {
-        this.data = data;
     }
 
 
