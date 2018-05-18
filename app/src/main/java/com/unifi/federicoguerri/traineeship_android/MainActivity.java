@@ -3,7 +3,6 @@ package com.unifi.federicoguerri.traineeship_android;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -12,18 +11,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ListView;
 
-import com.unifi.federicoguerri.traineeship_android.core.CustomAdapter;
-import com.unifi.federicoguerri.traineeship_android.core.CustomDataSet;
 import com.unifi.federicoguerri.traineeship_android.core.DataLoaderFromFile;
+import com.unifi.federicoguerri.traineeship_android.core.ItemsLoaderToPriceListView;
 
 import java.io.File;
-import java.io.IOException;
-import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
@@ -47,56 +40,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPostResume() {
         super.onPostResume();
-        DataLoaderFromFile loaderFromFile = new DataLoaderFromFile();
-        try {
-            loaderFromFile.loadFileFromPath(pricesPath);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            ArrayList<CustomDataSet> dataSets = loaderFromFile.getRecords();
-            if(dataSets.size()>0) {
-                final CustomAdapter adapter = new CustomAdapter(dataSets, getApplicationContext(),pricesPath);
-                adapter.registerDataSetObserver(new DataSetObserver() {
-                    @Override
-                    public void onChanged() {
-                        super.onChanged();
-                        totalItem.setTitle(formatTotalPrice());
-                    }
-                    private String formatTotalPrice(){
-                        String total=String.valueOf(new DecimalFormat("##.##").format(adapter.getTotal()));
-                        if(total.equals("0")){
-                            total="0.0";
-                        }
-                        return total;
-                    }
-                });
-                ((ListView)findViewById(R.id.pricesListViewMainActivity)).setOnHierarchyChangeListener(new ViewGroup.OnHierarchyChangeListener() {
-                    @Override
-                    public void onChildViewAdded(View view, View view1) {
-                    }
-
-                    @Override
-                    public void onChildViewRemoved(View view, View view1) {
-                        if(((ListView)view).getChildCount()==0){
-                            view.setVisibility(View.INVISIBLE);
-                            findViewById(R.id.welcomeLayoutMainActivity).setVisibility(View.VISIBLE);
-                        }
-                    }
-                });
-                ((ListView) findViewById(R.id.pricesListViewMainActivity)).setAdapter(adapter);
-                findViewById(R.id.pricesListViewMainActivity).setVisibility(View.VISIBLE);
-                findViewById(R.id.welcomeLayoutMainActivity).setVisibility(View.INVISIBLE);
-            }else{
-                findViewById(R.id.pricesListViewMainActivity).setVisibility(View.INVISIBLE);
-                findViewById(R.id.welcomeLayoutMainActivity).setVisibility(View.VISIBLE);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            findViewById(R.id.pricesListViewMainActivity).setVisibility(View.INVISIBLE);
-            findViewById(R.id.welcomeLayoutMainActivity).setVisibility(View.VISIBLE);
-        }
+        ItemsLoaderToPriceListView itemsLoaderToPriceListView =new ItemsLoaderToPriceListView(new DataLoaderFromFile(),pricesPath,totalItem,this);
+        itemsLoaderToPriceListView.loadItems();
     }
 
     public void startOcrScanActivity(View view) {

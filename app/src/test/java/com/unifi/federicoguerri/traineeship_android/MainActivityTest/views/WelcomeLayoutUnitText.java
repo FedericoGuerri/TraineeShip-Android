@@ -32,8 +32,6 @@ public class WelcomeLayoutUnitText extends AbstractMainActivityUnitTest {
         assertEquals(Gravity.CENTER,shadowLinearLayout.getGravity());
     }
 
-
-
     @Test
     public void welcomeLayout_isVisible(){
         Assert.assertEquals(View.VISIBLE,welcomeLayout.getVisibility());

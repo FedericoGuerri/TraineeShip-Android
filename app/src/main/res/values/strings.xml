@@ -10,6 +10,7 @@
     <string name="bad_recognition_get_closer_please">Fit price in the rectangle.</string>
     <string name="no_price_detected_toast">No price detected.</string>
     <string name="cant_write_to_file">Error while saving price!</string>
+    <string name="cant_read_from_file">Error while reading saved prices!</string>
     <string name="affermative">YES</string>
     <string name="negative">NO</string>
     <string name="miniature_dialog_title">Miniature</string>
@@ -17,5 +18,4 @@
     <string name="take_photo_to_product">Take a photo of product.</string>
     <string name="itemdelete_imageview_pricelistview_contentdescriptor">Tap to delete.</string>
     <string name="menuitem_total_default_mainactivity">0.0</string>
-
 </resources>

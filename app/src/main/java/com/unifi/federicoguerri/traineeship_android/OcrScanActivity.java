@@ -10,7 +10,6 @@ import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
@@ -58,9 +57,7 @@ public class OcrScanActivity extends AppCompatActivity {
         }
 
         filePath=getIntent().getStringExtra("fileName");
-
         ocrScanView = findViewById(R.id.ocrViewOcrScanActivity);
-
         myOcrBuilder=new OcrComponentsBuilder(getApplicationContext());
         if (myOcrBuilder.getTextRecognizer().isOperational()) {
 
@@ -79,14 +76,10 @@ public class OcrScanActivity extends AppCompatActivity {
     private void resizeTargetingView() {
         DisplayMetrics displayMetrics=new DisplayMetrics();
         WindowManager windowManager=(WindowManager) getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
-        assert windowManager != null;
         windowManager.getDefaultDisplay().getMetrics(displayMetrics);
-
         ViewGroup.LayoutParams params=(findViewById(R.id.textTargetingLayout)).getLayoutParams();
         params.height=(displayMetrics.heightPixels)/3;
         params.width=(displayMetrics.widthPixels);
-
-
     }
 
 
@@ -119,10 +112,8 @@ public class OcrScanActivity extends AppCompatActivity {
                 toast.show();
             }
         }else{
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                ((FloatingActionButton)findViewById(R.id.fabSaveCurrentPrice)).setImageResource(R.drawable.ic_format_text);
-                findViewById(R.id.fabSaveCurrentPrice).setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(this,R.color.colorAccent)));
-            }
+            ((FloatingActionButton)findViewById(R.id.fabSaveCurrentPrice)).setImageResource(R.drawable.ic_format_text);
+            findViewById(R.id.fabSaveCurrentPrice).setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(this,R.color.colorAccent)));
             isGettingMiniature=false;
             findViewById(R.id.textTargetingLayout).setVisibility(View.VISIBLE);
             myOcrBuilder.getCameraSource().takePicture(null, new CameraSource.PictureCallback() {
@@ -130,7 +121,6 @@ public class OcrScanActivity extends AppCompatActivity {
                 public void onPictureTaken(byte[] bytes) {
                     Bitmap bitmap= BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                     String miniaturePath=saveMiniatureFile(Bitmap.createScaledBitmap(bitmap,350,450,true),filePath);
-                    //String miniaturePath=saveMiniatureFile(bitmap,filePath);
                     saveDataToFile(miniaturePath,filePath);
                     endActivity();
                 }
@@ -148,7 +138,6 @@ public class OcrScanActivity extends AppCompatActivity {
             Toast.makeText(this,getText(R.string.cant_write_to_file),Toast.LENGTH_SHORT).show();
             return filename;
         }
-
         FileOutputStream out;
         try {
             out = new FileOutputStream(filename);
@@ -173,9 +162,6 @@ public class OcrScanActivity extends AppCompatActivity {
             }
         }
     }
-
-
-
 
 
     private void showMiniatureDialog() {
@@ -214,15 +200,12 @@ public class OcrScanActivity extends AppCompatActivity {
 
     private void getMiniature() {
         findViewById(R.id.textTargetingLayout).setVisibility(View.INVISIBLE);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            ((FloatingActionButton)findViewById(R.id.fabSaveCurrentPrice)).setImageResource(R.drawable.ic_camera);
-            findViewById(R.id.fabSaveCurrentPrice).setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(this,R.color.fab_miniature_color)));
-        }
+        ((FloatingActionButton)findViewById(R.id.fabSaveCurrentPrice)).setImageResource(R.drawable.ic_camera);
+        findViewById(R.id.fabSaveCurrentPrice).setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(this,R.color.fab_miniature_color)));
+
         isGettingMiniature=true;
         Toast.makeText(getApplicationContext(), getString(R.string.take_photo_to_product), Toast.LENGTH_SHORT).show();
     }
-
-
 
 
     @Override

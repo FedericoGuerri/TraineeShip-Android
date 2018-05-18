@@ -3,19 +3,16 @@ package com.unifi.federicoguerri.traineeship_android.OcrScanActivityTest.views;
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.unifi.federicoguerri.traineeship_android.OcrScanActivity;
 import com.unifi.federicoguerri.traineeship_android.R;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
-import org.robolectric.Robolectric;
 import org.robolectric.shadows.ShadowActivity;
 import org.robolectric.shadows.ShadowAlertDialog;
 import org.robolectric.shadows.ShadowApplication;
@@ -259,10 +256,6 @@ public class FabSaveCurrentPriceUnitTest extends AbstractOcrScanActivityUnitTest
 
     @Test
     public void fabSavePrice_resetBackgroundTintList_afterTakingTheMiniature(){
-        Intent intent = new Intent();
-        intent.putExtra("fileName","some/directory/configuration.txt");
-        activity = Robolectric.buildActivity(OcrScanActivity.class, intent).create().get();
-        fabSavePrice =activity.findViewById(R.id.fabSaveCurrentPrice);
         tapOnFabAndPressDialogPositiveButton();
         fabSavePrice.performClick();
         assertEquals(getColorFromResources(R.color.colorAccent),fabSavePrice.getBackgroundTintList().getDefaultColor());
@@ -271,10 +264,6 @@ public class FabSaveCurrentPriceUnitTest extends AbstractOcrScanActivityUnitTest
     /*
     @Test
     public void fabSavePrice_willShowToastMessage_afterTakingTheMiniature_ifCantWriteToFile(){
-        Intent intent = new Intent();
-        intent.putExtra("fileName","some/directory/configuration.txt");
-        activity = Robolectric.buildActivity(OcrScanActivity.class, intent).create().get();
-        fabSavePrice =activity.findViewById(R.id.fabSaveCurrentPrice);
         tapOnFabAndPressDialogPositiveButton();
         fabSavePrice.performClick();
         assertEquals(activity.getResources().getString(R.string.cant_write_to_file),ShadowToast.getTextOfLatestToast());
@@ -283,14 +272,15 @@ public class FabSaveCurrentPriceUnitTest extends AbstractOcrScanActivityUnitTest
     @Test
     public void fabSavePrice_willShowToastMessage_afterTakingTheMiniature_ifGetDirectoryPath(){
         Intent intent = new Intent();
-        intent.putExtra("fileName","some/directory/configuration.txt");
-        activity = Robolectric.buildActivity(OcrScanActivity.class, intent).create().get();
+        intent.putExtra("fileName","some/directory/");
+        activity = Robolectric.buildActivity(OcrScanActivity.class, intent).create().visible().get();
         fabSavePrice =activity.findViewById(R.id.fabSaveCurrentPrice);
         tapOnFabAndPressDialogPositiveButton();
         fabSavePrice.performClick();
         assertEquals(getStringFromResources(R.string.cant_write_to_file),ShadowToast.getTextOfLatestToast());
     }
     */
+
 
 
     private void tapOnFabAndPressDialogPositiveButton(){
