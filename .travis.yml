@@ -4,7 +4,7 @@ sudo: required
 
 env:
   global:
-    - ADB_INSTALL_TIMEOUT=8
+    - ADB_INSTALL_TIMEOUT=16
     
 cache:
   directories:
