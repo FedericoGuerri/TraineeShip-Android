@@ -33,7 +33,7 @@ before_install:
   - pip install --user codecov
     
   # Create and start emulator for the script.
-  - echo no | avdmanager create avd --force -n test -k "system-images;android-23;default;armeabi-v7a"
+  - echo no | avdmanager create avd --force -n test -k "system-images;android-23;google_apis;armeabi-v7a"
   - $ANDROID_HOME/emulator/emulator -avd test -no-audio -no-window &
 
 install: 
