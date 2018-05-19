@@ -8,14 +8,10 @@ import android.view.MenuItem;
 import com.unifi.federicoguerri.traineeship_android.BuildConfig;
 import com.unifi.federicoguerri.traineeship_android.MainActivity;
 import com.unifi.federicoguerri.traineeship_android.R;
-import com.unifi.federicoguerri.traineeship_android.core.DataLoaderFromFile;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
@@ -31,17 +27,11 @@ import static org.robolectric.Shadows.shadowOf;
 @RunWith(RobolectricTestRunner.class)
 public class GenericBehaviorTest {
 
-    @Mock
-    private DataLoaderFromFile dataLoaderFromFile;
-
-    @InjectMocks
-    private MainActivity activity= Robolectric.buildActivity(MainActivity.class).create().visible().get();
-
+    private MainActivity activity;
 
     @Before
     public void setUp(){
-        MockitoAnnotations.initMocks(this);
-        //activity = Robolectric.buildActivity(MainActivity.class).create().visible().get();
+        activity = Robolectric.buildActivity(MainActivity.class).create().visible().get();
     }
 
     @Test

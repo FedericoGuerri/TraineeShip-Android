@@ -14,6 +14,7 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
     buildTypes {
         debug {
             testCoverageEnabled true
@@ -23,6 +24,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
     lintOptions {
         lintConfig file("lint.xml")
     }
@@ -61,7 +63,7 @@ ext {
     //App
     appCompatVersion = '27.1.0'
     constraintLayoutVersion = '1.0.2'
-    playVisionVersion = '12.0.0'//'12.0.0'
+    playVisionVersion = '15.0.2'//'12.0.0'
     designVersion ='27.1.0'
 
     //Test

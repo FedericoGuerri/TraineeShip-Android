@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -42,10 +43,9 @@ public class OcrScanActivity extends AppCompatActivity {
 
     private SurfaceView ocrScanView;
     private OcrComponentsBuilder myOcrBuilder;
-    private final int REQUEST_CAMERA_PERMISSION=10400;
+    private final int REQUEST_CAMERA_PERMISSION = 10400;
     private String filePath;
-    private boolean isGettingMiniature=false;
-
+    private boolean isGettingMiniature = false;
 
 
     @Override
@@ -56,30 +56,33 @@ public class OcrScanActivity extends AppCompatActivity {
             getSupportActionBar().hide();
         }
 
-        filePath=getIntent().getStringExtra("fileName");
+        filePath = getIntent().getStringExtra("fileName");
         ocrScanView = findViewById(R.id.ocrViewOcrScanActivity);
-        myOcrBuilder=new OcrComponentsBuilder(getApplicationContext());
-        if (myOcrBuilder.getTextRecognizer().isOperational()) {
+        myOcrBuilder = new OcrComponentsBuilder(getApplicationContext());
 
-            myOcrBuilder.setCameraSource(new CameraSource.Builder(getApplicationContext(), myOcrBuilder.getTextRecognizer()).setFacing(CameraSource.CAMERA_FACING_BACK)
-                    .setRequestedPreviewSize(1280, 720).setRequestedFps(2.0f).setAutoFocusEnabled(true).build());
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        WindowManager windowManager = (WindowManager) getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
+        windowManager.getDefaultDisplay().getMetrics(displayMetrics);
 
-            ocrScanView.getHolder().addCallback(new MySurfaceHolderCallback(this,myOcrBuilder,ocrScanView.getHolder(),REQUEST_CAMERA_PERMISSION));
-        }else{
-            Log.d("TextRecognizer","dependencies error");
-        }
+        //if (myOcrBuilder.getTextRecognizer().isOperational()) {
+        myOcrBuilder.setCameraSource(new CameraSource.Builder(getApplicationContext(), myOcrBuilder.getTextRecognizer()).setFacing(CameraSource.CAMERA_FACING_BACK)
+                .setRequestedPreviewSize(displayMetrics.heightPixels, displayMetrics.widthPixels).setRequestedFps(2.0f).setAutoFocusEnabled(true).build());
+
+        ocrScanView.getHolder().addCallback(new MySurfaceHolderCallback(this, myOcrBuilder, ocrScanView.getHolder(), REQUEST_CAMERA_PERMISSION));
+        //}else{
+        //    Log.d("TextRecognizer","dependencies error");
+        //}
 
         myOcrBuilder.setRecognizedTextView((TextView) findViewById(R.id.recognizedTextViewOcrScanActivity));
-        resizeTargetingView();
+
+        resizeTargetingView(displayMetrics.widthPixels,displayMetrics.heightPixels);
+
     }
 
-    private void resizeTargetingView() {
-        DisplayMetrics displayMetrics=new DisplayMetrics();
-        WindowManager windowManager=(WindowManager) getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
-        windowManager.getDefaultDisplay().getMetrics(displayMetrics);
+    private void resizeTargetingView(int width, int height) {
         ViewGroup.LayoutParams params=(findViewById(R.id.textTargetingLayout)).getLayoutParams();
-        params.height=(displayMetrics.heightPixels)/3;
-        params.width=(displayMetrics.widthPixels);
+        params.height=height/3;
+        params.width=width;
     }
 
 
@@ -132,7 +135,7 @@ public class OcrScanActivity extends AppCompatActivity {
         String filename="noMiniature";
         try {
             String configurationDir = filePath.substring(0, filePath.lastIndexOf(File.separator));
-            @SuppressLint("SimpleDateFormat") String timeStamp = new SimpleDateFormat("yyyy_MMdd_HH_mm_ss").format(new Date());
+            String timeStamp = new SimpleDateFormat("yyyy_MMdd_HH_mm_ss").format(new Date());
             filename=configurationDir + File.separator + "miniature_"+ timeStamp + ".png";
         }catch (Exception e){
             Toast.makeText(this,getText(R.string.cant_write_to_file),Toast.LENGTH_SHORT).show();
@@ -141,25 +144,25 @@ public class OcrScanActivity extends AppCompatActivity {
         FileOutputStream out;
         try {
             out = new FileOutputStream(filename);
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 80, out);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
             out.close();
         } catch (Exception e) {
             Toast.makeText(this,getText(R.string.cant_write_to_file),Toast.LENGTH_SHORT).show();
+            filename="noMiniature";
         }
         return filename;
     }
 
     private void saveDataToFile(String miniaturePath,String filePath) {
-        DataWriterToFile dataWriterToFile = new DataWriterToFile();
+        DataWriterToFile dataWriterToFile= new DataWriterToFile();
         dataWriterToFile.setFilePath(filePath);
         try {
             dataWriterToFile.writeToPath(myOcrBuilder.getRecognizedTextView().getText().toString().replace(",",".") +" "+ miniaturePath+" ",true);
         } catch (Exception e) {
             if(e.getMessage().equals("Failed to write to file")) {
                 Toast.makeText(this, getText(R.string.cant_write_to_file), Toast.LENGTH_SHORT).show();
-            }else{
-                e.printStackTrace();
             }
+            e.printStackTrace();
         }
     }
 
@@ -202,7 +205,6 @@ public class OcrScanActivity extends AppCompatActivity {
         findViewById(R.id.textTargetingLayout).setVisibility(View.INVISIBLE);
         ((FloatingActionButton)findViewById(R.id.fabSaveCurrentPrice)).setImageResource(R.drawable.ic_camera);
         findViewById(R.id.fabSaveCurrentPrice).setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(this,R.color.fab_miniature_color)));
-
         isGettingMiniature=true;
         Toast.makeText(getApplicationContext(), getString(R.string.take_photo_to_product), Toast.LENGTH_SHORT).show();
     }
