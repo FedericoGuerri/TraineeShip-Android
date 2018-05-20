@@ -1,7 +1,6 @@
 package com.unifi.federicoguerri.traineeship_android;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -9,7 +8,6 @@ import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -19,7 +17,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,6 +43,9 @@ public class OcrScanActivity extends AppCompatActivity {
     private final int REQUEST_CAMERA_PERMISSION = 10400;
     private String filePath;
     private boolean isGettingMiniature = false;
+
+    private FloatingActionButton saveButton;
+    private int color;
 
 
     @Override
@@ -76,6 +76,9 @@ public class OcrScanActivity extends AppCompatActivity {
         myOcrBuilder.setRecognizedTextView((TextView) findViewById(R.id.recognizedTextViewOcrScanActivity));
 
         resizeTargetingView(displayMetrics.widthPixels,displayMetrics.heightPixels);
+
+        saveButton=findViewById(R.id.fabSaveCurrentPrice);
+        color=ContextCompat.getColor(this,R.color.colorAccent);
 
     }
 
@@ -115,8 +118,15 @@ public class OcrScanActivity extends AppCompatActivity {
                 toast.show();
             }
         }else{
-            ((FloatingActionButton)findViewById(R.id.fabSaveCurrentPrice)).setImageResource(R.drawable.ic_format_text);
-            findViewById(R.id.fabSaveCurrentPrice).setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(this,R.color.colorAccent)));
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            saveButton.setImageResource(R.drawable.ic_format_text);
+            saveButton.setBackgroundTintList(ColorStateList.valueOf(color));
+            //((FloatingActionButton)findViewById(R.id.fabSaveCurrentPrice)).setImageResource(R.drawable.ic_format_text);
+            //findViewById(R.id.fabSaveCurrentPrice).setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(this,R.color.colorAccent)));
             isGettingMiniature=false;
             findViewById(R.id.textTargetingLayout).setVisibility(View.VISIBLE);
             myOcrBuilder.getCameraSource().takePicture(null, new CameraSource.PictureCallback() {
