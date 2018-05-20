@@ -27,6 +27,11 @@ public class GenericHelper {
         onView(withId(R.id.fabSaveCurrentPrice)).perform(click());
         onView(withText(text)).perform(click());
         if(text.equals("YES")){
+            try {
+                Thread.sleep(6000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             onView(withId(R.id.fabSaveCurrentPrice)).perform(click());
         }
     }

@@ -44,7 +44,7 @@ public class OcrScanActivity extends AppCompatActivity {
     private String filePath;
     private boolean isGettingMiniature = false;
 
-    private FloatingActionButton saveButton;
+    private FloatingActionButton fabSavePrice;
     private int color;
 
 
@@ -77,7 +77,7 @@ public class OcrScanActivity extends AppCompatActivity {
 
         resizeTargetingView(displayMetrics.widthPixels,displayMetrics.heightPixels);
 
-        saveButton=findViewById(R.id.fabSaveCurrentPrice);
+        fabSavePrice =findViewById(R.id.fabSaveCurrentPrice);
         color=ContextCompat.getColor(this,R.color.colorAccent);
 
     }
@@ -123,8 +123,8 @@ public class OcrScanActivity extends AppCompatActivity {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            saveButton.setImageResource(R.drawable.ic_format_text);
-            saveButton.setBackgroundTintList(ColorStateList.valueOf(color));
+            fabSavePrice.setImageResource(R.drawable.ic_format_text);
+            fabSavePrice.setBackgroundTintList(ColorStateList.valueOf(color));
             //((FloatingActionButton)findViewById(R.id.fabSaveCurrentPrice)).setImageResource(R.drawable.ic_format_text);
             //findViewById(R.id.fabSaveCurrentPrice).setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(this,R.color.colorAccent)));
             isGettingMiniature=false;
@@ -226,7 +226,7 @@ public class OcrScanActivity extends AppCompatActivity {
     }
 
     private void endActivity() {
-        findViewById(R.id.fabSaveCurrentPrice).setEnabled(false);
+        fabSavePrice.setEnabled(false);
         finish();
         overridePendingTransition(R.anim.end_ocr_scan_enter,R.anim.end_ocr_scan_exit);
     }

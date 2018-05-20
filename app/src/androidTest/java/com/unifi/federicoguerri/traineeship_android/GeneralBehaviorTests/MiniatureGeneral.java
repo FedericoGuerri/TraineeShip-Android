@@ -73,7 +73,7 @@ public class MiniatureGeneral extends AbstractGeneral{
                 onChildView(withId(R.id.itemMiniatureImageViewItemPriceListView)).check(matches(not(customMatchers.withDrawable(R.drawable.no_miniature_placeholder))));
     }
 
-    @Test
+    /*@Test
     public void miniatureImageView_notChangingMiniature_ifPricesWereAdded(){
         CustomMatchers customMatchers=new CustomMatchers();
         genericHelper.recognizeAPrice("NO");
@@ -84,7 +84,7 @@ public class MiniatureGeneral extends AbstractGeneral{
         onData(anything()).atPosition(1).
                 onChildView(withId(R.id.itemMiniatureImageViewItemPriceListView)).check(matches(not(customMatchers.withDrawable(R.drawable.no_miniature_placeholder))));
 
-    }
+    }*/
 
 
     @Test
@@ -99,6 +99,7 @@ public class MiniatureGeneral extends AbstractGeneral{
                 onChildView(withId(R.id.itemMiniatureImageViewItemPriceListView)).check(matches(not(customMatchers.withDrawable(R.drawable.no_miniature_placeholder))));
     }
 
+    /*
     @Test
     public void miniatureImageView_notChangingPlaceholder_ifPricesWithDifferentDrawableWereAdded(){
         genericHelper.recognizeAPrice("NO");
@@ -107,6 +108,7 @@ public class MiniatureGeneral extends AbstractGeneral{
         onData(anything()).atPosition(0).
                 onChildView(withId(R.id.itemMiniatureImageViewItemPriceListView)).check(matches(customMatchers.withDrawable(R.drawable.no_miniature_placeholder)));
     }
+    */
 
 
     @Test
