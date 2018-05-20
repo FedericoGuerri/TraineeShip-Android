@@ -5,7 +5,7 @@ sudo: required
 env:
   global:
    # Increase timeout for installation to 20 minutes. Default is 2.
-    - ADB_INSTALL_TIMEOUT=20
+    - ADB_INSTALL_TIMEOUT=16
     
 cache:
   directories:
@@ -42,7 +42,7 @@ before_install:
 
 install: 
   # Run junit tests
-  - ./gradlew testDebugUnitTestCoverage
+  - ./gradlew testDebugUnitTestCoverage -PdisablePreDex
 
 before_script:
   # Wait emulator and unlock it.
@@ -54,7 +54,7 @@ before_script:
 
 script: 
   # Run instrumentation tests
-  - travis_wait ./gradlew connectedCheck
+  - travis_wait ./gradlew connectedCheck -PdisablePreDex
 
 after_success:
   # Upload coverage to codecov
