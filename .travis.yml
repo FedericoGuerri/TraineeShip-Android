@@ -52,12 +52,12 @@ before_script:
   - adb shell settings put global animator_duration_scale 0 &
   
    # Tapping on "WAIT" button of dialog
-  - adb shell input tap 297 478 &
-  - sleep 2
-  - adb shell input tap 305 484 &
-  - sleep 2
-  - adb shell input tap 320 490 &
-  - sleep 2
+  #- adb shell input tap 297 478 &
+  #- sleep 2
+  #- adb shell input tap 305 484 &
+  #- sleep 2
+  #- adb shell input tap 320 490 &
+  #- sleep 2
   
   - adb shell input keyevent 82 &
 
