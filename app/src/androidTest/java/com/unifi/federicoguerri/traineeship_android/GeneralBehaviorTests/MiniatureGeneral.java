@@ -14,6 +14,7 @@ import org.junit.runner.RunWith;
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.anything;
 import static org.hamcrest.CoreMatchers.not;
 
@@ -140,7 +141,7 @@ public class MiniatureGeneral extends AbstractGeneral{
         genericHelper.recognizeAPrice("NO");
         genericHelper.deletePrice(1);
         genericHelper.deletePrice(1);
-        onData(anything()).atPosition(0).
+        onData(allOf()).atPosition(0).
                 onChildView(withId(R.id.itemMiniatureImageViewItemPriceListView)).check(matches(not(customMatchers.withDrawable(R.drawable.no_miniature_placeholder))));
     }
 
