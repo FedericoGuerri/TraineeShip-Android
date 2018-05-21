@@ -133,6 +133,7 @@ public class MiniatureGeneral extends AbstractGeneral{
                 onChildView(withId(R.id.itemMiniatureImageViewItemPriceListView)).check(matches(not(customMatchers.withDrawable(R.drawable.no_miniature_placeholder))));
     }
 
+    /*
     @Test
     public void miniatureImageView_notChangingMiniature_ifPricesWithDifferentDrawableWereDeleted(){
         CustomMatchers customMatchers=new CustomMatchers();
@@ -144,6 +145,7 @@ public class MiniatureGeneral extends AbstractGeneral{
         onData(allOf()).atPosition(0).
                 onChildView(withId(R.id.itemMiniatureImageViewItemPriceListView)).check(matches(not(customMatchers.withDrawable(R.drawable.no_miniature_placeholder))));
     }
+    */
 
 
 
