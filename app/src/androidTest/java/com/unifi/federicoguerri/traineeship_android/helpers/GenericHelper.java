@@ -38,13 +38,13 @@ public class GenericHelper {
 
 
     public void deleteFirstPrice() {
-        onData(anything()).atPosition(0).
+        onData(allOf()).atPosition(0).
                 onChildView(withId(R.id.itemDeletePriceImageViewitemPriceListView)).
                 perform(click());
     }
 
     public void deletePrice(int index) {
-        onData(anything()).atPosition(index).
+        onData(allOf()).atPosition(index).
                 onChildView(withId(R.id.itemDeletePriceImageViewitemPriceListView)).
                 perform(click());
     }
