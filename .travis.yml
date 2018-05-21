@@ -42,7 +42,7 @@ before_install:
 
 install: 
   # Run junit tests
-  - ./gradlew testDebugUnitTestCoverage -PdisablePreDex
+  - ./gradlew testDebugUnitTestCoverage
 
 before_script:
   # Wait emulator and unlock it.
@@ -63,7 +63,7 @@ before_script:
 
 script: 
   # Run instrumentation tests
-  - travis_wait ./gradlew connectedCheck -PdisablePreDex
+  - travis_wait ./gradlew connectedCheck
 
 after_success:
   # Upload coverage to codecov
