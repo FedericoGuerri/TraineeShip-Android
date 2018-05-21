@@ -5,6 +5,7 @@ import android.database.DataSetObserver;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -19,12 +20,17 @@ public class ItemsLoaderToPriceListView {
     private String pricesPath;
     private MenuItem totalItem;
     private Activity activity;
+    private ListView pricesList;
+    private LinearLayout welcomeLayout;
 
     public ItemsLoaderToPriceListView(DataLoaderFromFile loaderFromFile, String pricesPath, MenuItem totalItem, Activity activity){
         this.loaderFromFile = loaderFromFile;
         this.pricesPath = pricesPath;
         this.totalItem = totalItem;
         this.activity = activity;
+
+        pricesList = activity.findViewById(R.id.pricesListViewMainActivity);
+        welcomeLayout=activity.findViewById(R.id.welcomeLayoutMainActivity);
     }
 
     public void loadItems(){
@@ -47,7 +53,7 @@ public class ItemsLoaderToPriceListView {
                         return total;
                     }
                 });
-                ((ListView)activity.findViewById(R.id.pricesListViewMainActivity)).setOnHierarchyChangeListener(new ViewGroup.OnHierarchyChangeListener() {
+                pricesList.setOnHierarchyChangeListener(new ViewGroup.OnHierarchyChangeListener() {
                     @Override
                     public void onChildViewAdded(View view, View view1) {
                     }
@@ -56,21 +62,21 @@ public class ItemsLoaderToPriceListView {
                     public void onChildViewRemoved(View view, View view1) {
                         if(((ListView)view).getChildCount()==0){
                             view.setVisibility(View.INVISIBLE);
-                            activity.findViewById(R.id.welcomeLayoutMainActivity).setVisibility(View.VISIBLE);
+                            welcomeLayout.setVisibility(View.VISIBLE);
                         }
                     }
                 });
-                ((ListView) activity.findViewById(R.id.pricesListViewMainActivity)).setAdapter(adapter);
-                activity.findViewById(R.id.pricesListViewMainActivity).setVisibility(View.VISIBLE);
-                activity.findViewById(R.id.welcomeLayoutMainActivity).setVisibility(View.INVISIBLE);
+                pricesList.setAdapter(adapter);
+                pricesList.setVisibility(View.VISIBLE);
+                welcomeLayout.setVisibility(View.INVISIBLE);
             }else{
-                activity.findViewById(R.id.pricesListViewMainActivity).setVisibility(View.INVISIBLE);
-                activity.findViewById(R.id.welcomeLayoutMainActivity).setVisibility(View.VISIBLE);
+                pricesList.setVisibility(View.INVISIBLE);
+                welcomeLayout.setVisibility(View.VISIBLE);
             }
         } catch (Exception e) {
             Toast.makeText(activity.getApplicationContext(),activity.getText(R.string.cant_read_from_file),Toast.LENGTH_SHORT).show();
-            activity.findViewById(R.id.pricesListViewMainActivity).setVisibility(View.INVISIBLE);
-            activity.findViewById(R.id.welcomeLayoutMainActivity).setVisibility(View.VISIBLE);
+            pricesList.setVisibility(View.INVISIBLE);
+            welcomeLayout.setVisibility(View.VISIBLE);
         }
     }
 }

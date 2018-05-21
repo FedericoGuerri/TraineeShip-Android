@@ -125,8 +125,6 @@ public class OcrScanActivity extends AppCompatActivity {
             }
             fabSavePrice.setImageResource(R.drawable.ic_format_text);
             fabSavePrice.setBackgroundTintList(ColorStateList.valueOf(color));
-            //((FloatingActionButton)findViewById(R.id.fabSaveCurrentPrice)).setImageResource(R.drawable.ic_format_text);
-            //findViewById(R.id.fabSaveCurrentPrice).setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(this,R.color.colorAccent)));
             isGettingMiniature=false;
             findViewById(R.id.textTargetingLayout).setVisibility(View.VISIBLE);
             myOcrBuilder.getCameraSource().takePicture(null, new CameraSource.PictureCallback() {
@@ -213,8 +211,8 @@ public class OcrScanActivity extends AppCompatActivity {
 
     private void getMiniature() {
         findViewById(R.id.textTargetingLayout).setVisibility(View.INVISIBLE);
-        ((FloatingActionButton)findViewById(R.id.fabSaveCurrentPrice)).setImageResource(R.drawable.ic_camera);
-        findViewById(R.id.fabSaveCurrentPrice).setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(this,R.color.fab_miniature_color)));
+        fabSavePrice.setImageResource(R.drawable.ic_camera);
+        fabSavePrice.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(this,R.color.fab_miniature_color)));
         isGettingMiniature=true;
         Toast.makeText(getApplicationContext(), getString(R.string.take_photo_to_product), Toast.LENGTH_SHORT).show();
     }
