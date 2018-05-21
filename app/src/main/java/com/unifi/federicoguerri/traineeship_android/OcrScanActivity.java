@@ -119,7 +119,7 @@ public class OcrScanActivity extends AppCompatActivity {
             }
         }else{
             try {
-                Thread.sleep(5000);
+                Thread.sleep(1500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
