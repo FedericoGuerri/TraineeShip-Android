@@ -113,9 +113,6 @@ public class MiniatureGeneral extends AbstractGeneral{
                 onChildView(withId(R.id.itemMiniatureImageViewItemPriceListView)).check(matches(customMatchers.withDrawable(R.drawable.no_miniature_placeholder)));
     }
 
-
-
-
     @Test
     public void miniatureImageView_notChangingMiniature_ifPricesWithDifferentDrawableWereAdded(){
         CustomMatchers customMatchers=new CustomMatchers();
@@ -126,17 +123,15 @@ public class MiniatureGeneral extends AbstractGeneral{
                 onChildView(withId(R.id.itemMiniatureImageViewItemPriceListView)).check(matches(not(customMatchers.withDrawable(R.drawable.no_miniature_placeholder))));
     }
 
-
     @Test
     public void miniatureImageView_notChangingPlaceholder_ifPricesWithDifferentDrawableWereDeleted(){
         genericHelper.recognizeAPrice("NO");
         genericHelper.recognizeAPrice("YES");//miniature
         genericHelper.recognizeAPrice("NO");
         genericHelper.deleteFirstPrice();
-        onData(allOf()).atPosition(0).
+        onData(allOf()).atPosition(1).
                 onChildView(withId(R.id.itemMiniatureImageViewItemPriceListView)).check(matches(not(customMatchers.withDrawable(R.drawable.no_miniature_placeholder))));
     }
-
 
     @Test
     public void miniatureImageView_notChangingMiniature_ifPricesWithDifferentDrawableWereDeleted(){
