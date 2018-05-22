@@ -1,7 +1,5 @@
 package com.unifi.federicoguerri.traineeship_android.MainActivityTest;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
 import android.os.Build;
 import android.view.MenuItem;
 
@@ -31,7 +29,7 @@ public class GenericBehaviorTest {
 
     @Before
     public void setUp(){
-        activity = Robolectric.buildActivity(MainActivity.class).create().visible().get();
+        activity = Robolectric.buildActivity(MainActivity.class).create().postResume().visible().get();
     }
 
     @Test
@@ -40,10 +38,8 @@ public class GenericBehaviorTest {
     }
 
     @Test
-    public void configurationDirectory_isCreated_afterPermissionIsGranted() {
-        int writePermission=10800;
-        activity.onRequestPermissionsResult(writePermission,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},new int[]{PackageManager.PERMISSION_GRANTED});
-        File directory = new File(activity.getFilesDir()
+    public void configurationDirectory_isCreated() {
+       File directory = new File(activity.getFilesDir()
                 + "/Android/data/"
                 + activity.getApplicationContext().getPackageName()
                 + "/ConfigurationDir");

@@ -38,7 +38,7 @@ android {
     }
 
     project.ext {
-        orchestrator = project.hasProperty('orchestrator') ? project.property('orchestrator') : false
+        orchestrator = project.hasProperty('orchestrator') ? project.property('orchestrator') : true
     }
 
     testOptions {

@@ -93,16 +93,15 @@ public class OcrScanActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode){
             case REQUEST_CAMERA_PERMISSION: {
-                if(grantResults[0]==PackageManager.PERMISSION_GRANTED){
-                    if(ActivityCompat.checkSelfPermission(this,Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
-                        return;
-                    }
-                    try {
-                        myOcrBuilder.getCameraSource().start(ocrScanView.getHolder());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                if(grantResults[0]==PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this,Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                    return;
                 }
+                try {
+                    myOcrBuilder.getCameraSource().start(ocrScanView.getHolder());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
             }
 
         }
@@ -118,11 +117,11 @@ public class OcrScanActivity extends AppCompatActivity {
                 toast.show();
             }
         }else{
-            try {
-                Thread.sleep(1500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+//            try {
+//                Thread.sleep(1500);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
             fabSavePrice.setImageResource(R.drawable.ic_format_text);
             fabSavePrice.setBackgroundTintList(ColorStateList.valueOf(color));
             isGettingMiniature=false;
