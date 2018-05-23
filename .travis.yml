@@ -63,7 +63,7 @@ before_script:
 
 script: 
   # Run instrumentation tests
-  - travis_wait ./gradlew connectedCheck
+  - travis_wait 50 ./gradlew connectedCheck
 
 after_success:
   # Upload coverage to codecov
