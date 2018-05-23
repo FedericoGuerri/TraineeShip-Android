@@ -117,11 +117,11 @@ public class OcrScanActivity extends AppCompatActivity {
                 toast.show();
             }
         }else{
-//            try {
-//                Thread.sleep(1500);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
+            try {
+                Thread.sleep(1500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             fabSavePrice.setImageResource(R.drawable.ic_format_text);
             fabSavePrice.setBackgroundTintList(ColorStateList.valueOf(color));
             isGettingMiniature=false;

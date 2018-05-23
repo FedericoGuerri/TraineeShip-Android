@@ -22,12 +22,27 @@ import static org.hamcrest.core.AllOf.allOf;
 public class GenericHelper {
 
     public void recognizeAPrice(String text) {
+        try {
+            Thread.sleep(1500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         onView(withId(R.id.fabNewOcrMainActivity)).perform(click());
+        try {
+            Thread.sleep(1500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         onView(withId(R.id.fabSaveCurrentPrice)).perform(click());
+        try {
+            Thread.sleep(1500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         onView(withText(text)).perform(click());
         if(text.equals("YES")){
             try {
-                Thread.sleep(3000);
+                Thread.sleep(3500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
