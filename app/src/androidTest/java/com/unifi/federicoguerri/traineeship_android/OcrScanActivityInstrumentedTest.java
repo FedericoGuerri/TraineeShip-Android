@@ -14,6 +14,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.hasChildCount;
 import static android.support.test.espresso.matcher.ViewMatchers.hasTextColor;
@@ -21,6 +22,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.isClickable;
 import static android.support.test.espresso.matcher.ViewMatchers.isCompletelyDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static junit.framework.Assert.assertEquals;
 
 @RunWith(AndroidJUnit4.class)
@@ -88,7 +90,7 @@ public class OcrScanActivityInstrumentedTest {
         onView(withId(R.id.fabSaveCurrentPrice)).check(matches(isClickable()));
     }
 
-    /*
+
     @Test
     public void fabSavePrice_willChangeDrawableWhileTakingMiniature(){
         onView(withId(R.id.fabSaveCurrentPrice)).perform(click());
@@ -96,7 +98,7 @@ public class OcrScanActivityInstrumentedTest {
         CustomMatchers customMatchers=new CustomMatchers();
         onView(withId(R.id.fabSaveCurrentPrice)).check(matches(customMatchers.withDrawable(R.drawable.ic_camera)));
     }
-    */
+
 
 
     // General tests
