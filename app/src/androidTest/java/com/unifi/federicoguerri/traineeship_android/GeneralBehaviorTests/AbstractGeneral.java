@@ -25,7 +25,7 @@ public class AbstractGeneral {
     @Before
     public void setUp(){
         genericHelper=new GenericHelper();
-       splashActivityRule.launchActivity(null);
+        splashActivityRule.launchActivity(null);
     }
 
     @After

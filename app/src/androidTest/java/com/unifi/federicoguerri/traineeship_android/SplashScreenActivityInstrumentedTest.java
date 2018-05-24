@@ -33,11 +33,11 @@ public class SplashScreenActivityInstrumentedTest {
     }
 
     // General tests
-    @Test
-    public void user_cantInteractByTap(){
-        onView(withId(android.R.id.content)).perform(click());
-        onView(withId(android.R.id.content)).check(matches(isCompletelyDisplayed()));
-    }
+//    @Test
+//    public void user_cantInteractByTap(){
+//        onView(withId(android.R.id.content)).perform(click());
+//        onView(withId(android.R.id.content)).check(matches(isCompletelyDisplayed()));
+//    }
 
     @Test
     public void user_cantInteractByLongClick(){
