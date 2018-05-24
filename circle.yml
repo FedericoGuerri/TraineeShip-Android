@@ -1,11 +1,6 @@
 # CircleCi configuration version
 version: 2
 
-dependencies:
-  pre:
-    - chmod +x android-wait-for-boot.sh
-    - chmod +x gradlew
-
 jobs:
   build:
     docker:
@@ -15,7 +10,7 @@ jobs:
     working_directory: ~/workspace
 
     steps:
-
+    
       - run:
           name: Lists installed targets
           command: android list target
@@ -25,6 +20,18 @@ jobs:
       - run:
           name: List available targets and other sdk modules
           command: sdkmanager --list --include_obsolete --verbose
+          environment:
+            TERM: dumb
+            
+      - run:
+          name: Making license directory
+          command: mkdir "$ANDROID_HOME/licenses" || true
+          environment:
+            TERM: dumb
+            
+      - run:
+          name: Licenses
+          command: echo "d56f5187479451eabf01fb78af6dfcb131a6481e" > "$ANDROID_HOME/licenses/android-sdk-license"
           environment:
             TERM: dumb
 
@@ -44,7 +51,7 @@ jobs:
       - checkout
 
       - run:
-          name: Wait for emulator
+          name: Permission to wait-script
           command: chmod +x android-wait-for-boot.sh
           environment:
             TERM: dumb
