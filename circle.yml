@@ -5,7 +5,7 @@ jobs:
   build:
     docker:
       # specific environment version to avoid incompatible updates
-      - image: bitriseio/docker-android:v2017_09_09-06_45-b744
+      - image: circleci/android:api-27-alpha
 
     working_directory: ~/workspace
 
