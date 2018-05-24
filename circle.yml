@@ -3,7 +3,7 @@ version: 2
 
 dependencies:
   pre:
-    - chmod +x android-wait-for-emulator.sh
+    - chmod +x android-wait-for-boot.sh
     - chmod +x gradlew
 
 jobs:
