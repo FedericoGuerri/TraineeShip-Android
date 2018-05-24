@@ -5,7 +5,7 @@ jobs:
   build:
     docker:
       # specific environment version to avoid incompatible updates
-      - image: circleci/android:api-27-alpha
+      - image: circleci/android:api-26-alpha
 
     working_directory: ~/workspace
 
