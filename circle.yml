@@ -45,6 +45,12 @@ jobs:
 
       - run:
           name: Wait for emulator
+          command: chmod +x android-wait-for-boot.sh
+          environment:
+            TERM: dumb
+
+      - run:
+          name: Wait for emulator
           command: ./android-wait-for-boot.sh
           environment:
             TERM: dumb
