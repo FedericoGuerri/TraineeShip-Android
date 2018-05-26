@@ -11,7 +11,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.longClick;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isCompletelyDisplayed;
@@ -25,19 +24,10 @@ public class SplashScreenActivityInstrumentedTest {
     @Rule
     public ActivityTestRule<SplashScreenActivity> splashScreenRule = new ActivityTestRule<>(SplashScreenActivity.class);
 
-    // background view
-
     @Test(expected = NoMatchingViewException.class)
     public void backgroundView_isOverridedByTheme(){
         onView(withId(R.id.splashBackgroundView)).check(matches(isCompletelyDisplayed()));
     }
-
-    // General tests
-//    @Test
-//    public void user_cantInteractByTap(){
-//        onView(withId(android.R.id.content)).perform(click());
-//        onView(withId(android.R.id.content)).check(matches(isCompletelyDisplayed()));
-//    }
 
     @Test
     public void user_cantInteractByLongClick(){

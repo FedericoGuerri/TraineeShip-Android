@@ -1,7 +1,6 @@
 package com.unifi.federicoguerri.traineeship_android;
 
 import android.Manifest;
-import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.rule.GrantPermissionRule;
 import android.support.test.runner.AndroidJUnit4;
@@ -16,11 +15,6 @@ import org.junit.runner.RunWith;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.ViewMatchers.hasChildCount;
-import static android.support.test.espresso.matcher.ViewMatchers.hasTextColor;
-import static android.support.test.espresso.matcher.ViewMatchers.isClickable;
-import static android.support.test.espresso.matcher.ViewMatchers.isCompletelyDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static junit.framework.Assert.assertEquals;
@@ -33,46 +27,6 @@ public class OcrScanActivityInstrumentedTest {
     @Rule public GrantPermissionRule runtimePermissionCamera = GrantPermissionRule .grant(Manifest.permission.CAMERA);
     @Rule public GrantPermissionRule runtimePermissionStorange = GrantPermissionRule .grant(Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
-    // parent layout
-
-    @Test
-    public void parentLayout_isVisibleTest(){
-        onView(withId(R.id.ocrParentLayoutOcrScanActivity)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
-    }
-
-
-//    @Test
-//    public void parentLayout_hasThreeChildrenTest(){
-//        onView(withId(R.id.ocrParentLayoutOcrScanActivity)).check(matches(hasChildCount(4)));
-//    }
-
-
-    // recognized Textview
-
-    @Test
-    public void recognizedTextView_isVisible(){
-        onView(withId(R.id.recognizedTextViewOcrScanActivity)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
-    }
-//
-//    @Test
-//    public void hintTextView_hasColorAccentTextColor(){
-//        onView(withId(R.id.recognizedTextViewOcrScanActivity)).check(matches(hasTextColor(R.color.colorAccent)));
-//    }
-
-
-    // ocr view
-
-    @Test
-    public void ocrView_isVisible(){
-        onView(withId(R.id.ocrViewOcrScanActivity)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
-    }
-
-    // fab save price
-
-    @Test
-    public void fabSavePrice_isCompletlyDisplayed(){
-        onView(withId(R.id.fabSaveCurrentPrice)).check(matches(isCompletelyDisplayed()));
-    }
 
     @Test
     public void fabSavePrice_hasBackgroundTintListColorTest(){
@@ -85,11 +39,6 @@ public class OcrScanActivityInstrumentedTest {
         onView(withId(R.id.fabSaveCurrentPrice)).check(matches(customMatchers.withDrawable(R.drawable.ic_format_text)));
     }
 
-//    @Test
-//    public void fabSavePrice_isClickable(){
-//        onView(withId(R.id.fabSaveCurrentPrice)).check(matches(isClickable()));
-//    }
-
 
     @Test
     public void fabSavePrice_willChangeDrawableWhileTakingMiniature(){
@@ -99,9 +48,6 @@ public class OcrScanActivityInstrumentedTest {
         onView(withId(R.id.fabSaveCurrentPrice)).check(matches(customMatchers.withDrawable(R.drawable.ic_camera)));
     }
 
-
-
-    // General tests
 
     @Test
     public void supportActionBar_isInvisibleTest(){

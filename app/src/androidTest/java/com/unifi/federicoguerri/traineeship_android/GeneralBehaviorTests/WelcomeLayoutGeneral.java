@@ -19,11 +19,6 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 @RunWith(AndroidJUnit4.class)
 public class WelcomeLayoutGeneral extends  AbstractGeneral{
 
-
-    // MainActivity
-
-    // welcomeLayout
-
     @Test
     public void welcomeLayout_willBeInvisible_AfterRecognizedAPrice(){
         genericHelper.recognizeAPrice("NO");
