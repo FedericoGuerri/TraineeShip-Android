@@ -23,13 +23,11 @@ public class MiniatureGeneral extends AbstractGeneral{
 
     private CustomMatchers customMatchers;
 
-    // MainActivity
     @Before
     public void settingUp() {
         customMatchers=new CustomMatchers();
     }
 
-    //miniature ImageView
     @Test
     public void miniatureImageView_hasPlaceholderDrawable_ifUserClicksOnNObutton(){
         genericHelper.recognizeAPrice("NO");
@@ -62,8 +60,6 @@ public class MiniatureGeneral extends AbstractGeneral{
                 onChildView(withId(R.id.itemMiniatureImageViewItemPriceListView)).check(matches(customMatchers.withDrawable(R.drawable.no_miniature_placeholder)));
     }
 
-
-    // failing tests!
 
 
     @Test
