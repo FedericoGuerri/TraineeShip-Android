@@ -31,6 +31,7 @@ public class CustomAdapterUnitTest {
     DataWriterToFile dataWriterToFile;
     @InjectMocks
     private CustomAdapter customAdapter;
+
     private MainActivity activity;
     private View convertView;
     private CustomAdapter.ViewHolder viewHolder;

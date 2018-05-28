@@ -12,13 +12,13 @@ import java.io.IOException;
 public class MySurfaceHolderCallback implements SurfaceHolder.Callback {
     private Activity activity;
     private OcrComponentsBuilder ocrBuilder;
-    private SurfaceHolder surfaceView;
+    private SurfaceHolder surfaceHolder;
     private int requestCode;
 
-    public MySurfaceHolderCallback(Activity activity, OcrComponentsBuilder ocrBuilder, SurfaceHolder surfaceView,int requestCode){
+    public MySurfaceHolderCallback(Activity activity, OcrComponentsBuilder ocrBuilder, SurfaceHolder surfaceHolder, int requestCode){
         this.activity = activity;
         this.ocrBuilder = ocrBuilder;
-        this.surfaceView = surfaceView;
+        this.surfaceHolder = surfaceHolder;
         this.requestCode = requestCode;
     }
 
@@ -28,13 +28,11 @@ public class MySurfaceHolderCallback implements SurfaceHolder.Callback {
             ActivityCompat.requestPermissions(activity,new String[]{Manifest.permission.CAMERA}, requestCode);
             return;
         }
-
         try {
-            ocrBuilder.getCameraSource().start(surfaceView);
+            ocrBuilder.getCameraSource().start(this.surfaceHolder);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     @Override

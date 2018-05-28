@@ -144,12 +144,7 @@ public class OcrScanActivity extends AppCompatActivity {
             String configurationDir = filePath.substring(0, filePath.lastIndexOf(File.separator));
             String timeStamp = new SimpleDateFormat("yyyy_MMdd_HH_mm_ss").format(new Date());
             filename=configurationDir + File.separator + "miniature_"+ timeStamp + ".png";
-        }catch (Exception e){
-            Toast.makeText(this,getText(R.string.cant_write_to_file),Toast.LENGTH_SHORT).show();
-            return filename;
-        }
-        FileOutputStream out;
-        try {
+            FileOutputStream out;
             out = new FileOutputStream(filename);
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
             out.close();

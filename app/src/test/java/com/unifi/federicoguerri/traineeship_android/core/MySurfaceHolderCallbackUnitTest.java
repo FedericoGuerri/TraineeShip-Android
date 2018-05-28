@@ -45,15 +45,15 @@ public class MySurfaceHolderCallbackUnitTest {
     @Before
     public void init(){
         ShadowApplication shadowApplication=shadowOf(activity.getApplication());
-        shadowApplication.grantPermissions(new String[]{Manifest.permission.CAMERA});
+        shadowApplication.grantPermissions(Manifest.permission.CAMERA);
         MockitoAnnotations.initMocks(this);
         when(ocrComponentsBuilder.getCameraSource()).thenReturn(fakeCamera);
     }
 
     @Test
     public void surfaceHolder_canThrowException_thatIsCaught() throws IOException{
-        surfaceHolderCallback.surfaceCreated(surfaceHolder);
         when(fakeCamera.start(any(SurfaceHolder.class))).thenThrow(IOException.class);
+        surfaceHolderCallback.surfaceCreated(surfaceHolder);
         verify(fakeCamera,atLeastOnce()).start(any(SurfaceHolder.class));
     }
 
@@ -77,9 +77,9 @@ public class MySurfaceHolderCallbackUnitTest {
     @Test
     public void surfaceHolder_requestCameraPermission_ifHasNot() throws IOException {
         ShadowApplication shadowApplication=shadowOf(activity.getApplication());
-        shadowApplication.denyPermissions(new String[]{Manifest.permission.CAMERA});
-        MockitoAnnotations.initMocks(this);
+        shadowApplication.denyPermissions(Manifest.permission.CAMERA);
         when(ocrComponentsBuilder.getCameraSource()).thenReturn(fakeCamera);
+        MockitoAnnotations.initMocks(this);
         surfaceHolderCallback.surfaceCreated(surfaceHolder);
         verify(fakeCamera,atMost(0)).start(any(SurfaceHolder.class));
     }

@@ -98,8 +98,7 @@ public class OcrComponentsBuilder implements  Detector.Processor<TextBlock>{
                 }
             }).start();
         } catch (Exception e) {
-            if (e.getMessage().equals("recognitionError")) {
-                if(recognizedTextView.getX()!=originalX || originalY!=recognizedTextView.getY()) {
+            if (e.getMessage().equals("recognitionError") && (recognizedTextView.getX()!=originalX || originalY!=recognizedTextView.getY())) {
                     recognizedTextView.animate().scaleY(0f).scaleX(0f).withEndAction(new Runnable() {
                         @Override
                         public void run() {
@@ -109,7 +108,6 @@ public class OcrComponentsBuilder implements  Detector.Processor<TextBlock>{
                             recognizedTextView.animate().scaleX(1f).scaleY(1f);
                         }
                     }).start();
-                }
             }
         }
     }

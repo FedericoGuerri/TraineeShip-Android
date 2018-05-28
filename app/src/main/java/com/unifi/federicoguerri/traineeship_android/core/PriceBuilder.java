@@ -25,11 +25,9 @@ public class PriceBuilder{
         for(int i=1;i<prices.length;i++){
             if(prices[i].contains(",") && !recognized.contains(",")){
                 recognized=prices[i];
-            }else if(prices[i].contains(",") && recognized.contains(",")){
-                if(prices[i].lastIndexOf(",")<=recognized.lastIndexOf(",")){
-                    if(prices[i].length()-prices[i].lastIndexOf(",")<recognized.length()-recognized.lastIndexOf(",") || recognized.length()>prices[i].length()) {
-                        recognized = prices[i];
-                    }
+            }else if(prices[i].contains(",") && recognized.contains(",") && prices[i].lastIndexOf(",")<=recognized.lastIndexOf(",") ){
+                if(prices[i].length()-prices[i].lastIndexOf(",")<recognized.length()-recognized.lastIndexOf(",") || recognized.length()>prices[i].length()) {
+                    recognized = prices[i];
                 }
             }
         }

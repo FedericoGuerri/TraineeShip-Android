@@ -21,11 +21,12 @@ import static org.robolectric.Shadows.shadowOf;
 @Config(constants = BuildConfig.class, sdk = Build.VERSION_CODES.LOLLIPOP_MR1)
 @RunWith(RobolectricTestRunner.class)
 public class GenericBehaviorTest {
+
     private OcrScanActivity activity;
 
     @Before
     public void setUp() {
-        activity = Robolectric.buildActivity(OcrScanActivity.class).create().get();
+        activity = Robolectric.buildActivity(OcrScanActivity.class).create().visible().postResume().get();
     }
 
     @Test
