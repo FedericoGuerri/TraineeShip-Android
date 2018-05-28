@@ -17,6 +17,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.isAssignableFro
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.CoreMatchers.anything;
 import static org.hamcrest.core.AllOf.allOf;
 
 public class GenericHelper {
@@ -52,13 +53,13 @@ public class GenericHelper {
 
 
     public void deleteFirstPrice() {
-        onData(allOf()).atPosition(0).
+        onData(anything()).atPosition(0).
                 onChildView(withId(R.id.itemDeletePriceImageViewitemPriceListView)).
                 perform(click());
     }
 
     public void deletePrice(int index) {
-        onData(allOf()).atPosition(index).
+        onData(anything()).atPosition(index).
                 onChildView(withId(R.id.itemDeletePriceImageViewitemPriceListView)).
                 perform(click());
     }
