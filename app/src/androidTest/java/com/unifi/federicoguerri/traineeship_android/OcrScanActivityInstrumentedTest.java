@@ -17,7 +17,7 @@ import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNull;
 
 @RunWith(AndroidJUnit4.class)
 public class OcrScanActivityInstrumentedTest {
@@ -50,8 +50,8 @@ public class OcrScanActivityInstrumentedTest {
 
 
     @Test
-    public void supportActionBar_isInvisibleTest(){
-        assertEquals(false, ocrScanActivityRule.getActivity().getSupportActionBar().isShowing());
+    public void supportActionBar_isNotThere(){
+        assertNull( ocrScanActivityRule.getActivity().getSupportActionBar());
     }
 
 

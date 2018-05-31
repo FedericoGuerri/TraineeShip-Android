@@ -52,9 +52,6 @@ public class OcrScanActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ocr_scan);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().hide();
-        }
 
         filePath = getIntent().getStringExtra("fileName");
         ocrScanView = findViewById(R.id.ocrViewOcrScanActivity);

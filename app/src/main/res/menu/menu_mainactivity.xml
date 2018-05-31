@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools">
     <item
         android:id="@+id/menuitem_total_mainactivity"
-        android:title="@string/menuitem_total_default_mainactivity"
-        app:showAsAction="always"
         android:enabled="false"
+        android:title="@string/menuitem_total_default_mainactivity"
+        app:showAsAction="always|withText"
         tools:visible="true" />
 </menu>

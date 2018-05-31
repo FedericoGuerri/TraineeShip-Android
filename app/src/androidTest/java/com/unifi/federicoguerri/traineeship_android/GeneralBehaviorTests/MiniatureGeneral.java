@@ -16,7 +16,6 @@ import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static org.hamcrest.CoreMatchers.anything;
 import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.core.AllOf.allOf;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest

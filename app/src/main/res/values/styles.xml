@@ -7,11 +7,14 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-
-    <style name="SplashScreenTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="NoActionBarTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+
+    <style name="SplashScreenTheme" parent="NoActionBarTheme">
         <item name="android:windowBackground">@drawable/splash_screen_bitmap</item>
     </style>
 
