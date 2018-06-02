@@ -261,6 +261,22 @@ public class FabSaveCurrentPriceUnitTest extends AbstractOcrScanActivityUnitTest
         assertEquals(getColorFromResources(R.color.colorAccent),fabSavePrice.getBackgroundTintList().getDefaultColor());
     }
 
+    @Test
+    public void fabSavePrice_willReset_priceTextViewX_afterTakingTheMiniature(){
+        TextView priceTextView= activity.findViewById(R.id.recognizedTextViewOcrScanActivity);
+        priceTextView.setX(-200);
+        tapOnFabAndPressDialogPositiveButton();
+        assertTrue(priceTextView.getX()!=-200);
+    }
+
+    @Test
+    public void fabSavePrice_willReset_priceTextViewY_afterTakingTheMiniature(){
+        TextView priceTextView= activity.findViewById(R.id.recognizedTextViewOcrScanActivity);
+        priceTextView.setY(-200);
+        tapOnFabAndPressDialogPositiveButton();
+        assertTrue(priceTextView.getY()!=-200);
+    }
+
     /*
     @Test
     public void fabSavePrice_willShowToastMessage_afterTakingTheMiniature_ifCantWriteToFile(){
@@ -280,7 +296,6 @@ public class FabSaveCurrentPriceUnitTest extends AbstractOcrScanActivityUnitTest
         assertEquals(getStringFromResources(R.string.cant_write_to_file),ShadowToast.getTextOfLatestToast());
     }
     */
-
 
 
     private void tapOnFabAndPressDialogPositiveButton(){

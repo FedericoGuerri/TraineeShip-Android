@@ -34,20 +34,15 @@ public class PriceBuilder{
     }
 
     private void formatPrice() throws Exception{
-
         if(recognized.length()>7){
             throw new Exception("recognitionError");
         }
-
         if(recognized.lastIndexOf(",")==recognized.length()-1 || recognized.startsWith(",")){
             throw new Exception("recognitionError");
         }
-
         if(recognized.lastIndexOf(",") != recognized.indexOf(",")){
             throw new Exception("recognitionError");
         }
-
-
     }
 
 

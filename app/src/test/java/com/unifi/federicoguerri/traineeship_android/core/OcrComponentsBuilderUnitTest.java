@@ -31,7 +31,6 @@ import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @Config(constants = BuildConfig.class, sdk = Build.VERSION_CODES.LOLLIPOP_MR1)
@@ -41,8 +40,9 @@ public class OcrComponentsBuilderUnitTest {
     private OcrComponentsBuilder ocrBuilder;
     private OcrScanActivity activity;
     private TextView textView;
-    private int defaultRectValue=220;
-    private TextBlock textBlock;
+    private Rect defaultRectValue=new Rect(0,20,50,400);
+    private float textViewOriginalX=120f;
+    private float textViewOriginalY=22f;
 
     @Before
     public void init(){
@@ -141,13 +141,14 @@ public class OcrComponentsBuilderUnitTest {
         String[] splittedValues=values.split(" ");
 
         SparseArray<TextBlock> mockedArray = Mockito.mock(SparseArray.class);
-        textBlock= Mockito.mock(TextBlock.class);
-        when(textBlock.getBoundingBox()).thenReturn(new Rect(100,33,0,0));
+        TextBlock textBlock= Mockito.mock(TextBlock.class);
+        when(textBlock.getBoundingBox()).thenReturn(new Rect(100,33,200,330));
         ArrayList<TextBlock> temp=new ArrayList<>();
 
         for (String value : splittedValues) {
             TextBlock nestedTextBlock = Mockito.mock(TextBlock.class);
             when(nestedTextBlock.getValue()).thenReturn(value);
+            when(nestedTextBlock.getBoundingBox()).thenReturn(new Rect(100,33,200,330));
             temp.add(nestedTextBlock);
         }
         when(textBlock.getComponents()).thenReturn((List)temp);
@@ -159,8 +160,8 @@ public class OcrComponentsBuilderUnitTest {
 
     private void initTextBuilderRunner(String valuesWithSpacesBetween,int arraySize){
         ocrBuilder.setRecognizedTextView(textView);
-        ocrBuilder.setTextViewCoordinates(120f,22f);
-        ocrBuilder.setRectBounds(new Rect(defaultRectValue, defaultRectValue, defaultRectValue, defaultRectValue));
+        ocrBuilder.setTextViewCoordinates(textViewOriginalX,textViewOriginalY);
+        ocrBuilder.setRectBounds(defaultRectValue);
 
         Detector.Detections<TextBlock> detections= Mockito.mock(Detector.Detections.class);
         SparseArray<TextBlock> array=mockSparseArray(valuesWithSpacesBetween,arraySize);
@@ -186,17 +187,6 @@ public class OcrComponentsBuilderUnitTest {
         assertEquals(33f,textView.getY());
     }
 
-    @Test
-    public void textView_hasDefaultXCoordinates_ifPriceWasDetected_andNoValueMatchPrice(){
-        initTextBuilderRunner("no 1.1 prices",1);
-        assertEquals(defaultRectValue,(int)textView.getX());
-    }
-
-    @Test
-    public void textView_hasDefaultYCoordinates_ifPriceWasDetected_andNoValueMatchPrice(){
-        initTextBuilderRunner("no 1.1 prices",1);
-        assertEquals(defaultRectValue,(int)textView.getY());
-    }
 
     @Test
     public void textView_hasTextFromResources(){
@@ -207,20 +197,15 @@ public class OcrComponentsBuilderUnitTest {
     @Test
     public void textView_hasOriginalXCoordinates_ifNoPricesWereDetected(){
         initTextBuilderRunner("no prices at all",1);
-        assertEquals(120f,textView.getX());
+        assertEquals(textViewOriginalX,textView.getX());
     }
 
     @Test
     public void textView_hasOriginalYCoordinates_ifNoPricesWereDetected(){
         initTextBuilderRunner("no prices at all",1);
-        assertEquals(22f,textView.getY());
+        assertEquals(textViewOriginalY,textView.getY());
     }
 
-    @Test
-    public void textView_hasBounds_fromTextBlock(){
-        initTextBuilderRunner("no 1,1 price",1);
-        verify(textBlock).getBoundingBox();
-    }
 
     @Test
     public void ocrBuilder_wontRecognizeText_ifNotDetecting(){
@@ -234,6 +219,24 @@ public class OcrComponentsBuilderUnitTest {
         ocrBuilder.setDetecting(true);
         initTextBuilderRunner("22,2",0);
         assertEquals("",textView.getText());
+    }
+
+    @Test
+    public void ocrBuilder_canAnimateTextViewX_ToOriginalXPosition(){
+        ocrBuilder.setRecognizedTextView(textView);
+        ocrBuilder.setTextViewCoordinates(textViewOriginalX,textViewOriginalY);
+        textView.setX(0);
+        ocrBuilder.animateTextViewToOriginalPosition();
+        assertEquals(textViewOriginalX,textView.getX());
+    }
+
+    @Test
+    public void ocrBuilder_canAnimateTextViewY_ToOriginalXPosition(){
+        ocrBuilder.setRecognizedTextView(textView);
+        ocrBuilder.setTextViewCoordinates(textViewOriginalX,textViewOriginalY);
+        textView.setY(0);
+        ocrBuilder.animateTextViewToOriginalPosition();
+        assertEquals(textViewOriginalY,textView.getY());
     }
 
     @Test

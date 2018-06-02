@@ -7,9 +7,12 @@ import android.widget.TextView;
 
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
+import com.google.android.gms.vision.text.Text;
 import com.google.android.gms.vision.text.TextBlock;
 import com.google.android.gms.vision.text.TextRecognizer;
 import com.unifi.federicoguerri.traineeship_android.R;
+
+import java.util.ArrayList;
 
 public class OcrComponentsBuilder implements  Detector.Processor<TextBlock>{
 
@@ -74,21 +77,28 @@ public class OcrComponentsBuilder implements  Detector.Processor<TextBlock>{
     private void detect(SparseArray<TextBlock> items) {
         try {
             StringBuilder stringBuilder=new StringBuilder();
+            ArrayList<Text> lines=new ArrayList<>();
             itemBox=rectBounds;
             for(int j=0;j<items.size();j++) {
                 for (int i = 0; i < items.get(j).getComponents().size(); i++) {
-                    stringBuilder.append(items.get(j).getComponents().get(i).getValue() + "\n");
-                }
-            }
-            PriceBuilder priceBuilder = new PriceBuilder(stringBuilder.toString());
-            String price=priceBuilder.getPrice();
-            for(int j=0;j<items.size();j++) {
-                for (int i = 0; i < items.get(j).getComponents().size(); i++) {
-                    if (items.get(j).getComponents().get(i).getValue().contains(price)) {
-                        itemBox = items.get(j).getBoundingBox();
+                    if(items.get(j).getComponents().get(i).getBoundingBox().top>rectBounds.top && items.get(j).getComponents().get(i).getBoundingBox().bottom<rectBounds.bottom) {
+                        stringBuilder.append(items.get(j).getComponents().get(i).getValue() + "\n");
+                        lines.add(items.get(j).getComponents().get(i));
                     }
                 }
             }
+
+            PriceBuilder priceBuilder = new PriceBuilder(stringBuilder.toString());
+            String price=priceBuilder.getPrice();
+            String notFormattedPrice=price.replace(",",".");
+
+            for(int i=0;i<lines.size();i++) {
+                if (lines.get(i).getValue().contains(price) || lines.get(i).getValue().contains(notFormattedPrice)) {
+                    itemBox = lines.get(i).getBoundingBox();
+                    break;
+                }
+            }
+
             recognizedTextView.setText(price);
             recognizedTextView.animate().x(itemBox.left).y(itemBox.top).withEndAction(new Runnable() {
                 @Override
@@ -129,4 +139,10 @@ public class OcrComponentsBuilder implements  Detector.Processor<TextBlock>{
             });
         }
     }
+
+    public void animateTextViewToOriginalPosition(){
+        recognizedTextView.animate().x(originalX).y(originalY);
+    }
+
+
 }

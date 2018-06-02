@@ -206,6 +206,7 @@ public class OcrScanActivity extends AppCompatActivity {
         fabSavePrice.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(this,R.color.fab_miniature_color)));
         isGettingMiniature=true;
         Toast.makeText(getApplicationContext(), getString(R.string.take_photo_to_product), Toast.LENGTH_SHORT).show();
+        myOcrBuilder.animateTextViewToOriginalPosition();
     }
 
 
@@ -235,7 +236,7 @@ public class OcrScanActivity extends AppCompatActivity {
                 int x = l[0];
                 int y = l[1];
                 myOcrBuilder.setRectBounds(new Rect(x,y,findViewById(R.id.textTargetingLayout).getWidth(),y+findViewById(R.id.textTargetingLayout).getHeight()));
-                myOcrBuilder.setTextViewCoordinates(myOcrBuilder.getRecognizedTextView().getX()-findViewById(R.id.textTargetingLayout).getWidth()/3,myOcrBuilder.getRecognizedTextView().getY());
+                myOcrBuilder.setTextViewCoordinates(myOcrBuilder.getRecognizedTextView().getX(),myOcrBuilder.getRecognizedTextView().getY());
             }
         }.start();
     }
