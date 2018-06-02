@@ -224,8 +224,8 @@ public class OcrComponentsBuilderUnitTest {
     @Test
     public void ocrBuilder_canAnimateTextViewX_ToOriginalXPosition(){
         ocrBuilder.setRecognizedTextView(textView);
-        ocrBuilder.setTextViewCoordinates(textViewOriginalX,textViewOriginalY);
         textView.setX(0);
+        ocrBuilder.setTextViewCoordinates(textViewOriginalX,textViewOriginalY);
         ocrBuilder.animateTextViewToOriginalPosition();
         assertEquals(textViewOriginalX,textView.getX());
     }
@@ -233,8 +233,8 @@ public class OcrComponentsBuilderUnitTest {
     @Test
     public void ocrBuilder_canAnimateTextViewY_ToOriginalXPosition(){
         ocrBuilder.setRecognizedTextView(textView);
-        ocrBuilder.setTextViewCoordinates(textViewOriginalX,textViewOriginalY);
         textView.setY(0);
+        ocrBuilder.setTextViewCoordinates(textViewOriginalX,textViewOriginalY);
         ocrBuilder.animateTextViewToOriginalPosition();
         assertEquals(textViewOriginalY,textView.getY());
     }

@@ -141,7 +141,7 @@ public class OcrComponentsBuilder implements  Detector.Processor<TextBlock>{
     }
 
     public void animateTextViewToOriginalPosition(){
-        recognizedTextView.animate().x(originalX).y(originalY);
+        recognizedTextView.animate().x(originalX).y(originalY).start();
     }
 
 
