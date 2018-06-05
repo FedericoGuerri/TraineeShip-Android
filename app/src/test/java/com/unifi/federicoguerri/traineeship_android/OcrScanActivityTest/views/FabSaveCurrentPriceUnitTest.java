@@ -28,7 +28,6 @@ import static org.robolectric.Shadows.shadowOf;
 public class FabSaveCurrentPriceUnitTest extends AbstractOcrScanActivityUnitTest{
 
     private FloatingActionButton fabSavePrice;
-    private ShadowApplication shadowApplication;
 
     @Rule
     public TemporaryFolder folder= new TemporaryFolder();
@@ -38,7 +37,7 @@ public class FabSaveCurrentPriceUnitTest extends AbstractOcrScanActivityUnitTest
     public View getTestingComponent() {
         fabSavePrice =activity.findViewById(R.id.fabSaveCurrentPrice);
 
-        shadowApplication=shadowOf(activity.getApplication());
+        ShadowApplication shadowApplication=shadowOf(activity.getApplication());
         shadowApplication.grantPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE);
         shadowApplication.grantPermissions(Manifest.permission.CAMERA);
 

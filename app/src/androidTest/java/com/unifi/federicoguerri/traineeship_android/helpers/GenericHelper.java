@@ -73,7 +73,6 @@ public class GenericHelper {
 
     private static ViewAction setTextInTextView(final String value){
         return new ViewAction() {
-            @SuppressWarnings("unchecked")
             @Override
             public Matcher<View> getConstraints() {
                 return allOf(isDisplayed(), isAssignableFrom(TextView.class));

@@ -8,12 +8,9 @@ import com.unifi.federicoguerri.traineeship_android.R;
 
 public class ItemLayoutUnitTest extends AbstractPricesListViewWithItemLayout {
 
-    private LinearLayout itemLayout;
-
     @Override
     public View getTestingComponent() {
-        itemLayout =  layoutResourceView.findViewById(R.id.itemLayoutPricesListView);
-        return itemLayout;
+        return  (LinearLayout) layoutResourceView.findViewById(R.id.itemLayoutPricesListView);
     }
 
 }

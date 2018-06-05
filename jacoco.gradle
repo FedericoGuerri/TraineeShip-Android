@@ -14,16 +14,18 @@ android {
     }
 }
 
+//Adding action after evaluate the project
 project.afterEvaluate {
-
     android.applicationVariants.all { variant ->
         def name = variant.name
         def testTaskName = "test${name.capitalize()}UnitTest"
 
+        //Create task for coverage reports
         tasks.create(name: "${testTaskName}Coverage", type: JacocoReport, dependsOn: "$testTaskName") {
             group = "Reporting"
             description = "Generate Jacoco coverage reports for the ${name.capitalize()} build."
 
+            //Target classes directories
             classDirectories = fileTree(
                     dir: "${project.buildDir}/intermediates/classes/${name}",
                     excludes: ['**/R.class',
@@ -34,9 +36,13 @@ project.afterEvaluate {
                                '**/Manifest*.*']
             )
 
+            //Target source directories
             sourceDirectories = files(['src/main/java'].plus(android.sourceSets[name].java.srcDirs))
+
+            //Execute jacoco task
             executionData = files("${project.buildDir}/jacoco/${testTaskName}.exec")
 
+            //Create both xml and html reports
             reports {
                 xml.enabled = true
                 html.enabled = true

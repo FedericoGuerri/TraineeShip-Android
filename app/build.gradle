@@ -23,10 +23,12 @@ android {
         }
     }
 
+    //Using custom lint configuration file
     lintOptions {
         lintConfig file("lint.xml")
     }
 
+    //Forcing some components version for compatibility
     configurations.all {
         resolutionStrategy {
             force 'com.android.support:support-annotations:25.4.0'
@@ -35,10 +37,12 @@ android {
         }
     }
 
+    //Optionally, can enable orchestrator
     project.ext {
         orchestrator = project.hasProperty('orchestrator') ? project.property('orchestrator') : false
     }
 
+    //Disabling animations and including app-resources in unit tests
     testOptions {
         animationsDisabled = true
         if (orchestrator) {

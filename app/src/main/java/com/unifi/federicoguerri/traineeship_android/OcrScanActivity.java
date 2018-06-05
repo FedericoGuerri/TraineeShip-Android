@@ -66,9 +66,6 @@ public class OcrScanActivity extends AppCompatActivity {
                 .setRequestedPreviewSize(displayMetrics.heightPixels, displayMetrics.widthPixels).setRequestedFps(2.0f).setAutoFocusEnabled(true).build());
 
         ocrScanView.getHolder().addCallback(new MySurfaceHolderCallback(this, myOcrBuilder, ocrScanView.getHolder(), REQUEST_CAMERA_PERMISSION));
-        //}else{
-        //    Log.d("TextRecognizer","dependencies error");
-        //}
 
         myOcrBuilder.setRecognizedTextView((TextView) findViewById(R.id.recognizedTextViewOcrScanActivity));
 
