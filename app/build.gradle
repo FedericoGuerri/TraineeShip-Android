@@ -50,11 +50,6 @@ android {
         }
     }
 
-    dexOptions {
-        // Skip pre-dexing when running on Travis CI or when disabled via -Dpre-dex=false.
-        preDexLibraries = preDexEnabled && !travisBuild
-    }
-
 }
 
 ext {
@@ -71,7 +66,6 @@ ext {
     orchestratorVersion = '1.0.1'
     robolectricVersion = '3.3.2'
     mockitoVersion='2.7.22'
-
 }
 
 dependencies {
@@ -96,6 +90,5 @@ dependencies {
 
     testImplementation "org.mockito:mockito-android:$mockitoVersion"
     androidTestImplementation "org.mockito:mockito-android:$mockitoVersion"
-
 }
 
