@@ -276,27 +276,6 @@ public class FabSaveCurrentPriceUnitTest extends AbstractOcrScanActivityUnitTest
         assertTrue(priceTextView.getY()!=-200);
     }
 
-    /*
-    @Test
-    public void fabSavePrice_willShowToastMessage_afterTakingTheMiniature_ifCantWriteToFile(){
-        tapOnFabAndPressDialogPositiveButton();
-        fabSavePrice.performClick();
-        assertEquals(activity.getResources().getString(R.string.cant_write_to_file),ShadowToast.getTextOfLatestToast());
-    }
-
-    @Test
-    public void fabSavePrice_willShowToastMessage_afterTakingTheMiniature_ifGetDirectoryPath(){
-        Intent intent = new Intent();
-        intent.putExtra("fileName","some/directory/");
-        activity = Robolectric.buildActivity(OcrScanActivity.class, intent).create().visible().get();
-        fabSavePrice =activity.findViewById(R.id.fabSaveCurrentPrice);
-        tapOnFabAndPressDialogPositiveButton();
-        fabSavePrice.performClick();
-        assertEquals(getStringFromResources(R.string.cant_write_to_file),ShadowToast.getTextOfLatestToast());
-    }
-    */
-
-
     private void tapOnFabAndPressDialogPositiveButton(){
         fabSavePrice.performClick();
         ShadowAlertDialog.getLatestAlertDialog().getButton(AlertDialog.BUTTON_POSITIVE).performClick();
