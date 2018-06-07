@@ -19,7 +19,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.robolectric.Shadows.shadowOf;
 
-@Config(constants = BuildConfig.class, sdk = Build.VERSION_CODES.LOLLIPOP_MR1)
+@Config(constants = BuildConfig.class, sdk = Build.VERSION_CODES.M)
 @RunWith(RobolectricTestRunner.class)
 public class GenericBehaviorTest {
 

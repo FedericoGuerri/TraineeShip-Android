@@ -220,7 +220,7 @@ public class OcrScanActivity extends AppCompatActivity {
     @Override
     protected void onPostResume() {
         super.onPostResume();
-        new CountDownTimer(2000,1000){
+        new CountDownTimer(1300,1000){
             @Override
             public void onTick(long l) {
 
@@ -232,7 +232,7 @@ public class OcrScanActivity extends AppCompatActivity {
                 int x = l[0];
                 int y = l[1];
                 myOcrBuilder.setRectBounds(new Rect(x,y,findViewById(R.id.textTargetingLayout).getWidth(),y+findViewById(R.id.textTargetingLayout).getHeight()));
-                myOcrBuilder.setTextViewCoordinates(myOcrBuilder.getRecognizedTextView().getX(),myOcrBuilder.getRecognizedTextView().getY());
+                myOcrBuilder.setTextViewCoordinates(myOcrBuilder.getRecognizedTextView().getX(),myOcrBuilder.getRecognizedTextView().getY(),findViewById(R.id.textTargetingLayout).getWidth()/3);
             }
         }.start();
     }

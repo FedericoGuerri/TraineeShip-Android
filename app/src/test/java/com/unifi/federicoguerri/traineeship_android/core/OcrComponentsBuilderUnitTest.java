@@ -43,6 +43,7 @@ public class OcrComponentsBuilderUnitTest {
     private Rect defaultRectValue=new Rect(0,20,50,400);
     private float textViewOriginalX=120f;
     private float textViewOriginalY=22f;
+    private float textViewBadRecognitionIndent=20;
 
     @Before
     public void init(){
@@ -160,7 +161,7 @@ public class OcrComponentsBuilderUnitTest {
 
     private void initTextBuilderRunner(String valuesWithSpacesBetween,int arraySize){
         ocrBuilder.setRecognizedTextView(textView);
-        ocrBuilder.setTextViewCoordinates(textViewOriginalX,textViewOriginalY);
+        ocrBuilder.setTextViewCoordinates(textViewOriginalX,textViewOriginalY,textViewBadRecognitionIndent);
         ocrBuilder.setRectBounds(defaultRectValue);
 
         Detector.Detections<TextBlock> detections= Mockito.mock(Detector.Detections.class);
@@ -197,7 +198,7 @@ public class OcrComponentsBuilderUnitTest {
     @Test
     public void textView_hasOriginalXCoordinates_ifNoPricesWereDetected(){
         initTextBuilderRunner("no prices at all",1);
-        assertEquals(textViewOriginalX,textView.getX());
+        assertEquals(textViewOriginalX-textViewBadRecognitionIndent,textView.getX());
     }
 
     @Test
@@ -225,7 +226,7 @@ public class OcrComponentsBuilderUnitTest {
     public void ocrBuilder_canAnimateTextViewX_ToOriginalXPosition(){
         ocrBuilder.setRecognizedTextView(textView);
         textView.setX(0);
-        ocrBuilder.setTextViewCoordinates(textViewOriginalX,textViewOriginalY);
+        ocrBuilder.setTextViewCoordinates(textViewOriginalX,textViewOriginalY,textViewBadRecognitionIndent);
         ocrBuilder.animateTextViewToOriginalPosition();
         assertEquals(textViewOriginalX,textView.getX());
     }
@@ -234,7 +235,27 @@ public class OcrComponentsBuilderUnitTest {
     public void ocrBuilder_canAnimateTextViewY_ToOriginalXPosition(){
         ocrBuilder.setRecognizedTextView(textView);
         textView.setY(0);
-        ocrBuilder.setTextViewCoordinates(textViewOriginalX,textViewOriginalY);
+        ocrBuilder.setTextViewCoordinates(textViewOriginalX,textViewOriginalY,textViewBadRecognitionIndent);
+        ocrBuilder.animateTextViewToOriginalPosition();
+        assertEquals(textViewOriginalY,textView.getY());
+    }
+
+    @Test
+    public void ocrBuilder_willAnimateTextViewX_toSpecifiedLocation_ifContainsStringFromResources(){
+        ocrBuilder.setRecognizedTextView(textView);
+        textView.setY(0);
+        ocrBuilder.setTextViewCoordinates(textViewOriginalX,textViewOriginalY,textViewBadRecognitionIndent);
+        textView.setText(activity.getText(R.string.bad_recognition_get_closer_please));
+        ocrBuilder.animateTextViewToOriginalPosition();
+        assertEquals(textViewOriginalX-textViewBadRecognitionIndent,textView.getX());
+    }
+
+    @Test
+    public void ocrBuilder_willAnimateTextViewY_toOriginalYLocation_ifContainsStringFromResources(){
+        ocrBuilder.setRecognizedTextView(textView);
+        textView.setY(0);
+        ocrBuilder.setTextViewCoordinates(textViewOriginalX,textViewOriginalY,textViewBadRecognitionIndent);
+        textView.setText(activity.getText(R.string.bad_recognition_get_closer_please));
         ocrBuilder.animateTextViewToOriginalPosition();
         assertEquals(textViewOriginalY,textView.getY());
     }

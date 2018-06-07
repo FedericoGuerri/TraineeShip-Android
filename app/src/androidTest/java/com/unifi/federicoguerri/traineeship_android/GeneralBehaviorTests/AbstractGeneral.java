@@ -5,7 +5,6 @@ import android.Manifest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.rule.GrantPermissionRule;
 
-import com.unifi.federicoguerri.traineeship_android.MainActivity;
 import com.unifi.federicoguerri.traineeship_android.SplashScreenActivity;
 import com.unifi.federicoguerri.traineeship_android.helpers.GenericHelper;
 

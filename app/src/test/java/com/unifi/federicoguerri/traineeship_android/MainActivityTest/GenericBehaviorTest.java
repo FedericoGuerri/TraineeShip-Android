@@ -71,5 +71,4 @@ public class GenericBehaviorTest {
         assertEquals(false,item.isEnabled());
     }
 
-
 }

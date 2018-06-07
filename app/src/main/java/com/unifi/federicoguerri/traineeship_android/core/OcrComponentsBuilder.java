@@ -22,6 +22,7 @@ public class OcrComponentsBuilder implements  Detector.Processor<TextBlock>{
     private Rect rectBounds;
     private Rect itemBox;
     private float originalY=0;
+    private float badRecognition_indent=0;
     private float originalX=0;
     private boolean isDetecting=true;
 
@@ -69,9 +70,10 @@ public class OcrComponentsBuilder implements  Detector.Processor<TextBlock>{
         isDetecting = detecting;
     }
 
-    public void setTextViewCoordinates(float x,float y){
+    public void setTextViewCoordinates(float x,float y,float badRecognition_indent){
         originalX=x;
         originalY=y;
+        this.badRecognition_indent = badRecognition_indent;
     }
 
     private void detect(SparseArray<TextBlock> items) {
@@ -100,21 +102,15 @@ public class OcrComponentsBuilder implements  Detector.Processor<TextBlock>{
             }
 
             recognizedTextView.setText(price);
-            recognizedTextView.animate().x(itemBox.left).y(itemBox.top).withEndAction(new Runnable() {
-                @Override
-                public void run() {
-                    recognizedTextView.setX(itemBox.left);
-                    recognizedTextView.setY(itemBox.top);
-                }
-            }).start();
+            animateRecognitionTextViewToLocation(itemBox.left, itemBox.top);
+
         } catch (Exception e) {
-            if (e.getMessage().equals("recognitionError") && (recognizedTextView.getX()!=originalX || originalY!=recognizedTextView.getY())) {
+            if (e.getMessage().equals("recognitionError") && (recognizedTextView.getX()!=originalX-badRecognition_indent || originalY!=recognizedTextView.getY())) {
                     recognizedTextView.animate().scaleY(0f).scaleX(0f).withEndAction(new Runnable() {
                         @Override
                         public void run() {
                             recognizedTextView.setText(recognizedTextView.getContext().getResources().getString(R.string.bad_recognition_get_closer_please));
-                            recognizedTextView.setX(originalX);
-                            recognizedTextView.setY(originalY);
+                            animateTextViewToOriginalPosition();
                             recognizedTextView.animate().scaleX(1f).scaleY(1f);
                         }
                     }).start();
@@ -141,7 +137,23 @@ public class OcrComponentsBuilder implements  Detector.Processor<TextBlock>{
     }
 
     public void animateTextViewToOriginalPosition(){
-        recognizedTextView.animate().x(originalX).y(originalY).start();
+        if(recognizedTextView.getText().toString().contains(recognizedTextView.getContext().getResources().getString(R.string.bad_recognition_get_closer_please))){
+            recognizedTextView.setX(originalX-badRecognition_indent);
+            recognizedTextView.setY(originalY);
+        }else {
+            animateRecognitionTextViewToLocation(originalX, originalY);
+        }
+    }
+
+    private void animateRecognitionTextViewToLocation(final float x,final float y) {
+        recognizedTextView.animate().x(x).y(y).setDuration(300).withEndAction(new Runnable() {
+            @Override
+            public void run() {
+                recognizedTextView.setX(x);
+                recognizedTextView.setY(y);
+
+            }
+        }).start();
     }
 
 
