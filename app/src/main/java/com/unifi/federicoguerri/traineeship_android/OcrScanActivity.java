@@ -158,7 +158,6 @@ public class OcrScanActivity extends AppCompatActivity {
             if(e.getMessage().equals("Failed to write to file")) {
                 Toast.makeText(this, getText(R.string.cant_write_to_file), Toast.LENGTH_SHORT).show();
             }
-            e.printStackTrace();
         }
     }
 

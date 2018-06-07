@@ -25,7 +25,6 @@ public class WelcomeLayoutUnitText extends AbstractMainActivityUnitTest {
         return welcomeLayout;
     }
 
-
     @Test
     public void welcomeLayout_hasCenterGravity(){
         ShadowLinearLayout shadowLinearLayout=shadowOf(welcomeLayout);
