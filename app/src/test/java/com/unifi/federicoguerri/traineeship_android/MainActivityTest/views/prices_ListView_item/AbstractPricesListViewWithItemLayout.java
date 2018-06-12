@@ -25,7 +25,7 @@ import static junit.framework.Assert.assertNotNull;
 public abstract class AbstractPricesListViewWithItemLayout  {
 
     protected View layoutResourceView;
-    public abstract View getTestingComponent();
+    protected abstract View getTestingComponent();
     private View testingComponent;
 
     @Before

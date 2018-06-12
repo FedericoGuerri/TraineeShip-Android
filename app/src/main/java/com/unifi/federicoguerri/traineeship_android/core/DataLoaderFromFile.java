@@ -10,6 +10,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 public class DataLoaderFromFile {
@@ -34,16 +35,14 @@ public class DataLoaderFromFile {
     }
 
 
-    public ArrayList<CustomDataSet> getRecords() throws Exception {
+    public List<CustomDataSet> getRecords() throws CustomException {
         readRecordsFromFile();
         loadDataFromReadRecords();
         return loadedData;
     }
 
-    private void readRecordsFromFile() throws Exception {
-        BufferedReader reader;
-        try {
-            reader = new BufferedReader(new FileReader(filePath));
+    private void readRecordsFromFile() throws CustomException {
+        try (BufferedReader reader=new BufferedReader(new FileReader(filePath))){
             String read;
             while ((read = reader.readLine()) != null) {
                 String[] splittedLine = read.split("\\s+");
@@ -53,9 +52,8 @@ public class DataLoaderFromFile {
                     }
                 }
             }
-            reader.close();
         } catch (Exception e) {
-            throw new Exception("Failed To read from file");
+            throw new CustomException("Failed To read from file");
         }
     }
 

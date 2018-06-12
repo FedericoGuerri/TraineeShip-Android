@@ -25,7 +25,7 @@ public class OcrScanActivityInstrumentedTest {
     @Rule
     public ActivityTestRule<OcrScanActivity> ocrScanActivityRule = new ActivityTestRule<>(OcrScanActivity.class);
     @Rule public GrantPermissionRule runtimePermissionCamera = GrantPermissionRule .grant(Manifest.permission.CAMERA);
-    @Rule public GrantPermissionRule runtimePermissionStorange = GrantPermissionRule .grant(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+    @Rule public GrantPermissionRule runtimePermissionStorage = GrantPermissionRule .grant(Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
 
     @Test

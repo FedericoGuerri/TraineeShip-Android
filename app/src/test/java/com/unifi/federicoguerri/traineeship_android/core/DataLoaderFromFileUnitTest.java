@@ -76,7 +76,7 @@ public class DataLoaderFromFileUnitTest {
 
     @Test
     public void dataLoader_throwsExceptionIfFilePathWasNotSpecified() throws Exception {
-        readRecordsFileException.expect(Exception.class);
+        readRecordsFileException.expect(CustomException.class);
         readRecordsFileException.expectMessage("Failed To read from file");
         assertEquals(0,dataLoaderFromFile.getRecords().size());
     }

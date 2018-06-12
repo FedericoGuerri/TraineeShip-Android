@@ -23,8 +23,7 @@ import java.util.Locale;
 public class MainActivity extends AppCompatActivity {
 
     private String pricesPath="";
-    private final int REQUEST_STORAGE_PERMISSION_OCR=10801;
-    private final int REQUEST_STORAGE_PERMISSION_CONFIGURATION=10800;
+    private static final int REQUEST_STORAGE_PERMISSION_CONFIGURATION=10800;
     private MenuItem totalItem;
 
     @Override
@@ -47,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void startOcrScanActivity(View view) {
         if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(MainActivity.this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_STORAGE_PERMISSION_OCR);
+            ActivityCompat.requestPermissions(MainActivity.this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_STORAGE_PERMISSION_CONFIGURATION);
             return;
         }
         lauchActivity();
@@ -67,22 +66,15 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode){
-            case REQUEST_STORAGE_PERMISSION_CONFIGURATION: {
-                if(grantResults[0]== PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                    return;
-                }
-                createConfigurationDirectory();
+        if (requestCode == REQUEST_STORAGE_PERMISSION_CONFIGURATION) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                return;
             }
-            case REQUEST_STORAGE_PERMISSION_OCR: {
-                if(grantResults[0]== PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
-                    return;
-                }
-            }
+            createConfigurationDirectory();
         }
     }
 
-    public boolean createConfigurationDirectory(){
+    private boolean createConfigurationDirectory(){
         File configDir=new File(getFilesDir()
                 + "/Android/data/"
                 + getApplicationContext().getPackageName()

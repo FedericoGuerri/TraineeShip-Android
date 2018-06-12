@@ -49,6 +49,9 @@ android {
             println("Running android test with orchestrator")
             execution "ANDROID_TEST_ORCHESTRATOR"
         }
+        if(System.getenv("TRAVIS") == "true"){
+            exclude 'com/unifi/federicoguerri/traineeship_android/GenericBehaviorTests'
+        }
         unitTests {
             includeAndroidResources = true
         }
@@ -60,7 +63,7 @@ ext {
     //App
     appCompatVersion = '27.1.0'
     constraintLayoutVersion = '1.0.2'
-    playVisionVersion = '15.0.2'
+    playVisionVersion = '15.0.1'
     designVersion ='27.1.0'
 
     //Test

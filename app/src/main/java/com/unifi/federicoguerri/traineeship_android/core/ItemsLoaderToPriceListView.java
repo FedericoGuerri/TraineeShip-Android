@@ -12,7 +12,7 @@ import android.widget.Toast;
 import com.unifi.federicoguerri.traineeship_android.R;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
+import java.util.List;
 
 public class ItemsLoaderToPriceListView {
 
@@ -36,8 +36,8 @@ public class ItemsLoaderToPriceListView {
     public void loadItems(){
         try {
             loaderFromFile.loadFileFromPath(pricesPath);
-            ArrayList<CustomDataSet> dataSets = loaderFromFile.getRecords();
-            if(dataSets.size()>0) {
+            List<CustomDataSet> dataSets = loaderFromFile.getRecords();
+            if(!dataSets.isEmpty()) {
                 final CustomAdapter adapter = new CustomAdapter(dataSets, activity.getApplicationContext(),pricesPath);
                 adapter.registerDataSetObserver(new DataSetObserver() {
                     @Override

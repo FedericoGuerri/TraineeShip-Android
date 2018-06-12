@@ -1,7 +1,7 @@
 package com.unifi.federicoguerri.traineeship_android.core;
 
 
-public class RecordRemoverFromString {
+class RecordRemoverFromString {
 
     public String remove(String data, int index) {
         if(data.startsWith(" ")){

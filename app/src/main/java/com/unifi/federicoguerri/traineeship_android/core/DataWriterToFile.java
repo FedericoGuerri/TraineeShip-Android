@@ -7,14 +7,12 @@ public class DataWriterToFile {
 
     private String filePath;
 
-    public void writeToPath(String message, boolean append) throws Exception {
-        try {
-            BufferedWriter out = new BufferedWriter(new FileWriter(filePath,append));
+    public void writeToPath(String message, boolean append) throws CustomException {
+        try (BufferedWriter out = new BufferedWriter(new FileWriter(filePath,append))){
             message= message.trim().replaceAll(" +", " ");
             out.write(message+" ");
-            out.close();
         } catch (Exception e) {
-            throw new Exception("Failed to write to file");
+            throw new CustomException("Failed to write to file");
         }
     }
 

@@ -40,7 +40,7 @@ public class OcrScanActivity extends AppCompatActivity {
 
     private SurfaceView ocrScanView;
     private OcrComponentsBuilder myOcrBuilder;
-    private final int REQUEST_CAMERA_PERMISSION = 10400;
+    private static final int REQUEST_CAMERA_PERMISSION = 10400;
     private String filePath;
     private boolean isGettingMiniature = false;
 
@@ -61,7 +61,6 @@ public class OcrScanActivity extends AppCompatActivity {
         WindowManager windowManager = (WindowManager) getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
         windowManager.getDefaultDisplay().getMetrics(displayMetrics);
 
-        //if (myOcrBuilder.getTextRecognizer().isOperational()) {
         myOcrBuilder.setCameraSource(new CameraSource.Builder(getApplicationContext(), myOcrBuilder.getTextRecognizer()).setFacing(CameraSource.CAMERA_FACING_BACK)
                 .setRequestedPreviewSize(displayMetrics.heightPixels, displayMetrics.widthPixels).setRequestedFps(2.0f).setAutoFocusEnabled(true).build());
 
@@ -85,19 +84,15 @@ public class OcrScanActivity extends AppCompatActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode){
-            case REQUEST_CAMERA_PERMISSION: {
-                if(grantResults[0]==PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this,Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                    return;
-                }
-                try {
-                    myOcrBuilder.getCameraSource().start(ocrScanView.getHolder());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
+        if (requestCode == REQUEST_CAMERA_PERMISSION) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                return;
             }
-
+            try {
+                myOcrBuilder.getCameraSource().start(ocrScanView.getHolder());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -133,7 +128,7 @@ public class OcrScanActivity extends AppCompatActivity {
     }
 
     private String saveMiniatureFile(Bitmap bitmap, String filePath){
-        String filename="noMiniature";
+        String filename;
         try {
             String configurationDir = filePath.substring(0, filePath.lastIndexOf(File.separator));
             String timeStamp = new SimpleDateFormat("yyyy_MMdd_HH_mm_ss").format(new Date());

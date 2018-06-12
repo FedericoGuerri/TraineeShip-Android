@@ -15,22 +15,22 @@ import com.unifi.federicoguerri.traineeship_android.R;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 
 public class CustomAdapter extends ArrayAdapter<CustomDataSet> {
 
     private Context mContext;
     private String filePath;
-    private CustomAdapter customAdapter;
-    private ArrayList<CustomDataSet> data;
+    private CustomAdapter adapter;
+    private List<CustomDataSet> data;
     private RecordRemoverFromString recordRemoverFromString;
     private DataWriterToFile dataWriterToFile;
 
-    public CustomAdapter(ArrayList<CustomDataSet> data, Context context,String filePath) {
+    public CustomAdapter(List<CustomDataSet> data, Context context, String filePath) {
         super(context, R.layout.item_price_listview, data);
         this.mContext=context;
         this.filePath=filePath;
-        customAdapter=this;
+        adapter =this;
         this.data=data;
         recordRemoverFromString =new RecordRemoverFromString();
         dataWriterToFile=new DataWriterToFile();
@@ -39,9 +39,9 @@ public class CustomAdapter extends ArrayAdapter<CustomDataSet> {
 
 
     public static class ViewHolder {
-        public TextView priceTextView;
-        public ImageView miniatureImageView;
-        public ImageView deleteImageView;
+        TextView priceTextView;
+        ImageView miniatureImageView;
+        ImageView deleteImageView;
     }
 
     @NonNull
@@ -58,7 +58,7 @@ public class CustomAdapter extends ArrayAdapter<CustomDataSet> {
             viewHolder.miniatureImageView = rowView.findViewById(R.id.itemMiniatureImageViewItemPriceListView);
             viewHolder.deleteImageView=rowView.findViewById(R.id.itemDeletePriceImageViewitemPriceListView);
             rowView.setTag(viewHolder);
-            customAdapter.notifyDataSetChanged();
+            adapter.notifyDataSetChanged();
         }else{
             viewHolder = (ViewHolder) rowView.getTag();
         }
@@ -80,7 +80,7 @@ public class CustomAdapter extends ArrayAdapter<CustomDataSet> {
                     e.printStackTrace();
                 }
                 remove(dataSet);
-                customAdapter.notifyDataSetChanged();
+                adapter.notifyDataSetChanged();
             }
         });
         return rowView;
@@ -93,7 +93,6 @@ public class CustomAdapter extends ArrayAdapter<CustomDataSet> {
             while ((line = reader.readLine()) != null) {
                 contentBuilder.append(line).append("\n");
             }
-            reader.close();
         }
         catch (IOException e) {
             e.printStackTrace();

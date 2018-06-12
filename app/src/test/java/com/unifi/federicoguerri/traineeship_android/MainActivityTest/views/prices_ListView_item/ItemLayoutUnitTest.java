@@ -10,7 +10,7 @@ public class ItemLayoutUnitTest extends AbstractPricesListViewWithItemLayout {
 
     @Override
     public View getTestingComponent() {
-        return  (LinearLayout) layoutResourceView.findViewById(R.id.itemLayoutPricesListView);
+        return  layoutResourceView.findViewById(R.id.itemLayoutPricesListView);
     }
 
 }

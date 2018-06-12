@@ -1,11 +1,14 @@
 package com.unifi.federicoguerri.traineeship_android.OcrScanActivityTest;
 
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Build;
 
 import com.unifi.federicoguerri.traineeship_android.BuildConfig;
 import com.unifi.federicoguerri.traineeship_android.OcrScanActivity;
 import com.unifi.federicoguerri.traineeship_android.R;
+import com.unifi.federicoguerri.traineeship_android.SplashScreenActivity;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -14,6 +17,8 @@ import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowActivity;
+
+import java.security.Permission;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -27,7 +32,7 @@ public class GenericBehaviorTest {
 
     @Before
     public void setUp() {
-        activity = Robolectric.buildActivity(OcrScanActivity.class).create().visible().postResume().get();
+        activity=Robolectric.setupActivity(OcrScanActivity.class);
     }
 
     @Test
@@ -47,6 +52,11 @@ public class GenericBehaviorTest {
         activity.onBackPressed();
         ShadowActivity shadowActivity = shadowOf(activity);
         assertEquals(R.anim.end_ocr_scan_exit,shadowActivity.getPendingTransitionExitAnimationResourceId());
+    }
+
+    @Test
+    public void test(){
+        activity.onRequestPermissionsResult(10400,new String[]{Manifest.permission.CAMERA},new int[] {PackageManager.PERMISSION_GRANTED});
     }
 
 }

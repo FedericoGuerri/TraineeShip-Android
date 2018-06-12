@@ -22,12 +22,11 @@ import static org.junit.Assert.assertEquals;
 @RunWith(RobolectricTestRunner.class)
 public class SplashBackgroundViewUnitTest {
 
-    protected SplashScreenActivity activity;
     private RelativeLayout splashBackground;
 
     @Before
     public void setUp() {
-        activity = Robolectric.buildActivity( SplashScreenActivity.class ).create().get();
+        SplashScreenActivity activity = Robolectric.buildActivity( SplashScreenActivity.class ).create().get();
         splashBackground=activity.findViewById(R.id.splashBackgroundView);
     }
 

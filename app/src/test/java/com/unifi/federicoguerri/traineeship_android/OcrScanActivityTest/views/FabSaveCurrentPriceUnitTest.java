@@ -29,9 +29,6 @@ public class FabSaveCurrentPriceUnitTest extends AbstractOcrScanActivityUnitTest
 
     private FloatingActionButton fabSavePrice;
 
-    @Rule
-    public TemporaryFolder folder= new TemporaryFolder();
-
 
     @Override
     public View getTestingComponent() {

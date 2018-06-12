@@ -20,8 +20,8 @@ import static junit.framework.Assert.assertNotNull;
 
 public abstract class AbstractOcrScanActivityUnitTest {
 
-    protected OcrScanActivity activity;
-    public abstract View getTestingComponent();
+    OcrScanActivity activity;
+    protected abstract View getTestingComponent();
     private View testingComponent;
 
     @Before

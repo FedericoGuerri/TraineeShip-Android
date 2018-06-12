@@ -29,7 +29,7 @@ public class GenericBehaviorTest {
 
     @Before
     public void setUp(){
-        activity = Robolectric.buildActivity(MainActivity.class).create().postResume().visible().get();
+        activity=Robolectric.setupActivity(MainActivity.class);
     }
 
     @Test
@@ -70,5 +70,7 @@ public class GenericBehaviorTest {
         MenuItem item= shadowOf(activity).getOptionsMenu().findItem(R.id.menuitem_total_mainactivity);
         assertEquals(false,item.isEnabled());
     }
+
+
 
 }

@@ -29,7 +29,7 @@ public class GenericBehaviorTest {
 
     @Before
     public void setUp() {
-        activity = Robolectric.buildActivity( SplashScreenActivity.class ).create().get();
+        activity=Robolectric.setupActivity(SplashScreenActivity.class);
     }
 
     @Test

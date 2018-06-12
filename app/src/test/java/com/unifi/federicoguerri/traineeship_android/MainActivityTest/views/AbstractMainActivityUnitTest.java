@@ -22,7 +22,7 @@ import static junit.framework.Assert.assertNotNull;
 public abstract class AbstractMainActivityUnitTest {
 
     protected MainActivity activity;
-    public abstract View getTestingComponent();
+    protected abstract View getTestingComponent();
     private View testingComponent;
 
     @Before
