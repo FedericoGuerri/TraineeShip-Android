@@ -1,6 +1,8 @@
 apply plugin: 'com.android.application'
 apply from: "$rootDir/jacoco.gradle"
 
+
+
 android {
     compileSdkVersion 27
     buildToolsVersion "27.0.3"
@@ -50,12 +52,13 @@ android {
             execution "ANDROID_TEST_ORCHESTRATOR"
         }
         if(System.getenv("TRAVIS") == "true"){
-            exclude 'com/unifi/federicoguerri/traineeship_android/GenericBehaviorTests'
+            exclude 'com/unifi/federicoguerri/traineeship_android/GeneralBehaviorTests'
         }
         unitTests {
             includeAndroidResources = true
         }
     }
+
 
 }
 
@@ -98,4 +101,7 @@ dependencies {
     testImplementation "org.mockito:mockito-android:$mockitoVersion"
     androidTestImplementation "org.mockito:mockito-android:$mockitoVersion"
 }
+
+
+
 
