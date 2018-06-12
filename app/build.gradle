@@ -52,7 +52,7 @@ android {
             execution "ANDROID_TEST_ORCHESTRATOR"
         }
         if(System.getenv("TRAVIS") == "true"){
-            exclude 'com/unifi/federicoguerri/traineeship_android/GeneralBehaviorTests'
+            exclude 'com/unifi/federicoguerri/traineeship_android/MiniatureGeneral.class'
         }
         unitTests {
             includeAndroidResources = true
