@@ -73,7 +73,7 @@ after_success:
   # Upload coverage to codecov
   - codecov
 
-  ./gradlew sonarqube \
+  ./gradlew sonarqube
   #  -Dsonar.organization=federicoguerri-github \
   #  -Dsonar.host.url=https://sonarcloud.io \
   #  -Dsonar.login=5e088ed4fc4c8804a703e3ac723e1c34051a4935
