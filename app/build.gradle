@@ -52,15 +52,17 @@ android {
             execution "ANDROID_TEST_ORCHESTRATOR"
         }
         if(System.getenv("TRAVIS") == "true"){
-            exclude 'com/unifi/federicoguerri/traineeship_android/MiniatureGeneral.class'
+            println("Running on Travis, Excluding some tests for speedup.")
+            //exclude 'com/unifi/federicoguerri/traineeship_android/GenericBehaviorTests'
         }
         unitTests {
             includeAndroidResources = true
         }
     }
 
-
 }
+
+
 
 ext {
     //App
