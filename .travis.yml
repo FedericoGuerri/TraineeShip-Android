@@ -10,6 +10,7 @@ env:
 cache:
   directories:
     - $HOME/.gradle
+    - $HOME/.sonar/cache
 
 addons:
   sonarcloud:
