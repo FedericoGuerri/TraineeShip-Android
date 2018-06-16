@@ -8,7 +8,6 @@ import android.os.Build;
 import com.unifi.federicoguerri.traineeship_android.BuildConfig;
 import com.unifi.federicoguerri.traineeship_android.OcrScanActivity;
 import com.unifi.federicoguerri.traineeship_android.R;
-import com.unifi.federicoguerri.traineeship_android.SplashScreenActivity;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -17,8 +16,6 @@ import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowActivity;
-
-import java.security.Permission;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;

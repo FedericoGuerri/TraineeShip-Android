@@ -218,7 +218,7 @@ public class OcrScanActivity extends AppCompatActivity {
         new CountDownTimer(1300,1000){
             @Override
             public void onTick(long l) {
-
+                //Called every second
             }
             @Override
             public void onFinish() {

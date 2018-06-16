@@ -3,7 +3,7 @@ package com.unifi.federicoguerri.traineeship_android.core;
 
 class PriceBuilder{
 
-    private final String recognitionMessage = "recognitionError";
+    private static final String RECOGNITION_ERROR = "recognitionError";
     private String recognized;
 
     PriceBuilder(String price){
@@ -38,13 +38,13 @@ class PriceBuilder{
 
     private void formatPrice() throws CustomException{
         if(recognized.length()>7){
-            throw new CustomException(recognitionMessage);
+            throw new CustomException(RECOGNITION_ERROR);
         }
         if(recognized.lastIndexOf(',')==recognized.length()-1 || recognized.startsWith(",")){
-            throw new CustomException(recognitionMessage);
+            throw new CustomException(RECOGNITION_ERROR);
         }
         if(recognized.lastIndexOf(',') != recognized.indexOf(',')){
-            throw new CustomException(recognitionMessage);
+            throw new CustomException(RECOGNITION_ERROR);
         }
     }
 

@@ -56,6 +56,7 @@ public class ItemsLoaderToPriceListView {
                 pricesList.setOnHierarchyChangeListener(new ViewGroup.OnHierarchyChangeListener() {
                     @Override
                     public void onChildViewAdded(View view, View view1) {
+                        //Not calling this, children are added "statically"
                     }
 
                     @Override

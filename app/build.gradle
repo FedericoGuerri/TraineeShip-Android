@@ -1,7 +1,6 @@
 apply plugin: 'com.android.application'
 apply from: "$rootDir/jacoco.gradle"
-
-
+apply plugin: "org.sonarqube"
 
 android {
     compileSdkVersion 27
@@ -13,6 +12,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunnerArgument 'size', 'Large'
     }
 
     buildTypes {

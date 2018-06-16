@@ -10,9 +10,7 @@ import android.widget.TextView;
 
 import com.unifi.federicoguerri.traineeship_android.R;
 
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
 import org.robolectric.shadows.ShadowActivity;
 import org.robolectric.shadows.ShadowAlertDialog;
 import org.robolectric.shadows.ShadowApplication;

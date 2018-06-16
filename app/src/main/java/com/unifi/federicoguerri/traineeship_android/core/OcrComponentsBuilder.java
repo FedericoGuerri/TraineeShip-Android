@@ -119,7 +119,7 @@ public class OcrComponentsBuilder implements  Detector.Processor<TextBlock>{
 
     @Override
     public void release() {
-
+        //Never releasing explicitally the recognizer
     }
 
     @Override
