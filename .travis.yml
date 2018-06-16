@@ -71,7 +71,7 @@ script:
   # - travis_wait 50 ./gradlew connectedCheck
   - travis_wait 50 ./gradlew spoon
   
-  - ./gradlew sonarqube
+  #- ./gradlew sonarqube
 
 after_success:
   # Upload coverage to codecov
