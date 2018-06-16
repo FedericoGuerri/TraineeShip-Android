@@ -2,6 +2,8 @@ apply plugin: 'com.android.application'
 apply from: "$rootDir/jacoco.gradle"
 apply plugin: "org.sonarqube"
 
+apply plugin: "com.jaredsburrows.spoon"
+
 android {
     compileSdkVersion 27
     buildToolsVersion "27.0.3"
@@ -12,7 +14,6 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        testInstrumentationRunnerArgument 'size', 'Large'
     }
 
     buildTypes {
@@ -60,8 +61,8 @@ android {
         }
     }
 
-}
 
+}
 
 
 ext {
@@ -102,8 +103,21 @@ dependencies {
 
     testImplementation "org.mockito:mockito-android:$mockitoVersion"
     androidTestImplementation "org.mockito:mockito-android:$mockitoVersion"
+
+    androidTestImplementation "com.squareup.spoon:spoon-client:2.0.0-SNAPSHOT"
 }
 
+spoon {
+    // Identifying title for this execution. ("Spoon Execution" by default)
+    title = "Travis tests"
+
+    // Path to output directory. ("$buildDir/spoon-output" by default)
+    baseOutputDir = "spoonTests"
+
+    // Run annotated tests - small, medium, large
+    testSize = "large"
+
+}
 
 
 
