@@ -16,7 +16,7 @@ addons:
   sonarcloud:
     organization: "federicoguerri-github"
     token:
-        secure: "5e088ed4fc4c8804a703e3ac723e1c34051a4935"
+        secure: ${SONAR}
     
 android:
   components:
@@ -69,12 +69,12 @@ script:
 
   # Run instrumentation tests and wait for result for 50 minutes
   - travis_wait 50 ./gradlew connectedCheck
+  
+  - ./gradlew sonarqube
 
 after_success:
   # Upload coverage to codecov
   - codecov
-
-  - sonar-scanner
     
 notifications:
     email:
