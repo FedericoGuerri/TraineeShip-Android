@@ -69,10 +69,9 @@ script:
 
   # Run instrumentation tests and wait for result for 50 minutes
   # - travis_wait 50 ./gradlew connectedCheck
-  # - travis_wait 50 adb shell am instrument -w -e size large android.support.test.runner.AndroidJUnitRunner
-  - travis_wait 50 adb shell am instrument -w -e annotation android.support.test.filters.LargeTest
+  - travis_wait 50 ./gradlew spoon
   
-  - ./gradlew sonarqube
+  #- ./gradlew sonarqube
 
 after_success:
   # Upload coverage to codecov
