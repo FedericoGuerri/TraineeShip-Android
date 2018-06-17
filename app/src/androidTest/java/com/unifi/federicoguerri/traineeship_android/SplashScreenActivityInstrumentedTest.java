@@ -3,6 +3,7 @@ package com.unifi.federicoguerri.traineeship_android;
 import android.support.test.espresso.NoActivityResumedException;
 import android.support.test.espresso.NoMatchingViewException;
 import android.support.test.espresso.action.ViewActions;
+import android.support.test.filters.MediumTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -19,6 +20,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static junit.framework.Assert.assertNull;
 
 @RunWith(AndroidJUnit4.class)
+@MediumTest
 public class SplashScreenActivityInstrumentedTest {
 
     @Rule

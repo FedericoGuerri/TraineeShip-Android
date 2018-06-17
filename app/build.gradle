@@ -1,7 +1,6 @@
 apply plugin: 'com.android.application'
 apply from: "$rootDir/jacoco.gradle"
 apply plugin: "org.sonarqube"
-
 apply plugin: "com.jaredsburrows.spoon"
 
 android {
@@ -52,16 +51,10 @@ android {
             println("Running android test with orchestrator")
             execution "ANDROID_TEST_ORCHESTRATOR"
         }
-        if(System.getenv("TRAVIS") == "true"){
-            println("Running on Travis, Excluding some tests for speedup.")
-            //exclude 'com/unifi/federicoguerri/traineeship_android/GenericBehaviorTests'
-        }
         unitTests {
             includeAndroidResources = true
         }
     }
-
-
 }
 
 
@@ -79,44 +72,34 @@ ext {
     orchestratorVersion = '1.0.1'
     robolectricVersion = '3.3.2'
     mockitoVersion='2.7.22'
+    spoonVersion='2.0.0-SNAPSHOT'
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "com.android.support:appcompat-v7:$appCompatVersion"
-
     implementation "com.android.support.constraint:constraint-layout:$constraintLayoutVersion"
-
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    implementation "com.google.android.gms:play-services-vision:$playVisionVersion"
+    implementation "com.android.support:design:$designVersion"
+
     androidTestImplementation "com.android.support.test:runner:$testRunnerVersion"
     androidTestImplementation "com.android.support.test.espresso:espresso-core:$espressoVersion"
     androidTestImplementation "com.android.support.test.espresso:espresso-intents:$espressoVersion"
     testImplementation "junit:junit:$junitVersion"
-
     androidTestUtil "com.android.support.test:orchestrator:$orchestratorVersion"
-
     testImplementation "org.robolectric:robolectric:$robolectricVersion"
-
-    implementation "com.google.android.gms:play-services-vision:$playVisionVersion"
-
-    implementation "com.android.support:design:$designVersion"
-
     testImplementation "org.mockito:mockito-android:$mockitoVersion"
     androidTestImplementation "org.mockito:mockito-android:$mockitoVersion"
-
-    androidTestImplementation "com.squareup.spoon:spoon-client:2.0.0-SNAPSHOT"
+    androidTestImplementation "com.squareup.spoon:spoon-client:$spoonVersion"
 }
 
 spoon {
     // Identifying title for this execution. ("Spoon Execution" by default)
     title = "Travis tests"
 
-    // Path to output directory. ("$buildDir/spoon-output" by default)
-    baseOutputDir = "spoonTests"
-
-    // Run annotated tests - small, medium, large
+    // Run only annotated large tests
     testSize = "large"
-
 }
 
 

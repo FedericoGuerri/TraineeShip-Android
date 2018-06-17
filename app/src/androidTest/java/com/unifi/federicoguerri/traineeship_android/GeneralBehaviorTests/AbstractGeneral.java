@@ -2,6 +2,7 @@ package com.unifi.federicoguerri.traineeship_android.GeneralBehaviorTests;
 
 
 import android.Manifest;
+import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.rule.GrantPermissionRule;
 
@@ -12,7 +13,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 
-
+@LargeTest
 class AbstractGeneral {
 
     @Rule

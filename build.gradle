@@ -19,7 +19,6 @@ buildscript {
 
 }
 
-
 allprojects {
     repositories {
         jcenter()
@@ -31,8 +30,6 @@ allprojects {
         }
         google()
     }
-
-
 }
 
 task clean(type: Delete) {

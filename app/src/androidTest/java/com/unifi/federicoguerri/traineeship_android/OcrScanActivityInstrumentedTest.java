@@ -1,6 +1,7 @@
 package com.unifi.federicoguerri.traineeship_android;
 
 import android.Manifest;
+import android.support.test.filters.MediumTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.rule.GrantPermissionRule;
 import android.support.test.runner.AndroidJUnit4;
@@ -20,6 +21,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static junit.framework.Assert.assertNull;
 
 @RunWith(AndroidJUnit4.class)
+@MediumTest
 public class OcrScanActivityInstrumentedTest {
 
     @Rule
