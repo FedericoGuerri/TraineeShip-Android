@@ -1,5 +1,7 @@
 package com.unifi.federicoguerri.traineeship_android.MainActivityTest;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.view.MenuItem;
 
@@ -71,6 +73,9 @@ public class GenericBehaviorTest {
         assertEquals(false,item.isEnabled());
     }
 
-
+    @Test
+    public void canrequestPermissionAtRuntime(){
+        activity.onRequestPermissionsResult(10800,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},new int[] {PackageManager.PERMISSION_GRANTED});
+    }
 
 }

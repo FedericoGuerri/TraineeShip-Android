@@ -17,6 +17,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -91,7 +92,7 @@ public class OcrScanActivity extends AppCompatActivity {
             try {
                 myOcrBuilder.getCameraSource().start(ocrScanView.getHolder());
             } catch (IOException e) {
-                e.printStackTrace();
+                Log.e("StartingCamera",e.getMessage());
             }
         }
     }
@@ -109,7 +110,7 @@ public class OcrScanActivity extends AppCompatActivity {
             try {
                 Thread.sleep(1500);
             } catch (Exception e) {
-                e.printStackTrace();
+                Log.e("SavingMiniature",e.getMessage());
             }
             fabSavePrice.setImageResource(R.drawable.ic_format_text);
             fabSavePrice.setBackgroundTintList(ColorStateList.valueOf(color));

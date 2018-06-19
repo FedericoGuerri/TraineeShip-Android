@@ -4,7 +4,7 @@ import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.intent.Intents;
 import android.support.test.espresso.matcher.ViewMatchers;
-import android.support.test.filters.LargeTest;
+import android.support.test.filters.MediumTest;
 import android.support.test.rule.ActivityTestRule;
 
 import com.unifi.federicoguerri.traineeship_android.helpers.CustomMatchers;
@@ -26,7 +26,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static junit.framework.Assert.assertEquals;
 
-@LargeTest
+@MediumTest
 public class MainActivityInstrumentedTest {
 
     @Rule

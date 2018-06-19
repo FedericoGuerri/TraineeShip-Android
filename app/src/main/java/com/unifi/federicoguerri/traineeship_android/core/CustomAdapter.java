@@ -3,6 +3,7 @@ package com.unifi.federicoguerri.traineeship_android.core;
 import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,7 +78,7 @@ public class CustomAdapter extends ArrayAdapter<CustomDataSet> {
                     String modifiedData= recordRemoverFromString.remove(readFromFile(),removingIndex);
                     dataWriterToFile.writeToPath(modifiedData,false);
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    Log.e("RemovingPrice",e.getMessage());
                 }
                 remove(dataSet);
                 adapter.notifyDataSetChanged();
@@ -95,7 +96,7 @@ public class CustomAdapter extends ArrayAdapter<CustomDataSet> {
             }
         }
         catch (IOException e) {
-            e.printStackTrace();
+            Log.e("ReadingPrice",e.getMessage());
         }
 
         return contentBuilder.toString().substring(0,contentBuilder.toString().length()-1);

@@ -71,7 +71,6 @@ ext {
     orchestratorVersion = '1.0.1'
     robolectricVersion = '3.3.2'
     mockitoVersion='2.7.22'
-    spoonVersion='2.0.0-SNAPSHOT'
 }
 
 dependencies {
