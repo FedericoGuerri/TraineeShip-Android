@@ -13,6 +13,7 @@ An android app, developed with:
   - <a href="https://gradle.org">Gradle</a>
   - <a href="https://junit.org/junit4/">Junit</a> using <a href="http://robolectric.org">Robolectric</a> and <a href="http://site.mockito.org">Mockito</a>
   - <a href="https://developer.android.com/training/testing/espresso/index.html">Espresso</a> (optionally with Orchestrator)
-  
+  - <a href="https://sonarcloud.io/api/project_badges/measure?project=TraineeShip-Android%3Aapp&metric=alert_status">Sonar</a>
+
 
 :rotating_light: **WIP...**
