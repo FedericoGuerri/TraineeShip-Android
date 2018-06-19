@@ -37,7 +37,7 @@ public class MySurfaceHolderCallback implements SurfaceHolder.Callback {
 
     @Override
     public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
-
+        //Not calling this
     }
 
     @Override

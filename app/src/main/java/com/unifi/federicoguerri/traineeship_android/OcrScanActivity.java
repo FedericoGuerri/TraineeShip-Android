@@ -108,7 +108,7 @@ public class OcrScanActivity extends AppCompatActivity {
         }else{
             try {
                 Thread.sleep(1500);
-            } catch (InterruptedException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             fabSavePrice.setImageResource(R.drawable.ic_format_text);

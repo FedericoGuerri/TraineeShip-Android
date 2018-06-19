@@ -1,7 +1,6 @@
 apply plugin: 'com.android.application'
 apply from: "$rootDir/jacoco.gradle"
 apply plugin: "org.sonarqube"
-apply plugin: "com.jaredsburrows.spoon"
 
 android {
     compileSdkVersion 27
@@ -91,16 +90,8 @@ dependencies {
     testImplementation "org.robolectric:robolectric:$robolectricVersion"
     testImplementation "org.mockito:mockito-android:$mockitoVersion"
     androidTestImplementation "org.mockito:mockito-android:$mockitoVersion"
-    androidTestImplementation "com.squareup.spoon:spoon-client:$spoonVersion"
 }
 
-spoon {
-    // Identifying title for this execution. ("Spoon Execution" by default)
-    title = "Travis tests"
-
-    // Run only annotated large tests
-    testSize = "large"
-}
 
 
 
