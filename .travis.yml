@@ -34,9 +34,6 @@ install:
   # Install the rest of tools.
   - sdkmanager tools
   
-  # List installed components
-  - sdkmanager --list || true
-  
   # Install the system image.
   - sdkmanager "system-images;android-22;default;armeabi-v7a"  
   

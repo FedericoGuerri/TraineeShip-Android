@@ -228,7 +228,7 @@ public class OcrScanActivity extends AppCompatActivity {
                 int x = l[0];
                 int y = l[1];
                 myOcrBuilder.setRectBounds(new Rect(x,y,findViewById(R.id.textTargetingLayout).getWidth(),y+findViewById(R.id.textTargetingLayout).getHeight()));
-                myOcrBuilder.setTextViewCoordinates(myOcrBuilder.getRecognizedTextView().getX(),myOcrBuilder.getRecognizedTextView().getY(),findViewById(R.id.textTargetingLayout).getWidth()/3);
+                myOcrBuilder.setTextViewCoordinates(myOcrBuilder.getRecognizedTextView().getX(),myOcrBuilder.getRecognizedTextView().getY(),(float) findViewById(R.id.textTargetingLayout).getWidth()/3);
             }
         }.start();
     }

@@ -18,22 +18,30 @@ class PriceBuilder{
 
     private void removeLetters() {
         recognized = recognized.replaceAll("[^0-9.,]", " ");
-        recognized=recognized.trim().replaceAll(" +", " ");
-        recognized = recognized.replace(".", ",");
+        recognized = recognized.trim().replaceAll(" +", " ");
+        recognized = recognized.replaceAll("[.]", ",");
         String[] prices = recognized.split(" ");
+        choosePrice(prices);
+    }
 
+
+    private void choosePrice(String[] prices) {
         recognized=prices[0];
         for(int i=1;i<prices.length;i++){
             if(prices[i].contains(",")) {
                 if (!recognized.contains(",")) {
                     recognized = prices[i];
-                } else if (recognized.contains(",") && prices[i].lastIndexOf(',') <= recognized.lastIndexOf(',')) {
-                    if (prices[i].length() - prices[i].lastIndexOf(',') < recognized.length() - recognized.lastIndexOf(',') || recognized.length() > prices[i].length()) {
+                } else {
+                    if (prices[i].lastIndexOf(',') <= recognized.lastIndexOf(',') && hasMoreFloatNumbers(prices[i])) {
                         recognized = prices[i];
                     }
                 }
             }
         }
+    }
+
+    private boolean hasMoreFloatNumbers(String price){
+        return price.length() - price.lastIndexOf(',') < recognized.length() - recognized.lastIndexOf(',') || recognized.length() > price.length();
     }
 
     private void formatPrice() throws CustomException{
