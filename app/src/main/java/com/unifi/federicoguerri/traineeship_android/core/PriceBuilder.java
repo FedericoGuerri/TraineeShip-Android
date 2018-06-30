@@ -12,7 +12,7 @@ class PriceBuilder{
 
     public String getPrice() throws CustomException{
         removeLetters();
-        formatPrice();
+        checkCorrectPriceFormat();
         return recognized;
     }
 
@@ -44,11 +44,11 @@ class PriceBuilder{
         return price.length() - price.lastIndexOf(',') < recognized.length() - recognized.lastIndexOf(',') || recognized.length() > price.length();
     }
 
-    private void formatPrice() throws CustomException{
-        if(recognized.length()>7){
+    private void checkCorrectPriceFormat() throws CustomException{
+        if(recognized.length()>7 || recognized.equals("")){
             throw new CustomException(RECOGNITION_ERROR);
         }
-        if(recognized.lastIndexOf(',')==recognized.length()-1 || recognized.startsWith(",")){
+        if(recognized.endsWith(",") || recognized.startsWith(",")){
             throw new CustomException(RECOGNITION_ERROR);
         }
         if(recognized.lastIndexOf(',') != recognized.indexOf(',')){

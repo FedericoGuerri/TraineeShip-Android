@@ -20,12 +20,5 @@ public class CustomExceptionUnitTest {
         assertEquals(message,customException.getMessage());
     }
 
-    @Test
-    public void customException_canSetMessage_fromSetter(){
-        final String newMessage = "new message";
-        customException.setMessage(newMessage);
-        assertEquals(newMessage,customException.getMessage());
-    }
-
 
 }

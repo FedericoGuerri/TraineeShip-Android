@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         itemsLoaderToPriceListView.loadItems();
     }
 
+
     public void startOcrScanActivity(View view) {
         if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(MainActivity.this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_STORAGE_PERMISSION_CONFIGURATION);
@@ -51,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         }
         lauchActivity();
     }
+
 
     private void lauchActivity(){
         Intent intent = new Intent(this, OcrScanActivity.class);
