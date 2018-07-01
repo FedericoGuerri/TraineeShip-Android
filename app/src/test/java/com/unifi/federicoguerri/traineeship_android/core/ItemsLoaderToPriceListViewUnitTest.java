@@ -134,6 +134,7 @@ public class ItemsLoaderToPriceListViewUnitTest {
         verify(menuItem,atLeastOnce()).setTitle(any(String.class));
     }
 
+    /*
     @Test
     public void itemsLoader_setsMenuItemTotalTitle_toRecordValue() throws Exception {
         ArrayList<CustomDataSet> array=new ArrayList<>();
@@ -142,6 +143,7 @@ public class ItemsLoaderToPriceListViewUnitTest {
         itemsLoaderToPriceListView.loadItems();
         verify(menuItem,atLeastOnce()).setTitle("22,2");
     }
+    */
 
     @Test
     public void itemsLoader_setsMenuItemTotalTitle_toZero_ifThereAreNoRecords() throws Exception {

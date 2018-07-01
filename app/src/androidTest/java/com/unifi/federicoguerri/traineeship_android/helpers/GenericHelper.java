@@ -1,6 +1,7 @@
 package com.unifi.federicoguerri.traineeship_android.helpers;
 
 
+import android.os.SystemClock;
 import android.support.test.espresso.UiController;
 import android.support.test.espresso.ViewAction;
 import android.view.View;
@@ -36,11 +37,14 @@ public class GenericHelper {
     }
 
     private void waitUI(int time) {
+        SystemClock.sleep(time);
+        /*
         try {
             Thread.sleep(time);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        */
     }
 
 

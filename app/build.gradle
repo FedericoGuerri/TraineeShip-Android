@@ -52,6 +52,7 @@ android {
         }
         unitTests {
             includeAndroidResources = true
+            unitTests.returnDefaultValues = true
         }
     }
 }
@@ -89,6 +90,8 @@ dependencies {
     testImplementation "org.robolectric:robolectric:$robolectricVersion"
     testImplementation "org.mockito:mockito-android:$mockitoVersion"
     androidTestImplementation "org.mockito:mockito-android:$mockitoVersion"
+
+    //androidTestCompile 'org.awaitility:awaitility:3.1.1'
 }
 
 

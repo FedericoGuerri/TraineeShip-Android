@@ -129,6 +129,12 @@ public class DataLoaderFromFileUnitTest {
         assertEquals("22.2",String.valueOf(dataLoaderFromFile.getRecords().get(0).getPrice()));
     }
 
+    @Test
+    public void dataLoader_willLoadBitmapFromResources_ifNotnoMiniature() throws Exception {
+        writeToFileSpecifiedFromField("22.2 "+folder.toString());
+        assertEquals("22.2",String.valueOf(dataLoaderFromFile.getRecords().get(0).getPrice()));
+    }
+
 
     private void writeToFileSpecifiedFromField(String data) throws Exception {
         folder.newFile(path);
