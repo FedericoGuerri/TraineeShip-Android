@@ -120,7 +120,7 @@ public class OcrScanActivity extends AppCompatActivity {
                 @Override
                 public void onPictureTaken(byte[] bytes) {
                     Bitmap bitmap= BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                    String miniaturePath=saveMiniatureFile(Bitmap.createScaledBitmap(bitmap,350,450,true),filePath);
+                    String miniaturePath=saveMiniatureFile(Bitmap.createScaledBitmap(bitmap,350,450,true));
                     saveDataToFile(miniaturePath,filePath);
                     endActivity();
                 }
@@ -128,7 +128,7 @@ public class OcrScanActivity extends AppCompatActivity {
         }
     }
 
-    private String saveMiniatureFile(Bitmap bitmap, String filePath){
+    private String saveMiniatureFile(Bitmap bitmap){
         String filename;
         try {
             String configurationDir = filePath.substring(0, filePath.lastIndexOf(File.separator));

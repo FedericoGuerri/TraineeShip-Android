@@ -265,4 +265,5 @@ public class OcrComponentsBuilderUnitTest {
         ocrBuilder.release();
     }
 
+
 }

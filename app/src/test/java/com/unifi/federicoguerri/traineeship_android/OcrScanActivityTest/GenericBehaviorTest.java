@@ -52,7 +52,7 @@ public class GenericBehaviorTest {
     }
 
     @Test
-    public void canrequestPermissionAtRuntime(){
+    public void canRequestPermissionAtRuntime(){
         activity.onRequestPermissionsResult(10400,new String[]{Manifest.permission.CAMERA},new int[] {PackageManager.PERMISSION_GRANTED});
     }
 
