@@ -11,23 +11,15 @@ class RecordRemoverFromString {
             data=" "+data;
         }
 
-        data = removePriceAndMiniaturePath(data, index);
-
-        if(data.startsWith(" ")){
-            data=data.substring(1);
-        }
-        if(!data.endsWith(" ")){
-            data=data+" ";
-        }
-
-        return data;
+        return removePriceAndMiniaturePath(data, index);
     }
 
     private String removePriceAndMiniaturePath(String data, int index) {
         Pattern whitespace = Pattern.compile("\\s");
         Matcher matcher = whitespace.matcher(data);
-        int foundSpaces=0;
+        int foundSpaces=-1;
         while (matcher.find()){
+            foundSpaces++;
             if(foundSpaces==index*2){
                 int firstSpaceIndex=matcher.end();
                 matcher.find(matcher.end());
@@ -35,7 +27,12 @@ class RecordRemoverFromString {
                 data=data.substring(0,firstSpaceIndex)+data.substring(matcher.end(),data.length());
                 break;
             }
-            foundSpaces++;
+        }
+        if(data.startsWith(" ")){
+            data=data.substring(1);
+        }
+        if(!data.endsWith(" ")){
+            data=data+" ";
         }
         return data;
     }

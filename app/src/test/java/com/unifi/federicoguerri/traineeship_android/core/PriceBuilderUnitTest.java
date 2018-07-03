@@ -79,11 +79,9 @@ public class PriceBuilderUnitTest {
     }
 
     @Test
-    public void priceBuilder_throwsExceptionIfThereAreMoreCommas() throws Exception {
-        recognitionException.expect(Exception.class);
-        recognitionException.expectMessage("recognitionError");
+    public void priceBuilder_returnsThefirstPrice_withComma_IfThereAreMoreCommas() throws Exception {
         readPrice("3,4,4");
-        assertEquals("",priceBuilder.getPrice());
+        assertEquals("3,4",priceBuilder.getPrice());
     }
 
     @Test
@@ -122,8 +120,9 @@ public class PriceBuilderUnitTest {
 
     @Test
     public void priceBuilder_returnsPriceWithLessNumbers_atCommaRight_ifSameNumbersAtCommaLeft() throws Exception {
-        readPrice("0,1234Words3,99some*__33,0");
-        assertEquals("3,99",priceBuilder.getPrice());
+        readPrice("0,99Words3,99some*__33,0");
+        assertEquals("0,99",priceBuilder.getPrice());
     }
+
 
 }

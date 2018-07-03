@@ -17,7 +17,7 @@ public class RecordRemoverFromStringUnitTest {
     }
 
     @Test
-    public void recordRemover_canDeleteTheOnlyOneRecord(){
+    public void recordRemover_canDeleteTheOnlyRecord(){
         String data="0.0 noMiniature ";
         assertEquals(" ", recordRemoverFromString.remove(data,0));
     }
@@ -67,7 +67,7 @@ public class RecordRemoverFromStringUnitTest {
 
     @Test
     public void recordRemover_willAlwaysReturnAStringEndingWithSpace(){
-        String data="22.2 noMiniature 0.0 noMiniature";
+        String data="22.2 noMiniature 0.0 noMiniature ";
         assertEquals("0.0 noMiniature ", recordRemoverFromString.remove(data,0));
     }
 
@@ -75,12 +75,6 @@ public class RecordRemoverFromStringUnitTest {
     public void recordRemover_canRemoveMoreRecordsFromSameString(){
         String data="22.2 noMiniature 0.0 noMiniature 22.3 noMiniature ";
         assertEquals("22.3 noMiniature ", recordRemoverFromString.remove(recordRemoverFromString.remove(data,0),0));
-    }
-
-    @Test
-    public void recordRemover_willRemoveSpaceIfFirstCharacter(){
-        String data=" 22.2 noMiniature 0.0 noMiniature ";
-        assertEquals("0.0 noMiniature ", recordRemoverFromString.remove(data,0));
     }
 
 }

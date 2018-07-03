@@ -15,6 +15,7 @@ import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
+import org.robolectric.shadows.ShadowActivity;
 
 import java.io.File;
 
@@ -23,7 +24,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.robolectric.Shadows.shadowOf;
 
-@Config(constants = BuildConfig.class, sdk = Build.VERSION_CODES.LOLLIPOP_MR1)
+@Config(constants = BuildConfig.class, sdk = Build.VERSION_CODES.M)
 @RunWith(RobolectricTestRunner.class)
 public class GenericBehaviorTest {
 
@@ -74,7 +75,14 @@ public class GenericBehaviorTest {
     }
 
     @Test
+    public void canRequestPermissionAtRuntime(){
+        activity.onRequestPermissionsResult(10800,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},new int[] {PackageManager.PERMISSION_GRANTED});
+    }
+
+    @Test
     public void canrequestPermissionAtRuntime(){
+        ShadowActivity shadowActivity=shadowOf(activity);
+        shadowActivity.denyPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE);
         activity.onRequestPermissionsResult(10800,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},new int[] {PackageManager.PERMISSION_GRANTED});
     }
 

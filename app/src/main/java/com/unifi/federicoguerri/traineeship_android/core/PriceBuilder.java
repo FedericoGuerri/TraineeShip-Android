@@ -1,6 +1,9 @@
 package com.unifi.federicoguerri.traineeship_android.core;
 
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 class PriceBuilder{
 
     private static final String RECOGNITION_ERROR = "recognitionError";
@@ -11,47 +14,54 @@ class PriceBuilder{
     }
 
     public String getPrice() throws CustomException{
-        removeLetters();
+        chooseMoreProbablePrice();
         checkCorrectPriceFormat();
         return recognized;
     }
 
-    private void removeLetters() {
-        recognized = recognized.replaceAll("[^0-9.,]", " ");
-        recognized = recognized.trim().replaceAll(" +", " ");
-        recognized = recognized.replaceAll("[.]", ",");
-        String[] prices = recognized.split(" ");
-        choosePrice(prices);
-    }
-
-
-    private void choosePrice(String[] prices) {
-        recognized=prices[0];
-        for(int i=1;i<prices.length;i++){
-            if(prices[i].contains(",")) {
-                if (!recognized.contains(",")) {
-                    recognized = prices[i];
-                } else {
-                    if (prices[i].lastIndexOf(',') <= recognized.lastIndexOf(',') && hasMoreFloatNumbers(prices[i])) {
-                        recognized = prices[i];
-                    }
+    private void chooseMoreProbablePrice() throws CustomException{
+        Matcher matcher = getAllPrices();
+        recognized=matcher.group();
+        while (matcher.find()){
+            String possiblePrice=matcher.group();
+            if(possiblePrice.contains(",")){
+                if(!recognized.contains(",")){
+                    recognized=possiblePrice;
+                }else{
+                    recognized = checkWitchPriceHasMoreFloatDigits(possiblePrice, recognized);
                 }
             }
         }
     }
 
-    private boolean hasMoreFloatNumbers(String price){
-        return price.length() - price.lastIndexOf(',') < recognized.length() - recognized.lastIndexOf(',') || recognized.length() > price.length();
+    private String checkWitchPriceHasMoreFloatDigits(String price1, String price2) {
+        if(price1.indexOf(',')<price2.indexOf(',')){
+            return price1;
+        }
+        return price2;
     }
 
+    private Matcher getAllPrices() throws CustomException {
+        recognized = recognized.replaceAll("[.]", ",");
+        final Pattern pattern = Pattern.compile("[0-9]+([,][0-9]{0,2})?");
+        String data=" "+recognized;
+        Matcher matcher = pattern.matcher(data);
+        matcher.matches();
+        if(!matcher.find()){
+            throw new CustomException(RECOGNITION_ERROR);
+        }
+        return matcher;
+    }
+
+
     private void checkCorrectPriceFormat() throws CustomException{
-        if(recognized.length()>7 || recognized.equals("")){
+        if(recognized.length()>7){
             throw new CustomException(RECOGNITION_ERROR);
         }
         if(recognized.endsWith(",") || recognized.startsWith(",")){
             throw new CustomException(RECOGNITION_ERROR);
         }
-        if(recognized.lastIndexOf(',') != recognized.indexOf(',')){
+        if(recognized.startsWith("0") && !recognized.contains(",")){
             throw new CustomException(RECOGNITION_ERROR);
         }
     }
