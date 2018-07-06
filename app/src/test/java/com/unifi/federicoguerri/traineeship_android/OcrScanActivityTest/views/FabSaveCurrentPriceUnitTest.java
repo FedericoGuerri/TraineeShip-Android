@@ -190,11 +190,6 @@ public class FabSaveCurrentPriceUnitTest extends AbstractOcrScanActivityUnitTest
         assertTrue(activity.isFinishing());
     }
 
-    @Test
-    public void fabSavePrice_willShowToastMessage_ifCantWriteToFile(){
-        tapOnFabAndPressDialogNegativeButton();
-        assertEquals(getStringFromResources(R.string.cant_write_to_file),ShadowToast.getTextOfLatestToast());
-    }
 
     @Test
     public void fabSavePrice_willEndOcrScanActivityWithEnterTransition()  {
@@ -270,6 +265,8 @@ public class FabSaveCurrentPriceUnitTest extends AbstractOcrScanActivityUnitTest
         tapOnFabAndPressDialogPositiveButton();
         assertTrue(priceTextView.getY()!=-200);
     }
+
+
 
     private void tapOnFabAndPressDialogPositiveButton(){
         fabSavePrice.performClick();

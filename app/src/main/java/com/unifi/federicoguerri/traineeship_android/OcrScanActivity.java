@@ -6,11 +6,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
@@ -26,15 +25,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.vision.CameraSource;
-import com.unifi.federicoguerri.traineeship_android.core.DataWriterToFile;
+import com.unifi.federicoguerri.traineeship_android.core.MiniatureSaver;
 import com.unifi.federicoguerri.traineeship_android.core.MySurfaceHolderCallback;
 import com.unifi.federicoguerri.traineeship_android.core.OcrComponentsBuilder;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Objects;
 
 public class OcrScanActivity extends AppCompatActivity {
@@ -42,11 +37,11 @@ public class OcrScanActivity extends AppCompatActivity {
     private SurfaceView ocrScanView;
     private OcrComponentsBuilder myOcrBuilder;
     private static final int REQUEST_CAMERA_PERMISSION = 10400;
-    private String filePath;
     private boolean isGettingMiniature = false;
 
     private FloatingActionButton fabSavePrice;
     private int color;
+    private MiniatureSaver miniatureSaver;
 
 
     @Override
@@ -54,7 +49,6 @@ public class OcrScanActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ocr_scan);
 
-        filePath = getIntent().getStringExtra("fileName");
         ocrScanView = findViewById(R.id.ocrViewOcrScanActivity);
         myOcrBuilder = new OcrComponentsBuilder(getApplicationContext());
 
@@ -73,6 +67,8 @@ public class OcrScanActivity extends AppCompatActivity {
 
         fabSavePrice =findViewById(R.id.fabSaveCurrentPrice);
         color=ContextCompat.getColor(this,R.color.colorAccent);
+
+        miniatureSaver =new MiniatureSaver(this,myOcrBuilder,getIntent().getIntExtra("nextIndex",0),fabSavePrice);
 
     }
 
@@ -107,53 +103,12 @@ public class OcrScanActivity extends AppCompatActivity {
                 toast.show();
             }
         }else{
-            try {
-                Thread.sleep(1500);
-            } catch (Exception e) {
-                Log.e("SavingMiniature",e.getMessage());
-            }
+            SystemClock.sleep(1500);
             fabSavePrice.setImageResource(R.drawable.ic_format_text);
             fabSavePrice.setBackgroundTintList(ColorStateList.valueOf(color));
             isGettingMiniature=false;
             findViewById(R.id.textTargetingLayout).setVisibility(View.VISIBLE);
-            myOcrBuilder.getCameraSource().takePicture(null, new CameraSource.PictureCallback() {
-                @Override
-                public void onPictureTaken(byte[] bytes) {
-                    Bitmap bitmap= BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                    String miniaturePath=saveMiniatureFile(Bitmap.createScaledBitmap(bitmap,350,450,true));
-                    saveDataToFile(miniaturePath,filePath);
-                    endActivity();
-                }
-            });
-        }
-    }
-
-    private String saveMiniatureFile(Bitmap bitmap){
-        String filename;
-        try {
-            String configurationDir = filePath.substring(0, filePath.lastIndexOf(File.separator));
-            String timeStamp = new SimpleDateFormat("yyyy_MMdd_HH_mm_ss").format(new Date());
-            filename=configurationDir + File.separator + "miniature_"+ timeStamp + ".png";
-            FileOutputStream out;
-            out = new FileOutputStream(filename);
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
-            out.close();
-        } catch (Exception e) {
-            Toast.makeText(this,getText(R.string.cant_write_to_file),Toast.LENGTH_SHORT).show();
-            filename="noMiniature";
-        }
-        return filename;
-    }
-
-    private void saveDataToFile(String miniaturePath,String filePath) {
-        DataWriterToFile dataWriterToFile= new DataWriterToFile();
-        dataWriterToFile.setFilePath(filePath);
-        try {
-            dataWriterToFile.writeToPath(myOcrBuilder.getRecognizedTextView().getText().toString().replace(",",".") +" "+ miniaturePath+" ",true);
-        } catch (Exception e) {
-            if(e.getMessage().equals("Failed to write to file")) {
-                Toast.makeText(this, getText(R.string.cant_write_to_file), Toast.LENGTH_SHORT).show();
-            }
+            myOcrBuilder.getCameraSource().takePicture(null, miniatureSaver);
         }
     }
 
@@ -171,8 +126,8 @@ public class OcrScanActivity extends AppCompatActivity {
                 });
         builder.setNegativeButton(getString(R.string.negative), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        saveDataToFile("noMiniature",filePath);
-                        endActivity();
+                        miniatureSaver.saveDataToFile("noMiniature");
+                        miniatureSaver.endActivity();
                         dialog.dismiss();
                     }
         });
@@ -204,14 +159,10 @@ public class OcrScanActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        endActivity();
+        miniatureSaver.endActivity();
     }
 
-    private void endActivity() {
-        fabSavePrice.setEnabled(false);
-        finish();
-        overridePendingTransition(R.anim.end_ocr_scan_enter,R.anim.end_ocr_scan_exit);
-    }
+
 
     @Override
     protected void onPostResume() {

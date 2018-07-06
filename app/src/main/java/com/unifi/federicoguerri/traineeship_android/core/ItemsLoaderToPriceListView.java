@@ -16,29 +16,25 @@ import java.util.List;
 
 public class ItemsLoaderToPriceListView {
 
-    private DataLoaderFromFile loaderFromFile;
-    private String pricesPath;
+    private DatabaseHelper helper;
     private MenuItem totalItem;
     private Activity activity;
     private ListView pricesList;
     private LinearLayout welcomeLayout;
 
-    public ItemsLoaderToPriceListView(DataLoaderFromFile loaderFromFile, String pricesPath, MenuItem totalItem, Activity activity){
-        this.loaderFromFile = loaderFromFile;
-        this.pricesPath = pricesPath;
+    public ItemsLoaderToPriceListView(DatabaseHelper helper, MenuItem totalItem, Activity activity){
+        this.helper = helper;
         this.totalItem = totalItem;
         this.activity = activity;
-
         pricesList = activity.findViewById(R.id.pricesListViewMainActivity);
         welcomeLayout=activity.findViewById(R.id.welcomeLayoutMainActivity);
     }
 
     public void loadItems(){
         try {
-            loaderFromFile.loadFileFromPath(pricesPath);
-            List<CustomDataSet> dataSets = loaderFromFile.getRecords();
+            List<CustomDataSet> dataSets = helper.getPricesAsDataSet();
             if(!dataSets.isEmpty()) {
-                final CustomAdapter adapter = new CustomAdapter(dataSets, activity.getApplicationContext(),pricesPath);
+                final CustomAdapter adapter = new CustomAdapter(dataSets, activity.getApplicationContext());
                 adapter.registerDataSetObserver(new DataSetObserver() {
                     @Override
                     public void onChanged() {

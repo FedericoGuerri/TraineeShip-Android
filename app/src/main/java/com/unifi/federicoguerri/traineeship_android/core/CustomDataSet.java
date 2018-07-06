@@ -6,10 +6,12 @@ public class CustomDataSet {
 
     private Float price;
     private Bitmap miniature;
+    private int id;
 
-    public CustomDataSet(Float price, Bitmap miniature) {
+    public CustomDataSet(Float price, Bitmap miniature,int id) {
         this.price=price;
         this.miniature=miniature;
+        this.id=id;
     }
 
     public Float getPrice() {
@@ -18,5 +20,9 @@ public class CustomDataSet {
 
     public Bitmap getMiniature() {
         return miniature;
+    }
+
+    public int getId() {
+        return id;
     }
 }

@@ -14,10 +14,11 @@ public class CustomDataSetUnitTest {
     private CustomDataSet customDataSet;
     private Float price=22.2f;
     private Bitmap miniature=null;
+    private int id;
 
     @Before
     public void createObjectWithConstructor(){
-        customDataSet=new CustomDataSet(price,miniature);
+        customDataSet=new CustomDataSet(price,miniature,id);
     }
 
     @Test

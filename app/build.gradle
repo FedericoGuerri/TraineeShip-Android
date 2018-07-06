@@ -91,6 +91,7 @@ dependencies {
     testImplementation "org.mockito:mockito-android:$mockitoVersion"
     androidTestImplementation "org.mockito:mockito-android:$mockitoVersion"
 
+    implementation 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'
     //androidTestCompile 'org.awaitility:awaitility:3.1.1'
 }
 

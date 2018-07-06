@@ -6,6 +6,7 @@ import android.view.View;
 import com.unifi.federicoguerri.traineeship_android.BuildConfig;
 import com.unifi.federicoguerri.traineeship_android.MainActivity;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,6 +30,11 @@ public abstract class AbstractMainActivityUnitTest {
     public void setUp() {
         activity = Robolectric.buildActivity( MainActivity.class ).create().visible().get();
         testingComponent=getTestingComponent();
+    }
+
+    @After
+    public void tearDown(){
+        activity.finish();
     }
 
     @Test

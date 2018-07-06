@@ -18,4 +18,5 @@
     <string name="take_photo_to_product">Take a photo of product.</string>
     <string name="itemdelete_imageview_pricelistview_contentdescriptor">Tap to delete.</string>
     <string name="menuitem_total_default_mainactivity">0.0</string>
+    <string name="itemid_textview_pricelistview_defaultvalue">-1</string>
 </resources>

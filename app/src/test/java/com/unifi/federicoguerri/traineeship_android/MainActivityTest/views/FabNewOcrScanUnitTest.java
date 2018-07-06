@@ -1,7 +1,9 @@
 package com.unifi.federicoguerri.traineeship_android.MainActivityTest.views;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.design.widget.FloatingActionButton;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,10 +15,6 @@ import org.robolectric.shadows.ShadowActivity;
 import org.robolectric.shadows.ShadowApplication;
 import org.robolectric.shadows.ShadowIntent;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-
-import static junit.framework.Assert.assertFalse;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -96,33 +94,16 @@ public class FabNewOcrScanUnitTest extends AbstractMainActivityUnitTest {
     public void fabNewOcr_givesOcrScanActivityFileNameWithIntent()  {
         fabNewOcr.performClick();
         ShadowActivity shadowActivity = shadowOf(activity);
-        assertTrue(shadowActivity.getNextStartedActivity().hasExtra("fileName"));
+        assertTrue(shadowActivity.getNextStartedActivity().hasExtra("nextIndex"));
     }
 
-    @Test
-    public void fabNewOcr_givesOcrScanActivityANotEmptyFileName()  {
-        fabNewOcr.performClick();
-        ShadowActivity shadowActivity = shadowOf(activity);
-        assertFalse(shadowActivity.getNextStartedActivity().getStringExtra("fileName").isEmpty());
-    }
 
     @Test
-    public void fabNewOcr_givesOcrScanActivityATxtFileName()  {
+    public void fabNewOcr_givesOcrScanActivityAnId()  {
         fabNewOcr.performClick();
         ShadowActivity shadowActivity = shadowOf(activity);
-        String fileName=shadowActivity.getNextStartedActivity().getStringExtra("fileName");
-        assertEquals(".txt",fileName.substring(fileName.lastIndexOf("."),fileName.length()));
-    }
-
-    @Test
-    public void fabNewOcr_givesOcrScanActivityADataFormattedFileName() throws ParseException {
-        fabNewOcr.performClick();
-        ShadowActivity shadowActivity = shadowOf(activity);
-        String fileName=shadowActivity.getNextStartedActivity().getStringExtra("fileName");
-        fileName=fileName.substring(fileName.lastIndexOf("/")+1,fileName.lastIndexOf("."));
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss");
-        dateFormat.setLenient(false);
-        dateFormat.parse(fileName);
+        int fileName=shadowActivity.getNextStartedActivity().getIntExtra("nextIndex",0);
+        assertEquals(0,fileName);
     }
 
     @Test
@@ -162,6 +143,22 @@ public class FabNewOcrScanUnitTest extends AbstractMainActivityUnitTest {
         ShadowActivity shadowActivity = shadowOf(activity);
         Intent startedIntent = shadowActivity.getNextStartedActivity();
         ShadowIntent shadowIntent = shadowOf(startedIntent);
+    }
+
+    @Test
+    public void fabNewOcr_willSave_IdCount_inSharedPreferences_onFabClick(){
+        fabNewOcr.performClick();
+        SharedPreferences sharedPreferences = activity.getApplication().getSharedPreferences("myConfiguration", Context.MODE_PRIVATE);
+        assertTrue(sharedPreferences.contains("id_price_count"));
+    }
+
+    @Test
+    public void fabNewOcr_willIncrease_IdCount_onFabClick(){
+        fabNewOcr.performClick();
+        SharedPreferences sharedPreferences = activity.getApplication().getSharedPreferences("myConfiguration", Context.MODE_PRIVATE);
+        int firstId=sharedPreferences.getInt("id_price_count",0);
+        fabNewOcr.performClick();
+        assertEquals(firstId+1,sharedPreferences.getInt("id_price_count",0));
     }
 
 

@@ -1,7 +1,9 @@
 package com.unifi.federicoguerri.traineeship_android;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,39 +11,45 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 
-import com.unifi.federicoguerri.traineeship_android.core.DataLoaderFromFile;
+import com.activeandroid.ActiveAndroid;
+import com.activeandroid.Configuration;
+import com.activeandroid.query.Delete;
+import com.unifi.federicoguerri.traineeship_android.core.DatabaseHelper;
+import com.unifi.federicoguerri.traineeship_android.core.DatabasePrice;
 import com.unifi.federicoguerri.traineeship_android.core.ItemsLoaderToPriceListView;
 
-import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
-    private String pricesPath="";
+    public static final String SHARED_PREF_NAME = "myConfiguration";
+    public static final String ID_PRICE_COUNT = "id_price_count";
+    private int id=0;
     private static final int REQUEST_STORAGE_PERMISSION_CONFIGURATION=10800;
-    private MenuItem totalItem;
+    private ItemsLoaderToPriceListView itemsLoaderToPriceListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Configuration.Builder configuration = new Configuration.Builder(this).setDatabaseName(getFileName());
+        configuration.addModelClasses(DatabasePrice.class);
+        ActiveAndroid.initialize(configuration.create());
 
-        if(!createConfigurationDirectory()){
-            ActivityCompat.requestPermissions(MainActivity.this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_STORAGE_PERMISSION_CONFIGURATION);
-        }
     }
 
     @Override
     protected void onPostResume() {
         super.onPostResume();
-        ItemsLoaderToPriceListView itemsLoaderToPriceListView =new ItemsLoaderToPriceListView(new DataLoaderFromFile(),pricesPath,totalItem,this);
-        itemsLoaderToPriceListView.loadItems();
+        readIdFromSharedPreferences();
+        if(itemsLoaderToPriceListView!=null) {
+            itemsLoaderToPriceListView.loadItems();
+        }
     }
 
 
@@ -56,46 +64,61 @@ public class MainActivity extends AppCompatActivity {
 
     private void lauchActivity(){
         Intent intent = new Intent(this, OcrScanActivity.class);
-        intent.putExtra("fileName",pricesPath);
+        intent.putExtra("nextIndex",id);
         startActivity(intent);
+        id++;
+        savePriceIdToSharedPreferences();
         overridePendingTransition(R.anim.new_ocr_scan_enter,R.anim.new_ocr_scan_exit);
     }
 
+    private void readIdFromSharedPreferences() {
+        SharedPreferences prefs;
+        prefs = getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        id = prefs.getInt(ID_PRICE_COUNT, 0);
+    }
+
+    private void savePriceIdToSharedPreferences() {
+        SharedPreferences prefs= getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt(ID_PRICE_COUNT, id);
+        editor.commit();
+    }
+
+
     private String getFileName() {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.US);
-        return formatter.format(new Date()) + ".txt";
+        return "prices_"+formatter.format(new Date())+".db";
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == REQUEST_STORAGE_PERMISSION_CONFIGURATION) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                return;
-            }
-            createConfigurationDirectory();
+        if (requestCode == REQUEST_STORAGE_PERMISSION_CONFIGURATION && permissionGranted(grantResults[0])) {
+            return;
         }
+        lauchActivity();
     }
 
-    private boolean createConfigurationDirectory(){
-        File configDir=new File(getFilesDir()
-                + "/Android/data/"
-                + getApplicationContext().getPackageName()
-                + "/ConfigurationDir");
-        if (!configDir.exists()) {
-           if(configDir.mkdirs()){
-                pricesPath=configDir.getPath() + File.separator + getFileName();
-            }
-        }else{
-            pricesPath=configDir.getPath() + File.separator + getFileName();
-        }
-        return configDir.exists();
+    private boolean permissionGranted(int grantResult) {
+        return grantResult == PackageManager.PERMISSION_GRANTED &&
+                ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED;
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_mainactivity, menu);
-        totalItem=menu.findItem(R.id.menuitem_total_mainactivity);
+        itemsLoaderToPriceListView = new ItemsLoaderToPriceListView(DatabaseHelper.getHelper(),menu.findItem(R.id.menuitem_total_mainactivity),this);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        SharedPreferences prefs= getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        prefs.edit().remove(ID_PRICE_COUNT);
+        prefs.edit().clear();
+        prefs.edit().commit();
+        new Delete().from(DatabasePrice.class).execute();
     }
 
 }

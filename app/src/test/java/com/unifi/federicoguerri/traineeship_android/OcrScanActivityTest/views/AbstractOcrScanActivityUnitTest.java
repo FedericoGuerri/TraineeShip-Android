@@ -3,14 +3,17 @@ package com.unifi.federicoguerri.traineeship_android.OcrScanActivityTest.views;
 import android.os.Build;
 import android.view.View;
 
+import com.activeandroid.ActiveAndroid;
 import com.unifi.federicoguerri.traineeship_android.BuildConfig;
 import com.unifi.federicoguerri.traineeship_android.OcrScanActivity;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
+import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 
 import static junit.framework.Assert.assertNotNull;
@@ -27,7 +30,13 @@ public abstract class AbstractOcrScanActivityUnitTest {
     @Before
     public void setUp() {
         activity = Robolectric.buildActivity( OcrScanActivity.class ).create().visible().get();
+        ActiveAndroid.initialize(RuntimeEnvironment.application);
         testingComponent=getTestingComponent();
+    }
+
+    @After
+    public void tearDown(){
+        ActiveAndroid.dispose();
     }
 
     @Test

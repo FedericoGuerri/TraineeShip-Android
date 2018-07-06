@@ -41,7 +41,7 @@ public class PricesListViewUnitTest extends AbstractMainActivityUnitTest {
 
     @Test
     public void pricesList_canUseCustomAdapter(){
-        CustomAdapter customAdapter=new CustomAdapter(new ArrayList<CustomDataSet>(),pricesList.getContext(),null);
+        CustomAdapter customAdapter=new CustomAdapter(new ArrayList<CustomDataSet>(),pricesList.getContext());
         pricesList.setAdapter(customAdapter);
         assertTrue(pricesList.getAdapter()==customAdapter);
     }
@@ -54,7 +54,7 @@ public class PricesListViewUnitTest extends AbstractMainActivityUnitTest {
 
     @Test
     public void pricesList_customAdapterHasNoRecords(){
-        CustomAdapter customAdapter=new CustomAdapter(new ArrayList<CustomDataSet>(),activity.getApplicationContext(),null);
+        CustomAdapter customAdapter=new CustomAdapter(new ArrayList<CustomDataSet>(),activity.getApplicationContext());
         pricesList.setAdapter(customAdapter);
         ShadowListView shadowListView = Shadows.shadowOf(pricesList);
         shadowListView.populateItems();
@@ -65,8 +65,8 @@ public class PricesListViewUnitTest extends AbstractMainActivityUnitTest {
     @Test
     public void pricesList_customAdapterHasOneRecord(){
         ArrayList<CustomDataSet> records=new ArrayList<>();
-        records.add(new CustomDataSet(22.2f,null));
-        CustomAdapter customAdapter=new CustomAdapter(records,activity.getApplicationContext(),null);
+        records.add(new CustomDataSet(22.2f,null,0));
+        CustomAdapter customAdapter=new CustomAdapter(records,activity.getApplicationContext());
         pricesList.setAdapter(customAdapter);
         ShadowListView shadowListView = Shadows.shadowOf(pricesList);
         shadowListView.populateItems();
@@ -76,8 +76,8 @@ public class PricesListViewUnitTest extends AbstractMainActivityUnitTest {
     @Test
     public void pricesList_customAdapterCanRemoveARecord(){
         ArrayList<CustomDataSet> records=new ArrayList<>();
-        records.add(new CustomDataSet(22.2f,null));
-        CustomAdapter customAdapter=new CustomAdapter(records,activity.getApplicationContext(),null);
+        records.add(new CustomDataSet(22.2f,null,0));
+        CustomAdapter customAdapter=new CustomAdapter(records,activity.getApplicationContext());
         pricesList.setAdapter(customAdapter);
         records.remove(0);
         customAdapter.notifyDataSetChanged();
@@ -89,10 +89,10 @@ public class PricesListViewUnitTest extends AbstractMainActivityUnitTest {
     @Test
     public void pricesList_customAdapterCanRemoveMoreRecords(){
         ArrayList<CustomDataSet> records=new ArrayList<>();
-        records.add(new CustomDataSet(22.2f,null));
-        records.add(new CustomDataSet(0.0f,null));
-        records.add(new CustomDataSet(22.2f,null));
-        CustomAdapter customAdapter=new CustomAdapter(records,activity.getApplicationContext(),null);
+        records.add(new CustomDataSet(22.2f,null,0));
+        records.add(new CustomDataSet(0.0f,null,1));
+        records.add(new CustomDataSet(22.2f,null,2));
+        CustomAdapter customAdapter=new CustomAdapter(records,activity.getApplicationContext());
         pricesList.setAdapter(customAdapter);
         records.remove(1);
         records.remove(0);

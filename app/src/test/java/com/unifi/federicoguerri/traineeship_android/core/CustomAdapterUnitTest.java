@@ -12,7 +12,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
@@ -27,8 +26,8 @@ import static junit.framework.Assert.assertNull;
 @RunWith(RobolectricTestRunner.class)
 public class CustomAdapterUnitTest {
 
-    @Mock
-    DataWriterToFile dataWriterToFile;
+    //@Mock
+    //DataWriterToFile dataWriterToFile;
     @InjectMocks
     private CustomAdapter customAdapter;
 
@@ -67,7 +66,7 @@ public class CustomAdapterUnitTest {
 
     @Test(expected = IndexOutOfBoundsException.class)
     public void customAdapterGetView_withNoRecordsThrowsException(){
-        customAdapter=new CustomAdapter(new ArrayList<CustomDataSet>(),activity.getApplicationContext(),null);
+        customAdapter=new CustomAdapter(new ArrayList<CustomDataSet>(),activity.getApplicationContext());
         customAdapter.getView(0,convertView,null);
     }
 
@@ -75,26 +74,26 @@ public class CustomAdapterUnitTest {
     @Test
     public void customAdapterGetView_withNullViewReturnsANewView(){
         ArrayList<CustomDataSet> records= new ArrayList<>();
-        records.add(new CustomDataSet(22.2f,null));
-        customAdapter=new CustomAdapter(records,activity.getApplicationContext(),null);
+        records.add(new CustomDataSet(22.2f,null,0));
+        customAdapter=new CustomAdapter(records,activity.getApplicationContext());
         assertFalse(convertView==customAdapter.getView(0,null,null));
     }
 
     @Test
     public void customAdapter_getTotalwillReturnAPriceValue(){
         ArrayList<CustomDataSet> records= new ArrayList<>();
-        records.add(new CustomDataSet(22.2f,null));
-        customAdapter=new CustomAdapter(records,activity.getApplicationContext(),null);
+        records.add(new CustomDataSet(22.2f,null,0));
+        customAdapter=new CustomAdapter(records,activity.getApplicationContext());
         assertEquals(22.2f,customAdapter.getTotal());
     }
 
     @Test
     public void customAdapter_getTotalwillReturnASumOfRecognizedPrices(){
         ArrayList<CustomDataSet> records= new ArrayList<>();
-        records.add(new CustomDataSet(22.2f,null));
-        records.add(new CustomDataSet(22.2f,null));
-        records.add(new CustomDataSet(0.0f,null));
-        customAdapter=new CustomAdapter(records,activity.getApplicationContext(),null);
+        records.add(new CustomDataSet(22.2f,null,0));
+        records.add(new CustomDataSet(22.2f,null,0));
+        records.add(new CustomDataSet(0.0f,null,0));
+        customAdapter=new CustomAdapter(records,activity.getApplicationContext());
         assertEquals(44.4f,customAdapter.getTotal());
     }
 
