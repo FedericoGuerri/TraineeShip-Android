@@ -13,11 +13,11 @@ public class DatabasePrice extends Model {
     @Column(name = "id_")
     public int id;
 
-    DatabasePrice(){
+    public DatabasePrice(){
         super();
     }
 
-    DatabasePrice(String price, String path,int id){
+    public DatabasePrice(String price, String path,int id){
         super();
         this.price = price;
         this.path = path;
