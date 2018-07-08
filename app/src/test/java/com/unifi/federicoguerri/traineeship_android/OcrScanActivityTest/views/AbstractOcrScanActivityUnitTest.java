@@ -18,7 +18,7 @@ import org.robolectric.annotation.Config;
 
 import static junit.framework.Assert.assertNotNull;
 
-@Config(constants = BuildConfig.class, sdk = Build.VERSION_CODES.LOLLIPOP_MR1)
+@Config(constants = BuildConfig.class, sdk = Build.VERSION_CODES.M)
 @RunWith(RobolectricTestRunner.class)
 
 public abstract class AbstractOcrScanActivityUnitTest {

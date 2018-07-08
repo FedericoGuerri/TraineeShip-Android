@@ -100,6 +100,7 @@ public class PriceBuilderUnitTest {
         assertEquals("",priceBuilder.getPrice());
     }
 
+
     @Test
     public void priceBuilder_returnsTheMostProbablePriceFormattedRecognition_whenInFirstPosition() throws Exception {
         readPrice("33,99someWords1111");

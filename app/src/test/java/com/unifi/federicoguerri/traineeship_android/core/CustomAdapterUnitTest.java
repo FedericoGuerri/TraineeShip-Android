@@ -1,5 +1,7 @@
 package com.unifi.federicoguerri.traineeship_android.core;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.view.View;
 import android.widget.ImageView;
@@ -7,6 +9,7 @@ import android.widget.TextView;
 
 import com.unifi.federicoguerri.traineeship_android.BuildConfig;
 import com.unifi.federicoguerri.traineeship_android.MainActivity;
+import com.unifi.federicoguerri.traineeship_android.R;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -26,8 +29,6 @@ import static junit.framework.Assert.assertNull;
 @RunWith(RobolectricTestRunner.class)
 public class CustomAdapterUnitTest {
 
-    //@Mock
-    //DataWriterToFile dataWriterToFile;
     @InjectMocks
     private CustomAdapter customAdapter;
 
@@ -75,6 +76,15 @@ public class CustomAdapterUnitTest {
     public void customAdapterGetView_withNullViewReturnsANewView(){
         ArrayList<CustomDataSet> records= new ArrayList<>();
         records.add(new CustomDataSet(22.2f,null,0));
+        customAdapter=new CustomAdapter(records,activity.getApplicationContext());
+        assertFalse(convertView==customAdapter.getView(0,null,null));
+    }
+
+    @Test
+    public void customAdapterGetView_withNullViewReturnsANewView_withNotNullMiniature(){
+        ArrayList<CustomDataSet> records= new ArrayList<>();
+        Bitmap miniature = BitmapFactory.decodeResource(activity.getApplicationContext().getResources(), R.drawable.no_miniature_placeholder);
+        records.add(new CustomDataSet(22.2f,miniature,0));
         customAdapter=new CustomAdapter(records,activity.getApplicationContext());
         assertFalse(convertView==customAdapter.getView(0,null,null));
     }
