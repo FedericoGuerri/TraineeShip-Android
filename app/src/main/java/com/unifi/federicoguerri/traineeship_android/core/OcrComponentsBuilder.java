@@ -96,7 +96,7 @@ public class OcrComponentsBuilder implements  Detector.Processor<TextBlock>{
             animateRecognitionTextViewToLocation(itemBox.left, itemBox.top);
 
         } catch (Exception e) {
-            if (e.getMessage().equals("recognitionError") && (recognizedTextView.getX()!=originalX- badRecognitionSpace || originalY!=recognizedTextView.getY())) {
+            if (e.getMessage().equals("recognitionError") && (recognizedTextView.getX()!=originalX- badRecognitionSpace /*|| originalY!=recognizedTextView.getY()*/)) {
                     recognizedTextView.animate().scaleY(0f).scaleX(0f).withEndAction(new Runnable() {
                         @Override
                         public void run() {

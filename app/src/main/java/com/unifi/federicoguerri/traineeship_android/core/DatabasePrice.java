@@ -36,7 +36,11 @@ public class DatabasePrice extends Model {
             return false;
         }
         DatabasePrice otherPrice = (DatabasePrice) obj;
-        return this.getId().equals(otherPrice.getId());
+        return this.getPriceId().equals(otherPrice.getPriceId());
+    }
+
+    public Integer getPriceId(){
+        return id;
     }
 
     @Override
