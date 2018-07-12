@@ -6,9 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
-import android.graphics.Rect;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -25,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.vision.CameraSource;
+import com.unifi.federicoguerri.traineeship_android.core.CustomCountdownTimer;
 import com.unifi.federicoguerri.traineeship_android.core.MiniatureSaver;
 import com.unifi.federicoguerri.traineeship_android.core.MySurfaceHolderCallback;
 import com.unifi.federicoguerri.traineeship_android.core.OcrComponentsBuilder;
@@ -83,12 +82,12 @@ public class OcrScanActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == REQUEST_CAMERA_PERMISSION) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                return;
+                miniatureSaver.endActivity();
             }
-            try {
+           try {
                 myOcrBuilder.getCameraSource().start(ocrScanView.getHolder());
             } catch (IOException e) {
-                Log.e("StartingCamera",e.getMessage());
+                Log.e("StartingCamera", e.getMessage());
             }
         }
     }
@@ -167,21 +166,7 @@ public class OcrScanActivity extends AppCompatActivity {
     @Override
     protected void onPostResume() {
         super.onPostResume();
-        new CountDownTimer(1300,1000){
-            @Override
-            public void onTick(long l) {
-                //Called every second
-            }
-            @Override
-            public void onFinish() {
-                int[] l = new int[2];
-                findViewById(R.id.textTargetingLayout).getLocationOnScreen(l);
-                int x = l[0];
-                int y = l[1];
-                myOcrBuilder.setRectBounds(new Rect(x,y,findViewById(R.id.textTargetingLayout).getWidth(),y+findViewById(R.id.textTargetingLayout).getHeight()));
-                myOcrBuilder.setTextViewCoordinates(myOcrBuilder.getRecognizedTextView().getX(),myOcrBuilder.getRecognizedTextView().getY(),(float) findViewById(R.id.textTargetingLayout).getWidth()/3);
-            }
-        }.start();
+        new CustomCountdownTimer(1300,1000,findViewById(R.id.textTargetingLayout),myOcrBuilder).start();
     }
 
     public OcrComponentsBuilder getMyOcrBuilder() {

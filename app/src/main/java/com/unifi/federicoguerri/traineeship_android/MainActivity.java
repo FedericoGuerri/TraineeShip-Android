@@ -92,16 +92,11 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == REQUEST_STORAGE_PERMISSION_CONFIGURATION && permissionGranted(grantResults[0])) {
-            return;
+        if (requestCode == REQUEST_STORAGE_PERMISSION_CONFIGURATION && grantResults[0]== PackageManager.PERMISSION_GRANTED) {
+            lauchActivity();
         }
-        lauchActivity();
     }
 
-    private boolean permissionGranted(int grantResult) {
-        return grantResult == PackageManager.PERMISSION_GRANTED &&
-                ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED;
-    }
 
 
     @Override
