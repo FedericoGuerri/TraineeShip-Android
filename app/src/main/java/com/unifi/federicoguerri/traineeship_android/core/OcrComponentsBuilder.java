@@ -80,23 +80,25 @@ public class OcrComponentsBuilder implements  Detector.Processor<TextBlock>{
             StringBuilder stringBuilder=new StringBuilder();
             ArrayList<Text> lines=new ArrayList<>();
             Rect itemBox=rectBounds;
+
+
             for(int j=0;j<items.size();j++) {
                 for (int i = 0; i < items.get(j).getComponents().size(); i++) {
                     addTextIfInTargetRectangle(items, stringBuilder, lines, itemBox, j, i);
                 }
             }
 
+
             PriceBuilder priceBuilder = new PriceBuilder(stringBuilder.toString());
             String price=priceBuilder.getPrice();
-            String notFormattedPrice=price.replace(",",".");
+            itemBox = priceBuilder.choosePriceThatFitsInTargetRect(lines,itemBox);
 
-            itemBox = choosePriceThatFitsInTargetRect(lines, itemBox, price, notFormattedPrice);
 
             recognizedTextView.setText(price);
             animateRecognitionTextViewToLocation(itemBox.left, itemBox.top);
 
-        } catch (Exception e) {
-            if (e.getMessage().equals("recognitionError") && (recognizedTextView.getX()!=originalX- badRecognitionSpace /*|| originalY!=recognizedTextView.getY()*/)) {
+        } catch (CustomException e) {
+            if (recognizedTextView.getX()!=originalX- badRecognitionSpace) {
                     recognizedTextView.animate().scaleY(0f).scaleX(0f).withEndAction(new Runnable() {
                         @Override
                         public void run() {
@@ -109,19 +111,10 @@ public class OcrComponentsBuilder implements  Detector.Processor<TextBlock>{
         }
     }
 
-    private Rect choosePriceThatFitsInTargetRect(ArrayList<Text> lines, Rect itemBox, String price, String notFormattedPrice) {
-        for(int i=0;i<lines.size();i++) {
-            if (lines.get(i).getValue().contains(price) || lines.get(i).getValue().contains(notFormattedPrice)) {
-                itemBox = lines.get(i).getBoundingBox();
-                break;
-            }
-        }
-        return itemBox;
-    }
 
     private void addTextIfInTargetRectangle(SparseArray<TextBlock> items, StringBuilder stringBuilder, ArrayList<Text> lines, Rect itemBox, int j, int i) {
         if(items.get(j).getComponents().get(i).getBoundingBox().top>itemBox.top && items.get(j).getComponents().get(i).getBoundingBox().bottom<itemBox.bottom) {
-            stringBuilder.append(items.get(j).getComponents().get(i).getValue() + "\n");
+            stringBuilder.append(items.get(j).getComponents().get(i).getValue().replaceAll(",",".") + "\n");
             lines.add(items.get(j).getComponents().get(i));
         }
     }

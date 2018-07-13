@@ -2,7 +2,6 @@ package com.unifi.federicoguerri.traineeship_android.OcrScanActivityTest;
 
 
 import android.Manifest;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 
@@ -18,7 +17,6 @@ import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowActivity;
 import org.robolectric.shadows.ShadowApplication;
-import org.robolectric.shadows.ShadowIntent;
 
 import static junit.framework.Assert.assertFalse;
 import static org.junit.Assert.assertEquals;

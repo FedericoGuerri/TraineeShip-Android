@@ -1,6 +1,11 @@
 package com.unifi.federicoguerri.traineeship_android.core;
 
 
+import android.graphics.Rect;
+
+import com.google.android.gms.vision.text.Text;
+
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -58,12 +63,21 @@ class PriceBuilder{
         if(recognized.length()>7){
             throw new CustomException(RECOGNITION_ERROR);
         }
-        if(recognized.endsWith(",") || recognized.startsWith(",")){
+        if(recognized.endsWith(",") ){
             throw new CustomException(RECOGNITION_ERROR);
         }
         if(recognized.startsWith("0") && !recognized.contains(",")){
             throw new CustomException(RECOGNITION_ERROR);
         }
+    }
+
+    public Rect choosePriceThatFitsInTargetRect(List<Text> lines, Rect defaultRect) {
+        for (Text currentText : lines) {
+            if (currentText.getValue().contains(recognized)) {
+                return currentText.getBoundingBox();
+            }
+        }
+        return defaultRect;
     }
 
 

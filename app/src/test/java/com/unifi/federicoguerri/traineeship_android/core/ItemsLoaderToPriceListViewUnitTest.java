@@ -135,6 +135,17 @@ public class ItemsLoaderToPriceListViewUnitTest {
     }
 
     @Test
+    public void itemsLoader_notModifyPricesListVisibility_ifThereAreRecordsRemaining() {
+        ArrayList<CustomDataSet> array=new ArrayList<>();
+        array.add(new CustomDataSet(22.2f,null,0));
+        array.add(new CustomDataSet(0.2f,null,1));
+        when(helper.getPricesAsDataSet()).thenReturn(array);
+        itemsLoaderToPriceListView.loadItems();
+        activity.findViewById(R.id.itemDeletePriceImageViewitemPriceListView).performClick();
+        assertEquals(View.VISIBLE,activity.findViewById(R.id.pricesListViewMainActivity).getVisibility());
+    }
+
+    @Test
     public void itemsLoader_callsMenuItemTotalsetTitle() {
         ArrayList<CustomDataSet> array=new ArrayList<>();
         array.add(new CustomDataSet(22.2f,null,0));

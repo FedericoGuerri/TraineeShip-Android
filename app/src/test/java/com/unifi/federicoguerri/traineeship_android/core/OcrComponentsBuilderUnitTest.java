@@ -222,6 +222,18 @@ public class OcrComponentsBuilderUnitTest {
         assertEquals("",textView.getText());
     }
 
+
+    @Test
+    public void ocrBuilder_wontRecognizeText_ifThereIsNoTest(){
+        ocrBuilder.setDetecting(true);
+        ocrBuilder.setRecognizedTextView(textView);
+        textView.setX(textViewOriginalX-textViewBadRecognitionIndent);
+        ocrBuilder.setTextViewCoordinates(textViewOriginalX,textViewOriginalY,textViewBadRecognitionIndent);
+        initTextBuilderRunner(" no prices ",1);
+        assertEquals("",textView.getText());
+    }
+
+
     @Test
     public void ocrBuilder_canAnimateTextViewX_ToOriginalXPosition(){
         ocrBuilder.setRecognizedTextView(textView);
@@ -230,6 +242,7 @@ public class OcrComponentsBuilderUnitTest {
         ocrBuilder.animateTextViewToOriginalPosition();
         assertEquals(textViewOriginalX,textView.getX());
     }
+
 
     @Test
     public void ocrBuilder_canAnimateTextViewY_ToOriginalXPosition(){
@@ -259,6 +272,9 @@ public class OcrComponentsBuilderUnitTest {
         ocrBuilder.animateTextViewToOriginalPosition();
         assertEquals(textViewOriginalY,textView.getY());
     }
+
+
+
 
     @Test
     public void ocrBuilder_implementsRelease_withNoActualCode(){
