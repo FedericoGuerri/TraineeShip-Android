@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.design.widget.FloatingActionButton;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.query.Select;
@@ -23,6 +24,7 @@ import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
+import org.robolectric.android.controller.ActivityController;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowActivity;
 import org.robolectric.shadows.ShadowApplication;
@@ -168,6 +170,16 @@ public class GenericBehaviorTest {
         ShadowActivity shadowActivity = shadowOf(activity);
         Intent startedIntent = shadowActivity.getNextStartedActivity();
         ShadowIntent shadowIntent = shadowOf(startedIntent);
+    }
+
+    @Test
+    public void onPostResume_willNotChangeWelcomeLayoutVisibility(){
+        ActivityController<MainActivity> controller =
+                Robolectric.buildActivity(MainActivity.class).create().start().visible();
+        View welcomeLayout=controller.get().findViewById(R.id.welcomeLayoutMainActivity);
+        int previewVisibility=welcomeLayout.getVisibility();
+        controller.resume();
+        assertEquals(previewVisibility,welcomeLayout.getVisibility());
     }
 
     private void denyWritePermission_andClickOnFabNewOcr() {

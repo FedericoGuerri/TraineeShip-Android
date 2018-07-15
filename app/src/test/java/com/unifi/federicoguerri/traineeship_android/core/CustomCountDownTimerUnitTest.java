@@ -44,6 +44,7 @@ public class CustomCountDownTimerUnitTest {
         when(textView.getX()).thenReturn(22f);
         when(textView.getY()).thenReturn(0f);
         when(ocrComponentsBuilder.getRecognizedTextView()).thenReturn(textView);
+
     }
 
     @Test

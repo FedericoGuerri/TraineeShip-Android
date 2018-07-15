@@ -1,8 +1,14 @@
 package com.unifi.federicoguerri.traineeship_android.core;
 
-import android.content.Context;
+import android.Manifest;
+import android.app.Activity;
+import android.content.pm.PackageManager;
 import android.graphics.Rect;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.util.SparseArray;
+import android.view.SurfaceHolder;
 import android.widget.TextView;
 
 import com.google.android.gms.vision.CameraSource;
@@ -12,6 +18,7 @@ import com.google.android.gms.vision.text.TextBlock;
 import com.google.android.gms.vision.text.TextRecognizer;
 import com.unifi.federicoguerri.traineeship_android.R;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class OcrComponentsBuilder implements  Detector.Processor<TextBlock>{
@@ -24,10 +31,11 @@ public class OcrComponentsBuilder implements  Detector.Processor<TextBlock>{
     private float badRecognitionSpace =0;
     private float originalX=0;
     private boolean isDetecting=true;
+    private Activity activity;
 
-
-    public OcrComponentsBuilder(Context context) {
-        textRecognizer = new TextRecognizer.Builder(context).build();
+    public OcrComponentsBuilder(Activity activity) {
+        this.activity=activity;
+        textRecognizer = new TextRecognizer.Builder(activity.getApplicationContext()).build();
     }
 
 
@@ -60,6 +68,17 @@ public class OcrComponentsBuilder implements  Detector.Processor<TextBlock>{
         this.rectBounds=rectBounds;
     }
 
+    public void startCamera(SurfaceHolder surfaceHolder){
+        if (ContextCompat.checkSelfPermission(activity.getApplicationContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(activity,new String[]{Manifest.permission.CAMERA}, 10400);
+            return;
+        }
+        try {
+            this.getCameraSource().start(surfaceHolder);
+        } catch (IOException e) {
+            Log.e("CreatingSurface",e.getMessage());
+        }
+    }
 
     public boolean isDetecting() {
         return isDetecting;
@@ -81,18 +100,15 @@ public class OcrComponentsBuilder implements  Detector.Processor<TextBlock>{
             ArrayList<Text> lines=new ArrayList<>();
             Rect itemBox=rectBounds;
 
-
             for(int j=0;j<items.size();j++) {
                 for (int i = 0; i < items.get(j).getComponents().size(); i++) {
-                    addTextIfInTargetRectangle(items, stringBuilder, lines, itemBox, j, i);
+                    addTextIfInTargetRectangle(stringBuilder, lines, itemBox, items.get(j).getComponents().get(i));
                 }
             }
-
 
             PriceBuilder priceBuilder = new PriceBuilder(stringBuilder.toString());
             String price=priceBuilder.getPrice();
             itemBox = priceBuilder.choosePriceThatFitsInTargetRect(lines,itemBox);
-
 
             recognizedTextView.setText(price);
             animateRecognitionTextViewToLocation(itemBox.left, itemBox.top);
@@ -112,10 +128,10 @@ public class OcrComponentsBuilder implements  Detector.Processor<TextBlock>{
     }
 
 
-    private void addTextIfInTargetRectangle(SparseArray<TextBlock> items, StringBuilder stringBuilder, ArrayList<Text> lines, Rect itemBox, int j, int i) {
-        if(items.get(j).getComponents().get(i).getBoundingBox().top>itemBox.top && items.get(j).getComponents().get(i).getBoundingBox().bottom<itemBox.bottom) {
-            stringBuilder.append(items.get(j).getComponents().get(i).getValue().replaceAll(",",".") + "\n");
-            lines.add(items.get(j).getComponents().get(i));
+    private void addTextIfInTargetRectangle(StringBuilder stringBuilder, ArrayList<Text> lines, Rect itemBox, Text block) {
+        if(block.getBoundingBox().top>itemBox.top && block.getBoundingBox().bottom<itemBox.bottom) {
+            stringBuilder.append(block.getValue().replaceAll(",",".") + "\n");
+            lines.add(block);
         }
     }
 

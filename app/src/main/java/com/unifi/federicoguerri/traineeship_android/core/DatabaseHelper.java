@@ -26,10 +26,10 @@ public class DatabaseHelper {
                 .executeSingle();
     }
 
-    public boolean savePrice(DatabasePrice price){
-        long idInDatabase=price.save();
-        return idInDatabase>0;
+    public long savePrice(DatabasePrice price){
+        return price.save();
     }
+
 
     public void deletePriceById(int id){
         new Delete().from(DatabasePrice.class).where("id_ = ?", id).execute();

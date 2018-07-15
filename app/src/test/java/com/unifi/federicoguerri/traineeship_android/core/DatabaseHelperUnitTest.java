@@ -49,24 +49,24 @@ public class DatabaseHelperUnitTest {
 
     @Test
     public void databaseHelper_canSavePrice_toDatabase(){
-        assertTrue(helper.savePrice(new DatabasePrice("","",0)));
+        assertTrue(helper.savePrice(new DatabasePrice("","",0))>0);
     }
 
     @Test
     public void databaseHelper_canSavePriceWithNotEmptyFields_toDatabase(){
-        assertTrue(helper.savePrice(new DatabasePrice("price","path",0)));
+        assertTrue(helper.savePrice(new DatabasePrice("price","path",0))>0);
     }
 
     @Test
     public void databaseHelper_canSaveMorePrices_toDatabase(){
         helper.savePrice(new DatabasePrice());
-        assertTrue(helper.savePrice(new DatabasePrice()));
+        assertTrue(helper.savePrice(new DatabasePrice())>0);
     }
 
     @Test
     public void databaseHelper_canSaveMorePricesWithNotEmptyFields_toDatabase(){
         helper.savePrice(new DatabasePrice("price","path",0));
-        assertTrue(helper.savePrice(new DatabasePrice("price1","path1",1)));
+        assertTrue(helper.savePrice(new DatabasePrice("price1","path1",1))>0);
     }
 
 

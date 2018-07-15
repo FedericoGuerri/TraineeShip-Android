@@ -14,7 +14,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +27,6 @@ import com.unifi.federicoguerri.traineeship_android.core.MiniatureSaver;
 import com.unifi.federicoguerri.traineeship_android.core.MySurfaceHolderCallback;
 import com.unifi.federicoguerri.traineeship_android.core.OcrComponentsBuilder;
 
-import java.io.IOException;
 import java.util.Objects;
 
 public class OcrScanActivity extends AppCompatActivity {
@@ -49,7 +47,7 @@ public class OcrScanActivity extends AppCompatActivity {
         setContentView(R.layout.activity_ocr_scan);
 
         ocrScanView = findViewById(R.id.ocrViewOcrScanActivity);
-        myOcrBuilder = new OcrComponentsBuilder(getApplicationContext());
+        myOcrBuilder = new OcrComponentsBuilder(this);
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
         WindowManager windowManager = (WindowManager) getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
@@ -58,7 +56,7 @@ public class OcrScanActivity extends AppCompatActivity {
         myOcrBuilder.setCameraSource(new CameraSource.Builder(getApplicationContext(), myOcrBuilder.getTextRecognizer()).setFacing(CameraSource.CAMERA_FACING_BACK)
                 .setRequestedPreviewSize(displayMetrics.heightPixels, displayMetrics.widthPixels).setRequestedFps(2.0f).setAutoFocusEnabled(true).build());
 
-        ocrScanView.getHolder().addCallback(new MySurfaceHolderCallback(this, myOcrBuilder, ocrScanView.getHolder(), REQUEST_CAMERA_PERMISSION));
+        ocrScanView.getHolder().addCallback(new MySurfaceHolderCallback(myOcrBuilder, ocrScanView.getHolder()));
 
         myOcrBuilder.setRecognizedTextView((TextView) findViewById(R.id.recognizedTextViewOcrScanActivity));
 
@@ -84,11 +82,8 @@ public class OcrScanActivity extends AppCompatActivity {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                 miniatureSaver.endActivity();
             }
-           try {
-                myOcrBuilder.getCameraSource().start(ocrScanView.getHolder());
-            } catch (IOException e) {
-                Log.e("StartingCamera", e.getMessage());
-            }
+
+            myOcrBuilder.startCamera(ocrScanView.getHolder());
         }
     }
 
@@ -167,9 +162,18 @@ public class OcrScanActivity extends AppCompatActivity {
     protected void onPostResume() {
         super.onPostResume();
         new CustomCountdownTimer(1300,1000,findViewById(R.id.textTargetingLayout),myOcrBuilder).start();
+        findViewById(R.id.textTargetingLayout).animate().alpha(1.0f).withEndAction(new Runnable() {
+            @Override
+            public void run() {
+                findViewById(R.id.textTargetingLayout).setVisibility(View.VISIBLE);
+            }
+        }).start();
     }
 
     public OcrComponentsBuilder getMyOcrBuilder() {
         return myOcrBuilder;
     }
+
+
+
 }

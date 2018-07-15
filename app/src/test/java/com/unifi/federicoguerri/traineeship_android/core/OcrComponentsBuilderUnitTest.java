@@ -1,9 +1,11 @@
 package com.unifi.federicoguerri.traineeship_android.core;
 
 
+import android.Manifest;
 import android.graphics.Rect;
 import android.os.Build;
 import android.util.SparseArray;
+import android.view.SurfaceHolder;
 import android.widget.TextView;
 
 import com.google.android.gms.vision.CameraSource;
@@ -21,7 +23,9 @@ import org.mockito.Mockito;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
+import org.robolectric.shadows.ShadowApplication;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,8 +34,12 @@ import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.robolectric.Shadows.shadowOf;
 
 @Config(constants = BuildConfig.class, sdk = Build.VERSION_CODES.LOLLIPOP_MR1)
 @RunWith(RobolectricTestRunner.class)
@@ -48,7 +56,7 @@ public class OcrComponentsBuilderUnitTest {
     @Before
     public void init(){
         activity = Robolectric.buildActivity( OcrScanActivity.class ).create().visible().get();
-        ocrBuilder=new OcrComponentsBuilder(activity.getApplicationContext());
+        ocrBuilder=new OcrComponentsBuilder(activity);
         textView=new TextView(activity.getBaseContext());
     }
 
@@ -273,13 +281,52 @@ public class OcrComponentsBuilderUnitTest {
         assertEquals(textViewOriginalY,textView.getY());
     }
 
-
-
-
     @Test
     public void ocrBuilder_implementsRelease_withNoActualCode(){
         ocrBuilder.release();
     }
+
+    @Test
+    public void ocrBuilder_canThrowException_thatIsCaught() throws IOException {
+        CameraSource fakeCamera = setUpFakeCameraSouce();
+        when(fakeCamera.start(any(SurfaceHolder.class))).thenThrow(IOException.class);
+        verify(fakeCamera,atLeastOnce()).start(any(SurfaceHolder.class));
+    }
+
+    @Test
+    public void surfaceHolder_startsCamera_whenSurfaceIsCreated() throws IOException {
+        CameraSource fakeCamera = setUpFakeCameraSouce();
+        verify(fakeCamera,atLeastOnce()).start(any(SurfaceHolder.class));
+    }
+
+    @Test
+    public void ocrBuilder_doesNotRecognizePrice_ifDefaultRectTop_isHighThan_TextRectTop(){
+        ocrBuilder.setDetecting(true);
+        defaultRectValue=new Rect(0,40,50,400);
+        initTextBuilderRunner("22,2",1);
+        assertEquals(activity.getText(R.string.bad_recognition_get_closer_please),textView.getText());
+    }
+
+    @Test
+    public void ocrBuilder_doesNotRecognizePrice_ifDefaultRectBottom_isMinorThan_TextRectBottom(){
+        ocrBuilder.setDetecting(true);
+        defaultRectValue=new Rect(0,20,50,250);
+        initTextBuilderRunner("22,2",1);
+        assertEquals(activity.getText(R.string.bad_recognition_get_closer_please),textView.getText());
+    }
+
+    private CameraSource setUpFakeCameraSouce() {
+        ShadowApplication shadowApplication=shadowOf(activity.getApplication());
+        shadowApplication.grantPermissions(Manifest.permission.CAMERA);
+        CameraSource fakeCamera= Mockito.mock(CameraSource.class);
+        ocrBuilder.setCameraSource(fakeCamera);
+        SurfaceHolder fakeHolder=Mockito.mock(SurfaceHolder.class);
+        ocrBuilder.startCamera(fakeHolder);
+        return fakeCamera;
+    }
+
+
+
 
 
 }
