@@ -10,6 +10,7 @@ import com.google.android.gms.vision.CameraSource;
 import com.unifi.federicoguerri.traineeship_android.R;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -39,19 +40,16 @@ public class MiniatureSaver implements CameraSource.PictureCallback {
         return configDir.getAbsolutePath();
     }
 
-    private String saveMiniatureFile(Bitmap bitmap){
-        String filename;
+    private String saveMiniatureFile(Bitmap bitmap) throws CustomException {
+        String timeStamp = new SimpleDateFormat("yyyy_MMdd_HH_mm_ss").format(new Date());
+        String filename=appDirectory() + File.separator + "miniature_"+ timeStamp + ".png";
+        FileOutputStream out;
         try {
-            String timeStamp = new SimpleDateFormat("yyyy_MMdd_HH_mm_ss").format(new Date());
-            filename=appDirectory() + File.separator + "miniature_"+ timeStamp + ".png";
-            FileOutputStream out;
             out = new FileOutputStream(filename);
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
-            out.close();
-        } catch (Exception e) {
-            Toast.makeText(activity, activity.getString(R.string.cant_write_to_file),Toast.LENGTH_SHORT).show();
-            filename="noMiniature";
+        } catch (FileNotFoundException e) {
+            throw new CustomException("no Miniature found");
         }
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
         return filename;
     }
 
@@ -64,8 +62,13 @@ public class MiniatureSaver implements CameraSource.PictureCallback {
 
     @Override
     public void onPictureTaken(byte[] bytes) {
-        Bitmap bitmap= BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-        String miniaturePath=saveMiniatureFile(Bitmap.createScaledBitmap(bitmap,350,450,true));
+        String miniaturePath;
+        try {
+            miniaturePath = saveMiniatureFile(Bitmap.createScaledBitmap(BitmapFactory.decodeByteArray(bytes, 0, bytes.length), 350, 450, true));
+        }catch (Exception e){
+            Toast.makeText(activity, activity.getString(R.string.cant_write_to_file),Toast.LENGTH_SHORT).show();
+            miniaturePath="noMiniature";
+        }
         saveDataToFile(miniaturePath);
         endActivity();
     }

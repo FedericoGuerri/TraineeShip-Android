@@ -100,11 +100,11 @@ public class GenericBehaviorTest {
     }
 
     @Test
-    public void willNotModifyTargetLayoutVisibility(){
+    public void willModifyTargetLayoutVisibility(){
         ActivityController<OcrScanActivity> controller =
                 Robolectric.buildActivity(OcrScanActivity.class).create().start().visible();
         controller.resume();
-        assertEquals(View.INVISIBLE,controller.get().findViewById(R.id.textTargetingLayout).getVisibility());
+        assertEquals(View.VISIBLE,controller.get().findViewById(R.id.textTargetingLayout).getVisibility());
     }
 
 
