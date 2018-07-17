@@ -316,13 +316,6 @@ public class OcrComponentsBuilderUnitTest {
         assertEquals(activity.getText(R.string.bad_recognition_get_closer_please),textView.getText());
     }
 
-    @Test
-    public void ocrBuilder_doesNotRecognizePrice_ifLeftRect_isMinorThanZero(){
-        ocrBuilder.setDetecting(true);
-        blockRect.left=-1;
-        initTextBuilderRunner("22,2",1);
-        assertEquals(activity.getText(R.string.bad_recognition_get_closer_please),textView.getText());
-    }
 
     private CameraSource setUpFakeCameraSouce() {
         ShadowApplication shadowApplication=shadowOf(activity.getApplication());

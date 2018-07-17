@@ -106,6 +106,7 @@ public class OcrComponentsBuilder implements  Detector.Processor<TextBlock>{
                 }
             }
 
+
             PriceBuilder priceBuilder = new PriceBuilder(stringBuilder.toString());
             String price=priceBuilder.getPrice();
             itemBox = priceBuilder.choosePriceThatFitsInTargetRect(lines,itemBox);
@@ -113,12 +114,12 @@ public class OcrComponentsBuilder implements  Detector.Processor<TextBlock>{
             recognizedTextView.setText(price);
             animateRecognitionTextViewToLocation(itemBox.left, itemBox.top);
 
-        } catch (CustomException e) {
+        } catch (Exception e) {
             if (recognizedTextView.getX()!=originalX- badRecognitionSpace) {
-                    recognizedTextView.animate().scaleY(0f).scaleX(0f).withEndAction(new Runnable() {
+                recognizedTextView.setText(recognizedTextView.getContext().getResources().getString(R.string.bad_recognition_get_closer_please));
+                recognizedTextView.animate().scaleY(0f).scaleX(0f).withEndAction(new Runnable() {
                         @Override
                         public void run() {
-                            recognizedTextView.setText(recognizedTextView.getContext().getResources().getString(R.string.bad_recognition_get_closer_please));
                             animateTextViewToOriginalPosition();
                             recognizedTextView.animate().scaleX(1f).scaleY(1f);
                         }
@@ -128,15 +129,14 @@ public class OcrComponentsBuilder implements  Detector.Processor<TextBlock>{
     }
 
 
+
     private void addTextIfInTargetRectangle(StringBuilder stringBuilder, ArrayList<Text> lines, Rect itemBox, Text block) {
-        if(block.getBoundingBox().left<0){
-            return;
-        }
         if(block.getBoundingBox().top>itemBox.top && block.getBoundingBox().bottom<itemBox.bottom) {
             stringBuilder.append(block.getValue().replaceAll(",",".") + "\n");
             lines.add(block);
         }
     }
+
 
     @Override
     public void release() {
