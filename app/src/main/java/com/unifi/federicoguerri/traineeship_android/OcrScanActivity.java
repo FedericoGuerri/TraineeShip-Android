@@ -101,7 +101,6 @@ public class OcrScanActivity extends AppCompatActivity {
             fabSavePrice.setImageResource(R.drawable.ic_format_text);
             fabSavePrice.setBackgroundTintList(ColorStateList.valueOf(color));
             isGettingMiniature=false;
-            findViewById(R.id.textTargetingLayout).setVisibility(View.VISIBLE);
             myOcrBuilder.getCameraSource().takePicture(null, miniatureSaver);
         }
     }
@@ -142,7 +141,12 @@ public class OcrScanActivity extends AppCompatActivity {
 
 
     private void getMiniature() {
-        findViewById(R.id.textTargetingLayout).setVisibility(View.INVISIBLE);
+        findViewById(R.id.textTargetingLayout).animate().alpha(0f).withEndAction(new Runnable() {
+            @Override
+            public void run() {
+                findViewById(R.id.textTargetingLayout).setVisibility(View.INVISIBLE);
+            }
+        });
         fabSavePrice.setImageResource(R.drawable.ic_camera);
         fabSavePrice.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(this,R.color.fab_miniature_color)));
         isGettingMiniature=true;

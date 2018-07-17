@@ -235,13 +235,6 @@ public class FabSaveCurrentPriceUnitTest extends AbstractOcrScanActivityUnitTest
     }
 
 
-    @Test
-    public void fabSavePrice_willShowAgainTextTargetingLayout_afterSavingMiniature(){
-        tapOnFabAndPressDialogPositiveButton();
-        fabSavePrice.performClick();
-        assertEquals(View.VISIBLE,shadowOf(activity).findViewById(R.id.textTargetingLayout).getVisibility());
-    }
-
 
     @Test
     public void fabSavePrice_resetBackgroundTintList_afterTakingTheMiniature(){
@@ -265,6 +258,7 @@ public class FabSaveCurrentPriceUnitTest extends AbstractOcrScanActivityUnitTest
         tapOnFabAndPressDialogPositiveButton();
         assertTrue(priceTextView.getY()!=-200);
     }
+
 
 
 

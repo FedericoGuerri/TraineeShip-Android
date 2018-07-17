@@ -29,6 +29,7 @@ import java.io.File;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
+import static org.junit.Assert.assertNotEquals;
 import static org.mockito.Mockito.when;
 
 @Config(constants = BuildConfig.class, sdk = Build.VERSION_CODES.M)
@@ -76,6 +77,30 @@ public class MiniatureSaverUnitTest {
                 + "/ConfigurationDir");
 
         assertTrue(configDir.exists());
+    }
+
+    @Test
+    public void miniatureSaver_wontCreateConfigurationDirectory_ifAlreadyExists(){
+        File configDir_before = new File(activity.getFilesDir()
+                + "/Android/data/"
+                + activity.getPackageName()
+                + "/ConfigurationDir");
+        configDir_before.mkdirs();
+        long beforeLastModified=configDir_before.lastModified();
+
+        Bitmap bmp = BitmapFactory.decodeResource(activity.getResources(), R.drawable.no_miniature_placeholder);
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
+
+        miniatureSaver.onPictureTaken(stream.toByteArray());
+
+        File configDir_after = new File(activity.getFilesDir()
+                + "/Android/data/"
+                + activity.getPackageName()
+                + "/ConfigurationDir");
+        configDir_after.setLastModified(0);
+
+        assertNotEquals(beforeLastModified,configDir_after.lastModified());
     }
 
 
