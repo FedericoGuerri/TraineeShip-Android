@@ -129,6 +129,9 @@ public class OcrComponentsBuilder implements  Detector.Processor<TextBlock>{
 
 
     private void addTextIfInTargetRectangle(StringBuilder stringBuilder, ArrayList<Text> lines, Rect itemBox, Text block) {
+        if(block.getBoundingBox().left<0){
+            return;
+        }
         if(block.getBoundingBox().top>itemBox.top && block.getBoundingBox().bottom<itemBox.bottom) {
             stringBuilder.append(block.getValue().replaceAll(",",".") + "\n");
             lines.add(block);

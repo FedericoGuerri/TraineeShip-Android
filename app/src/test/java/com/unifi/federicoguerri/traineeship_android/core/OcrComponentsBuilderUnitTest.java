@@ -49,6 +49,7 @@ public class OcrComponentsBuilderUnitTest {
     private OcrScanActivity activity;
     private TextView textView;
     private Rect defaultRectValue=new Rect(0,20,50,400);
+    private Rect blockRect=new Rect(100,33,200,330);
     private float textViewOriginalX=120f;
     private float textViewOriginalY=22f;
     private float textViewBadRecognitionIndent=20;
@@ -151,13 +152,13 @@ public class OcrComponentsBuilderUnitTest {
 
         SparseArray<TextBlock> mockedArray = Mockito.mock(SparseArray.class);
         TextBlock textBlock= Mockito.mock(TextBlock.class);
-        when(textBlock.getBoundingBox()).thenReturn(new Rect(100,33,200,330));
+        when(textBlock.getBoundingBox()).thenReturn(blockRect);
         ArrayList<TextBlock> temp=new ArrayList<>();
 
         for (String value : splittedValues) {
             TextBlock nestedTextBlock = Mockito.mock(TextBlock.class);
             when(nestedTextBlock.getValue()).thenReturn(value);
-            when(nestedTextBlock.getBoundingBox()).thenReturn(new Rect(100,33,200,330));
+            when(nestedTextBlock.getBoundingBox()).thenReturn(blockRect);
             temp.add(nestedTextBlock);
         }
         when(textBlock.getComponents()).thenReturn((List)temp);
@@ -311,6 +312,14 @@ public class OcrComponentsBuilderUnitTest {
     public void ocrBuilder_doesNotRecognizePrice_ifDefaultRectBottom_isMinorThan_TextRectBottom(){
         ocrBuilder.setDetecting(true);
         defaultRectValue=new Rect(0,20,50,250);
+        initTextBuilderRunner("22,2",1);
+        assertEquals(activity.getText(R.string.bad_recognition_get_closer_please),textView.getText());
+    }
+
+    @Test
+    public void ocrBuilder_doesNotRecognizePrice_ifLeftRect_isMinorThanZero(){
+        ocrBuilder.setDetecting(true);
+        blockRect.left=-1;
         initTextBuilderRunner("22,2",1);
         assertEquals(activity.getText(R.string.bad_recognition_get_closer_please),textView.getText());
     }
