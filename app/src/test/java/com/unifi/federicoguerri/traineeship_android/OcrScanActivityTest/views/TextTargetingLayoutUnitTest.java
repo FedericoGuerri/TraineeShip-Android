@@ -26,8 +26,8 @@ public class TextTargetingLayoutUnitTest extends AbstractOcrScanActivityUnitTest
 
 
     @Test
-    public void textTargetingLayout_isInvisible(){
-        assertEquals(View.INVISIBLE,textTargetingLayout.getVisibility());
+    public void textTargetingLayout_isVisible(){
+        assertEquals(View.VISIBLE,textTargetingLayout.getVisibility());
     }
 
     @Test
@@ -47,7 +47,7 @@ public class TextTargetingLayoutUnitTest extends AbstractOcrScanActivityUnitTest
 
     @Test
     public void textTargetingLayout_hasCustomAlpha(){
-        assertEquals(0.7f,textTargetingLayout.getAlpha());
+        assertEquals(0.0f,textTargetingLayout.getAlpha(),0);
     }
 
     @Test
