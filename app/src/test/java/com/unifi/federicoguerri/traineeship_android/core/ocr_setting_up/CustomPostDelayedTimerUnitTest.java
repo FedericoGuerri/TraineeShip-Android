@@ -1,4 +1,4 @@
-package com.unifi.federicoguerri.traineeship_android.core;
+package com.unifi.federicoguerri.traineeship_android.core.ocr_setting_up;
 
 import android.graphics.Rect;
 import android.os.Build;
@@ -28,14 +28,14 @@ import static org.mockito.Mockito.when;
 
 @Config(constants = BuildConfig.class, sdk = Build.VERSION_CODES.LOLLIPOP_MR1)
 @RunWith(RobolectricTestRunner.class)
-public class CustomCountDownTimerUnitTest {
+public class CustomPostDelayedTimerUnitTest {
 
     private OcrScanActivity activity= Robolectric.buildActivity(OcrScanActivity.class).create().visible().get();
     private View view=activity.findViewById(R.id.textTargetingLayout);
     @Mock
     private OcrComponentsBuilder ocrComponentsBuilder;
     @InjectMocks
-    private CustomCountdownTimer customCountDownTimer=new CustomCountdownTimer(1000,view,ocrComponentsBuilder);
+    private CustomPostDelayedSettingUp customCountDownTimer=new CustomPostDelayedSettingUp(1000,view,ocrComponentsBuilder);
 
     @Before
     public void init(){

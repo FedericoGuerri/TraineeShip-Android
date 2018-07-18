@@ -1,9 +1,10 @@
-package com.unifi.federicoguerri.traineeship_android.core;
+package com.unifi.federicoguerri.traineeship_android.core.Database;
 
 import android.os.Build;
 
 import com.activeandroid.ActiveAndroid;
 import com.unifi.federicoguerri.traineeship_android.BuildConfig;
+import com.unifi.federicoguerri.traineeship_android.core.database_active_android.DatabasePrice;
 
 import org.junit.After;
 import org.junit.Before;

@@ -1,4 +1,4 @@
-package com.unifi.federicoguerri.traineeship_android.core;
+package com.unifi.federicoguerri.traineeship_android.core.PricesListSettingUp;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -10,6 +10,8 @@ import android.widget.TextView;
 import com.unifi.federicoguerri.traineeship_android.BuildConfig;
 import com.unifi.federicoguerri.traineeship_android.MainActivity;
 import com.unifi.federicoguerri.traineeship_android.R;
+import com.unifi.federicoguerri.traineeship_android.core.prices_list_setting_up.CustomAdapter;
+import com.unifi.federicoguerri.traineeship_android.core.prices_list_setting_up.CustomDataSet;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -34,36 +36,14 @@ public class CustomAdapterUnitTest {
 
     private MainActivity activity;
     private View convertView;
-    private CustomAdapter.ViewHolder viewHolder;
 
     @Before
     public void setUp() {
         activity = Robolectric.buildActivity( MainActivity.class ).create().start().get();
         convertView=new View(activity.getApplicationContext());
-        viewHolder=new CustomAdapter.ViewHolder();
-        viewHolder.priceTextView=new TextView(activity.getApplicationContext());
-        viewHolder.priceTextView.setText("22.2");
-        viewHolder.miniatureImageView=new ImageView(activity.getApplicationContext());
-        viewHolder.deleteImageView=new ImageView(activity.getApplicationContext());
-        convertView.setTag(viewHolder);
     }
 
 
-    @Test
-    public void viewHolderPriceTextView_hasCorrectText(){
-        assertEquals("22.2",viewHolder.priceTextView.getText().toString());
-    }
-
-
-    @Test
-    public void viewHolderPriceTextView_hasCorrectTextCastedToFloat(){
-        assertEquals(22.2f,Float.valueOf(viewHolder.priceTextView.getText().toString()));
-    }
-
-    @Test
-    public void viewHolderMiniatureImageView_hasNullDrawable(){
-        assertNull(viewHolder.miniatureImageView.getDrawable());
-    }
 
     @Test(expected = IndexOutOfBoundsException.class)
     public void customAdapterGetView_withNoRecordsThrowsException(){

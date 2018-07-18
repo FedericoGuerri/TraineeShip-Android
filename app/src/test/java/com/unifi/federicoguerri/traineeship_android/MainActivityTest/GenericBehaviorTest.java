@@ -15,7 +15,7 @@ import com.activeandroid.query.Select;
 import com.unifi.federicoguerri.traineeship_android.BuildConfig;
 import com.unifi.federicoguerri.traineeship_android.MainActivity;
 import com.unifi.federicoguerri.traineeship_android.R;
-import com.unifi.federicoguerri.traineeship_android.core.DatabasePrice;
+import com.unifi.federicoguerri.traineeship_android.core.database_active_android.DatabasePrice;
 
 import org.junit.After;
 import org.junit.Before;

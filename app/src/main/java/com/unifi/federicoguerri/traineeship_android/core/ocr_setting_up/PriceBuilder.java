@@ -1,4 +1,4 @@
-package com.unifi.federicoguerri.traineeship_android.core;
+package com.unifi.federicoguerri.traineeship_android.core.ocr_setting_up;
 
 
 import android.graphics.Rect;
@@ -9,16 +9,16 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-class PriceBuilder{
+public class PriceBuilder{
 
     private static final String RECOGNITION_ERROR = "recognitionError";
     private String recognized;
 
-    PriceBuilder(String price){
+    public PriceBuilder(String price){
         recognized=price;
     }
 
-    public String getPrice() throws CustomException{
+    public String getPrice() throws CustomException {
         chooseMoreProbablePrice();
         checkCorrectPriceFormat();
         return recognized;

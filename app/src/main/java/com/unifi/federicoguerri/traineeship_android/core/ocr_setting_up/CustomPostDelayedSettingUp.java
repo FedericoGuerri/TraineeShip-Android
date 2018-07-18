@@ -1,14 +1,14 @@
-package com.unifi.federicoguerri.traineeship_android.core;
+package com.unifi.federicoguerri.traineeship_android.core.ocr_setting_up;
 
 import android.graphics.Rect;
 import android.os.Handler;
 import android.view.View;
 
-public class CustomCountdownTimer implements Runnable{
+public class CustomPostDelayedSettingUp implements Runnable{
     private View targetLayout;
     private OcrComponentsBuilder myOcrBuilder;
 
-    public CustomCountdownTimer(long millisInFuture, View targetLayout, OcrComponentsBuilder myOcrBuilder) {
+    public CustomPostDelayedSettingUp(long millisInFuture, View targetLayout, OcrComponentsBuilder myOcrBuilder) {
         this.targetLayout = targetLayout;
         this.myOcrBuilder = myOcrBuilder;
         Handler handler=new Handler();

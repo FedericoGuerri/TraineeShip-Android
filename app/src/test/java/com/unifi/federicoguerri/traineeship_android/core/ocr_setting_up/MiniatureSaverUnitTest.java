@@ -1,4 +1,4 @@
-package com.unifi.federicoguerri.traineeship_android.core;
+package com.unifi.federicoguerri.traineeship_android.core.ocr_setting_up;
 
 
 import android.graphics.Bitmap;
@@ -44,8 +44,6 @@ public class MiniatureSaverUnitTest {
     private TextView textView;
     @Mock
     private FloatingActionButton fab;
-    @Mock
-    BitmapFactory bitmapFactory;
 
     @InjectMocks
     private MiniatureSaver miniatureSaver=new MiniatureSaver(activity,ocrComponentsBuilder,0,fab);

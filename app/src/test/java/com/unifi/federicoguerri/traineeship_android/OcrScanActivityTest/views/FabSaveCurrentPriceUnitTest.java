@@ -231,7 +231,7 @@ public class FabSaveCurrentPriceUnitTest extends AbstractOcrScanActivityUnitTest
     @Test
     public void fabSavePrice_willHideTextTargetingLayout_whileSavingMiniature(){
         tapOnFabAndPressDialogPositiveButton();
-        assertEquals(View.INVISIBLE,activity.findViewById(R.id.textTargetingLayout).getVisibility());
+        assertEquals(0f,activity.findViewById(R.id.textTargetingLayout).getAlpha(),0);
     }
 
 

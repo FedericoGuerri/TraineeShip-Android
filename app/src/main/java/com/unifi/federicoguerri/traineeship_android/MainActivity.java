@@ -16,9 +16,9 @@ import android.view.View;
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.Configuration;
 import com.activeandroid.query.Delete;
-import com.unifi.federicoguerri.traineeship_android.core.DatabaseHelper;
-import com.unifi.federicoguerri.traineeship_android.core.DatabasePrice;
-import com.unifi.federicoguerri.traineeship_android.core.ItemsLoaderToPriceListView;
+import com.unifi.federicoguerri.traineeship_android.core.database_active_android.DatabaseHelper;
+import com.unifi.federicoguerri.traineeship_android.core.database_active_android.DatabasePrice;
+import com.unifi.federicoguerri.traineeship_android.core.prices_list_setting_up.ItemsLoaderToPriceListView;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

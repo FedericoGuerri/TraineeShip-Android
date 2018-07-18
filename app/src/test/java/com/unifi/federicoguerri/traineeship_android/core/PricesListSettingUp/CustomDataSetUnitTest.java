@@ -1,6 +1,8 @@
-package com.unifi.federicoguerri.traineeship_android.core;
+package com.unifi.federicoguerri.traineeship_android.core.PricesListSettingUp;
 
 import android.graphics.Bitmap;
+
+import com.unifi.federicoguerri.traineeship_android.core.prices_list_setting_up.CustomDataSet;
 
 import org.junit.Before;
 import org.junit.Test;

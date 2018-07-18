@@ -22,10 +22,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.vision.CameraSource;
-import com.unifi.federicoguerri.traineeship_android.core.CustomCountdownTimer;
-import com.unifi.federicoguerri.traineeship_android.core.MiniatureSaver;
-import com.unifi.federicoguerri.traineeship_android.core.MySurfaceHolderCallback;
-import com.unifi.federicoguerri.traineeship_android.core.OcrComponentsBuilder;
+import com.unifi.federicoguerri.traineeship_android.core.ocr_setting_up.CustomPostDelayedSettingUp;
+import com.unifi.federicoguerri.traineeship_android.core.ocr_setting_up.MiniatureSaver;
+import com.unifi.federicoguerri.traineeship_android.core.ocr_setting_up.MySurfaceHolderCallback;
+import com.unifi.federicoguerri.traineeship_android.core.ocr_setting_up.OcrComponentsBuilder;
 
 import java.util.Objects;
 
@@ -160,7 +160,7 @@ public class OcrScanActivity extends AppCompatActivity {
     @Override
     protected void onPostResume() {
         super.onPostResume();
-        new CustomCountdownTimer(1300,findViewById(R.id.textTargetingLayout),myOcrBuilder);
+        new CustomPostDelayedSettingUp(1300,findViewById(R.id.textTargetingLayout),myOcrBuilder);
     }
 
     public OcrComponentsBuilder getMyOcrBuilder() {

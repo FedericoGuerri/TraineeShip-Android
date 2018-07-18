@@ -1,9 +1,11 @@
-package com.unifi.federicoguerri.traineeship_android.core;
+package com.unifi.federicoguerri.traineeship_android.core.Database;
 
 import android.os.Build;
 
 import com.activeandroid.ActiveAndroid;
 import com.unifi.federicoguerri.traineeship_android.BuildConfig;
+import com.unifi.federicoguerri.traineeship_android.core.database_active_android.DatabaseHelper;
+import com.unifi.federicoguerri.traineeship_android.core.database_active_android.DatabasePrice;
 
 import org.junit.After;
 import org.junit.Before;
@@ -25,12 +27,12 @@ import static junit.framework.Assert.assertTrue;
 
 public class DatabaseHelperUnitTest {
 
-    private com.unifi.federicoguerri.traineeship_android.core.DatabaseHelper helper;
+    private DatabaseHelper helper;
 
     @Before
     public void init(){
         ActiveAndroid.initialize(RuntimeEnvironment.application);
-        helper=com.unifi.federicoguerri.traineeship_android.core.DatabaseHelper.getHelper();
+        helper= DatabaseHelper.getHelper();
     }
 
     @After

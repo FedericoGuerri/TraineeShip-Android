@@ -1,5 +1,4 @@
-package com.unifi.federicoguerri.traineeship_android.core;
-
+package com.unifi.federicoguerri.traineeship_android.core.ocr_setting_up;
 
 
 import android.graphics.Rect;

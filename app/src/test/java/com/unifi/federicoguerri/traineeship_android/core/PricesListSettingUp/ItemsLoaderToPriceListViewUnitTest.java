@@ -1,4 +1,4 @@
-package com.unifi.federicoguerri.traineeship_android.core;
+package com.unifi.federicoguerri.traineeship_android.core.PricesListSettingUp;
 
 import android.os.Build;
 import android.view.MenuItem;
@@ -9,6 +9,9 @@ import com.activeandroid.ActiveAndroid;
 import com.unifi.federicoguerri.traineeship_android.BuildConfig;
 import com.unifi.federicoguerri.traineeship_android.MainActivity;
 import com.unifi.federicoguerri.traineeship_android.R;
+import com.unifi.federicoguerri.traineeship_android.core.database_active_android.DatabaseHelper;
+import com.unifi.federicoguerri.traineeship_android.core.prices_list_setting_up.CustomDataSet;
+import com.unifi.federicoguerri.traineeship_android.core.prices_list_setting_up.ItemsLoaderToPriceListView;
 
 import org.junit.After;
 import org.junit.Before;
