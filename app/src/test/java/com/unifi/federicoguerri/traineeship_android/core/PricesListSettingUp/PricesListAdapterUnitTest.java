@@ -4,14 +4,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.unifi.federicoguerri.traineeship_android.BuildConfig;
 import com.unifi.federicoguerri.traineeship_android.MainActivity;
 import com.unifi.federicoguerri.traineeship_android.R;
-import com.unifi.federicoguerri.traineeship_android.core.prices_list_setting_up.CustomAdapter;
-import com.unifi.federicoguerri.traineeship_android.core.prices_list_setting_up.CustomDataSet;
+import com.unifi.federicoguerri.traineeship_android.core.prices_list_setting_up.PricesListAdapter;
+import com.unifi.federicoguerri.traineeship_android.core.prices_list_setting_up.PricesListDataSet;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -29,10 +27,10 @@ import static junit.framework.Assert.assertNull;
 
 @Config(constants = BuildConfig.class, sdk = Build.VERSION_CODES.LOLLIPOP_MR1)
 @RunWith(RobolectricTestRunner.class)
-public class CustomAdapterUnitTest {
+public class PricesListAdapterUnitTest {
 
     @InjectMocks
-    private CustomAdapter customAdapter;
+    private PricesListAdapter pricesListAdapter;
 
     private MainActivity activity;
     private View convertView;
@@ -47,44 +45,44 @@ public class CustomAdapterUnitTest {
 
     @Test(expected = IndexOutOfBoundsException.class)
     public void customAdapterGetView_withNoRecordsThrowsException(){
-        customAdapter=new CustomAdapter(new ArrayList<CustomDataSet>(),activity.getApplicationContext());
-        customAdapter.getView(0,convertView,null);
+        pricesListAdapter =new PricesListAdapter(new ArrayList<PricesListDataSet>(),activity.getApplicationContext());
+        pricesListAdapter.getView(0,convertView,null);
     }
 
 
     @Test
     public void customAdapterGetView_withNullViewReturnsANewView(){
-        ArrayList<CustomDataSet> records= new ArrayList<>();
-        records.add(new CustomDataSet(22.2f,null,0));
-        customAdapter=new CustomAdapter(records,activity.getApplicationContext());
-        assertFalse(convertView==customAdapter.getView(0,null,null));
+        ArrayList<PricesListDataSet> records= new ArrayList<>();
+        records.add(new PricesListDataSet(22.2f,null,0));
+        pricesListAdapter =new PricesListAdapter(records,activity.getApplicationContext());
+        assertFalse(convertView== pricesListAdapter.getView(0,null,null));
     }
 
     @Test
     public void customAdapterGetView_withNullViewReturnsANewView_withNotNullMiniature(){
-        ArrayList<CustomDataSet> records= new ArrayList<>();
+        ArrayList<PricesListDataSet> records= new ArrayList<>();
         Bitmap miniature = BitmapFactory.decodeResource(activity.getApplicationContext().getResources(), R.drawable.no_miniature_placeholder);
-        records.add(new CustomDataSet(22.2f,miniature,0));
-        customAdapter=new CustomAdapter(records,activity.getApplicationContext());
-        assertFalse(convertView==customAdapter.getView(0,null,null));
+        records.add(new PricesListDataSet(22.2f,miniature,0));
+        pricesListAdapter =new PricesListAdapter(records,activity.getApplicationContext());
+        assertFalse(convertView== pricesListAdapter.getView(0,null,null));
     }
 
     @Test
     public void customAdapter_getTotalwillReturnAPriceValue(){
-        ArrayList<CustomDataSet> records= new ArrayList<>();
-        records.add(new CustomDataSet(22.2f,null,0));
-        customAdapter=new CustomAdapter(records,activity.getApplicationContext());
-        assertEquals(22.2f,customAdapter.getTotal());
+        ArrayList<PricesListDataSet> records= new ArrayList<>();
+        records.add(new PricesListDataSet(22.2f,null,0));
+        pricesListAdapter =new PricesListAdapter(records,activity.getApplicationContext());
+        assertEquals(22.2f, pricesListAdapter.getTotal());
     }
 
     @Test
     public void customAdapter_getTotalwillReturnASumOfRecognizedPrices(){
-        ArrayList<CustomDataSet> records= new ArrayList<>();
-        records.add(new CustomDataSet(22.2f,null,0));
-        records.add(new CustomDataSet(22.2f,null,0));
-        records.add(new CustomDataSet(0.0f,null,0));
-        customAdapter=new CustomAdapter(records,activity.getApplicationContext());
-        assertEquals(44.4f,customAdapter.getTotal());
+        ArrayList<PricesListDataSet> records= new ArrayList<>();
+        records.add(new PricesListDataSet(22.2f,null,0));
+        records.add(new PricesListDataSet(22.2f,null,0));
+        records.add(new PricesListDataSet(0.0f,null,0));
+        pricesListAdapter =new PricesListAdapter(records,activity.getApplicationContext());
+        assertEquals(44.4f, pricesListAdapter.getTotal());
     }
 
 

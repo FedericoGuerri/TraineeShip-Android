@@ -21,7 +21,7 @@ import com.unifi.federicoguerri.traineeship_android.R;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class OcrComponentsBuilder implements  Detector.Processor<TextBlock>{
+public class OcrComponentsBuilder implements Detector.Processor<TextBlock>{
 
     private TextRecognizer textRecognizer;
     private TextView recognizedTextView;

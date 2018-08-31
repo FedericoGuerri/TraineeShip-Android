@@ -4,11 +4,11 @@ import android.graphics.Rect;
 import android.os.Handler;
 import android.view.View;
 
-public class CustomPostDelayedSettingUp implements Runnable{
+public class PostDelayedSettingUpRunnable implements Runnable{
     private View targetLayout;
     private OcrComponentsBuilder myOcrBuilder;
 
-    public CustomPostDelayedSettingUp(long millisInFuture, View targetLayout, OcrComponentsBuilder myOcrBuilder) {
+    public PostDelayedSettingUpRunnable(long millisInFuture, View targetLayout, OcrComponentsBuilder myOcrBuilder) {
         this.targetLayout = targetLayout;
         this.myOcrBuilder = myOcrBuilder;
         Handler handler=new Handler();

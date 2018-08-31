@@ -38,13 +38,6 @@ public class GenericHelper {
 
     private void waitUI(int time) {
         SystemClock.sleep(time);
-        /*
-        try {
-            Thread.sleep(time);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        */
     }
 
 

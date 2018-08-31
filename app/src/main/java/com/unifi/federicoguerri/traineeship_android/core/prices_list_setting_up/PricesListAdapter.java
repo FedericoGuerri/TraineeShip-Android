@@ -15,13 +15,13 @@ import com.unifi.federicoguerri.traineeship_android.core.database_active_android
 
 import java.util.List;
 
-public class CustomAdapter extends ArrayAdapter<CustomDataSet> {
+public class PricesListAdapter extends ArrayAdapter<PricesListDataSet> {
 
     private Context mContext;
-    private CustomAdapter adapter;
-    private List<CustomDataSet> data;
+    private PricesListAdapter adapter;
+    private List<PricesListDataSet> data;
 
-    public CustomAdapter(List<CustomDataSet> data, Context context) {
+    public PricesListAdapter(List<PricesListDataSet> data, Context context) {
         super(context, R.layout.item_price_listview, data);
         this.mContext=context;
         adapter =this;
@@ -40,7 +40,7 @@ public class CustomAdapter extends ArrayAdapter<CustomDataSet> {
     @Override
     public View getView(final int position, final View convertView, @NonNull final ViewGroup parent) {
         View rowView = convertView;
-        final CustomDataSet dataSet= data.get(position);
+        final PricesListDataSet dataSet= data.get(position);
         ViewHolder viewHolder;
         if (rowView == null) {
             LayoutInflater inflater = LayoutInflater.from(mContext);
@@ -77,7 +77,7 @@ public class CustomAdapter extends ArrayAdapter<CustomDataSet> {
 
     public float getTotal(){
         float total=0.0f;
-        for(CustomDataSet item: data){
+        for(PricesListDataSet item: data){
             total=total+item.getPrice();
         }
         return total;

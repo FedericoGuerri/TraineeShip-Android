@@ -10,7 +10,7 @@ import com.unifi.federicoguerri.traineeship_android.BuildConfig;
 import com.unifi.federicoguerri.traineeship_android.MainActivity;
 import com.unifi.federicoguerri.traineeship_android.R;
 import com.unifi.federicoguerri.traineeship_android.core.database_active_android.DatabaseHelper;
-import com.unifi.federicoguerri.traineeship_android.core.prices_list_setting_up.CustomDataSet;
+import com.unifi.federicoguerri.traineeship_android.core.prices_list_setting_up.PricesListDataSet;
 import com.unifi.federicoguerri.traineeship_android.core.prices_list_setting_up.ItemsLoaderToPriceListView;
 
 import org.junit.After;
@@ -103,8 +103,8 @@ public class ItemsLoaderToPriceListViewUnitTest {
 
     @Test
     public void itemsLoader_setsListViewAdapter()  {
-        ArrayList<CustomDataSet> array=new ArrayList<>();
-        array.add(new CustomDataSet(22.2f,null,0));
+        ArrayList<PricesListDataSet> array=new ArrayList<>();
+        array.add(new PricesListDataSet(22.2f,null,0));
         when(helper.getPricesAsDataSet()).thenReturn(array);
         itemsLoaderToPriceListView.loadItems();
         ListView listView=activity.findViewById(R.id.pricesListViewMainActivity);
@@ -113,7 +113,7 @@ public class ItemsLoaderToPriceListViewUnitTest {
 
     @Test
     public void itemsLoader_setsWelcomeLayoutVisible_ifThereAreNoRecords(){
-        ArrayList<CustomDataSet> array=new ArrayList<>();
+        ArrayList<PricesListDataSet> array=new ArrayList<>();
         when(helper.getPricesAsDataSet()).thenReturn(array);
         itemsLoaderToPriceListView.loadItems();
         assertEquals(View.VISIBLE,activity.findViewById(R.id.welcomeLayoutMainActivity).getVisibility());
@@ -121,7 +121,7 @@ public class ItemsLoaderToPriceListViewUnitTest {
 
     @Test
     public void itemsLoader_setsPricesListInvisible_ifThereAreNoRecords() {
-        ArrayList<CustomDataSet> array=new ArrayList<>();
+        ArrayList<PricesListDataSet> array=new ArrayList<>();
         when(helper.getPricesAsDataSet()).thenReturn(array);
         itemsLoaderToPriceListView.loadItems();
         assertEquals(View.INVISIBLE,activity.findViewById(R.id.pricesListViewMainActivity).getVisibility());
@@ -129,8 +129,8 @@ public class ItemsLoaderToPriceListViewUnitTest {
 
     @Test
     public void itemsLoader_setsPricesListInvisible_ifAllRecordsWereRemoved() {
-        ArrayList<CustomDataSet> array=new ArrayList<>();
-        array.add(new CustomDataSet(22.2f,null,0));
+        ArrayList<PricesListDataSet> array=new ArrayList<>();
+        array.add(new PricesListDataSet(22.2f,null,0));
         when(helper.getPricesAsDataSet()).thenReturn(array);
         itemsLoaderToPriceListView.loadItems();
         activity.findViewById(R.id.itemDeletePriceImageViewitemPriceListView).performClick();
@@ -139,9 +139,9 @@ public class ItemsLoaderToPriceListViewUnitTest {
 
     @Test
     public void itemsLoader_notModifyPricesListVisibility_ifThereAreRecordsRemaining() {
-        ArrayList<CustomDataSet> array=new ArrayList<>();
-        array.add(new CustomDataSet(22.2f,null,0));
-        array.add(new CustomDataSet(0.2f,null,1));
+        ArrayList<PricesListDataSet> array=new ArrayList<>();
+        array.add(new PricesListDataSet(22.2f,null,0));
+        array.add(new PricesListDataSet(0.2f,null,1));
         when(helper.getPricesAsDataSet()).thenReturn(array);
         itemsLoaderToPriceListView.loadItems();
         activity.findViewById(R.id.itemDeletePriceImageViewitemPriceListView).performClick();
@@ -150,8 +150,8 @@ public class ItemsLoaderToPriceListViewUnitTest {
 
     @Test
     public void itemsLoader_callsMenuItemTotalsetTitle() {
-        ArrayList<CustomDataSet> array=new ArrayList<>();
-        array.add(new CustomDataSet(22.2f,null,0));
+        ArrayList<PricesListDataSet> array=new ArrayList<>();
+        array.add(new PricesListDataSet(22.2f,null,0));
         when(helper.getPricesAsDataSet()).thenReturn(array);
         itemsLoaderToPriceListView.loadItems();
         verify(menuItem,atLeastOnce()).setTitle(any(String.class));
@@ -160,8 +160,8 @@ public class ItemsLoaderToPriceListViewUnitTest {
     /*
     @Test
     public void itemsLoader_setsMenuItemTotalTitle_toRecordValue() throws Exception {
-        ArrayList<CustomDataSet> array=new ArrayList<>();
-        array.add(new CustomDataSet(22.2f,null));
+        ArrayList<PricesListDataSet> array=new ArrayList<>();
+        array.add(new PricesListDataSet(22.2f,null));
         when(loaderFromFile.getRecords()).thenReturn(array);
         itemsLoaderToPriceListView.loadItems();
         verify(menuItem,atLeastOnce()).setTitle("22,2");
@@ -170,8 +170,8 @@ public class ItemsLoaderToPriceListViewUnitTest {
 
     @Test
     public void itemsLoader_setsMenuItemTotalTitle_toZero_ifThereAreNoRecords() {
-        ArrayList<CustomDataSet> array=new ArrayList<>();
-        array.add(new CustomDataSet(22.2f,null,0));
+        ArrayList<PricesListDataSet> array=new ArrayList<>();
+        array.add(new PricesListDataSet(22.2f,null,0));
         when(helper.getPricesAsDataSet()).thenReturn(array);
         itemsLoaderToPriceListView.loadItems();
         activity.findViewById(R.id.itemDeletePriceImageViewitemPriceListView).performClick();

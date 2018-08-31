@@ -5,7 +5,7 @@ import android.graphics.BitmapFactory;
 
 import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
-import com.unifi.federicoguerri.traineeship_android.core.prices_list_setting_up.CustomDataSet;
+import com.unifi.federicoguerri.traineeship_android.core.prices_list_setting_up.PricesListDataSet;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,8 +44,8 @@ public class DatabaseHelper {
     }
 
 
-    public List<CustomDataSet> getPricesAsDataSet() {
-        ArrayList<CustomDataSet> prices=new ArrayList<>();
+    public List<PricesListDataSet> getPricesAsDataSet() {
+        ArrayList<PricesListDataSet> prices=new ArrayList<>();
         for(DatabasePrice databasePrice: this.getAllPrices()){
             Bitmap miniature=null;
             if(!databasePrice.path.equals("noMiniature")){
@@ -53,7 +53,7 @@ public class DatabaseHelper {
                 option.inPreferredConfig = Bitmap.Config.ARGB_8888;
                 miniature=BitmapFactory.decodeFile(databasePrice.path);
             }
-            prices.add(new CustomDataSet(Float.valueOf(databasePrice.price),miniature,databasePrice.id));
+            prices.add(new PricesListDataSet(Float.valueOf(databasePrice.price),miniature,databasePrice.id));
         }
         return prices;
     }

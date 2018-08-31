@@ -33,9 +33,9 @@ public class ItemsLoaderToPriceListView {
 
     public void loadItems(){
         try {
-            List<CustomDataSet> dataSets = helper.getPricesAsDataSet();
+            List<PricesListDataSet> dataSets = helper.getPricesAsDataSet();
             if(!dataSets.isEmpty()) {
-                final CustomAdapter adapter = new CustomAdapter(dataSets, activity.getApplicationContext());
+                final PricesListAdapter adapter = new PricesListAdapter(dataSets, activity.getApplicationContext());
                 adapter.registerDataSetObserver(new DataSetObserver() {
                     @Override
                     public void onChanged() {

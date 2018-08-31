@@ -28,14 +28,14 @@ import static org.mockito.Mockito.when;
 
 @Config(constants = BuildConfig.class, sdk = Build.VERSION_CODES.LOLLIPOP_MR1)
 @RunWith(RobolectricTestRunner.class)
-public class CustomPostDelayedTimerUnitTest {
+public class PostDelayedSettingUpRunnableUnitTest {
 
     private OcrScanActivity activity= Robolectric.buildActivity(OcrScanActivity.class).create().visible().get();
     private View view=activity.findViewById(R.id.textTargetingLayout);
     @Mock
     private OcrComponentsBuilder ocrComponentsBuilder;
     @InjectMocks
-    private CustomPostDelayedSettingUp customCountDownTimer=new CustomPostDelayedSettingUp(1000,view,ocrComponentsBuilder);
+    private PostDelayedSettingUpRunnable customCountDownTimer=new PostDelayedSettingUpRunnable(1000,view,ocrComponentsBuilder);
 
     @Before
     public void init(){

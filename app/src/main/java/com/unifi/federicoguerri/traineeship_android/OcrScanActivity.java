@@ -22,7 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.vision.CameraSource;
-import com.unifi.federicoguerri.traineeship_android.core.ocr_setting_up.CustomPostDelayedSettingUp;
+import com.unifi.federicoguerri.traineeship_android.core.ocr_setting_up.PostDelayedSettingUpRunnable;
 import com.unifi.federicoguerri.traineeship_android.core.ocr_setting_up.MiniatureSaver;
 import com.unifi.federicoguerri.traineeship_android.core.ocr_setting_up.MySurfaceHolderCallback;
 import com.unifi.federicoguerri.traineeship_android.core.ocr_setting_up.OcrComponentsBuilder;
@@ -160,7 +160,7 @@ public class OcrScanActivity extends AppCompatActivity {
     @Override
     protected void onPostResume() {
         super.onPostResume();
-        new CustomPostDelayedSettingUp(1300,findViewById(R.id.textTargetingLayout),myOcrBuilder);
+        new PostDelayedSettingUpRunnable(1300,findViewById(R.id.textTargetingLayout),myOcrBuilder);
     }
 
     public OcrComponentsBuilder getMyOcrBuilder() {

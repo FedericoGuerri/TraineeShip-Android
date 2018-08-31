@@ -39,6 +39,15 @@
 
         <activity android:name=".OcrScanActivity" android:theme="@style/NoActionBarTheme"/>
 
+        <provider
+            android:name="com.activeandroid.content.ContentProvider"
+            android:authorities="com.unifi.federicoguerri.traineeship"
+            android:enabled="true"
+            android:exported="false">
+        </provider>
+
     </application>
+
+
 
 </manifest>

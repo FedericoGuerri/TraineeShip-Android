@@ -6,8 +6,8 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.unifi.federicoguerri.traineeship_android.R;
-import com.unifi.federicoguerri.traineeship_android.core.prices_list_setting_up.CustomAdapter;
-import com.unifi.federicoguerri.traineeship_android.core.prices_list_setting_up.CustomDataSet;
+import com.unifi.federicoguerri.traineeship_android.core.prices_list_setting_up.PricesListAdapter;
+import com.unifi.federicoguerri.traineeship_android.core.prices_list_setting_up.PricesListDataSet;
 
 import org.junit.Test;
 import org.robolectric.Shadows;
@@ -41,9 +41,9 @@ public class PricesListViewUnitTest extends AbstractMainActivityUnitTest {
 
     @Test
     public void pricesList_canUseCustomAdapter(){
-        CustomAdapter customAdapter=new CustomAdapter(new ArrayList<CustomDataSet>(),pricesList.getContext());
-        pricesList.setAdapter(customAdapter);
-        assertTrue(pricesList.getAdapter()==customAdapter);
+        PricesListAdapter pricesListAdapter =new PricesListAdapter(new ArrayList<PricesListDataSet>(),pricesList.getContext());
+        pricesList.setAdapter(pricesListAdapter);
+        assertTrue(pricesList.getAdapter()== pricesListAdapter);
     }
 
     @Test
@@ -54,8 +54,8 @@ public class PricesListViewUnitTest extends AbstractMainActivityUnitTest {
 
     @Test
     public void pricesList_customAdapterHasNoRecords(){
-        CustomAdapter customAdapter=new CustomAdapter(new ArrayList<CustomDataSet>(),activity.getApplicationContext());
-        pricesList.setAdapter(customAdapter);
+        PricesListAdapter pricesListAdapter =new PricesListAdapter(new ArrayList<PricesListDataSet>(),activity.getApplicationContext());
+        pricesList.setAdapter(pricesListAdapter);
         ShadowListView shadowListView = Shadows.shadowOf(pricesList);
         shadowListView.populateItems();
         assertEquals(-1,shadowListView.findIndexOfItemContainingText("22.2"));
@@ -64,10 +64,10 @@ public class PricesListViewUnitTest extends AbstractMainActivityUnitTest {
 
     @Test
     public void pricesList_customAdapterHasOneRecord(){
-        ArrayList<CustomDataSet> records=new ArrayList<>();
-        records.add(new CustomDataSet(22.2f,null,0));
-        CustomAdapter customAdapter=new CustomAdapter(records,activity.getApplicationContext());
-        pricesList.setAdapter(customAdapter);
+        ArrayList<PricesListDataSet> records=new ArrayList<>();
+        records.add(new PricesListDataSet(22.2f,null,0));
+        PricesListAdapter pricesListAdapter =new PricesListAdapter(records,activity.getApplicationContext());
+        pricesList.setAdapter(pricesListAdapter);
         ShadowListView shadowListView = Shadows.shadowOf(pricesList);
         shadowListView.populateItems();
         assertEquals(0,shadowListView.findIndexOfItemContainingText("22.2"));
@@ -75,12 +75,12 @@ public class PricesListViewUnitTest extends AbstractMainActivityUnitTest {
 
     @Test
     public void pricesList_customAdapterCanRemoveARecord(){
-        ArrayList<CustomDataSet> records=new ArrayList<>();
-        records.add(new CustomDataSet(22.2f,null,0));
-        CustomAdapter customAdapter=new CustomAdapter(records,activity.getApplicationContext());
-        pricesList.setAdapter(customAdapter);
+        ArrayList<PricesListDataSet> records=new ArrayList<>();
+        records.add(new PricesListDataSet(22.2f,null,0));
+        PricesListAdapter pricesListAdapter =new PricesListAdapter(records,activity.getApplicationContext());
+        pricesList.setAdapter(pricesListAdapter);
         records.remove(0);
-        customAdapter.notifyDataSetChanged();
+        pricesListAdapter.notifyDataSetChanged();
         ShadowListView shadowListView = Shadows.shadowOf(pricesList);
         shadowListView.populateItems();
         assertEquals(-1,shadowListView.findIndexOfItemContainingText("22.2"));
@@ -88,15 +88,15 @@ public class PricesListViewUnitTest extends AbstractMainActivityUnitTest {
 
     @Test
     public void pricesList_customAdapterCanRemoveMoreRecords(){
-        ArrayList<CustomDataSet> records=new ArrayList<>();
-        records.add(new CustomDataSet(22.2f,null,0));
-        records.add(new CustomDataSet(0.0f,null,1));
-        records.add(new CustomDataSet(22.2f,null,2));
-        CustomAdapter customAdapter=new CustomAdapter(records,activity.getApplicationContext());
-        pricesList.setAdapter(customAdapter);
+        ArrayList<PricesListDataSet> records=new ArrayList<>();
+        records.add(new PricesListDataSet(22.2f,null,0));
+        records.add(new PricesListDataSet(0.0f,null,1));
+        records.add(new PricesListDataSet(22.2f,null,2));
+        PricesListAdapter pricesListAdapter =new PricesListAdapter(records,activity.getApplicationContext());
+        pricesList.setAdapter(pricesListAdapter);
         records.remove(1);
         records.remove(0);
-        customAdapter.notifyDataSetChanged();
+        pricesListAdapter.notifyDataSetChanged();
         ShadowListView shadowListView = Shadows.shadowOf(pricesList);
         shadowListView.populateItems();
         assertEquals(0,shadowListView.findIndexOfItemContainingText("22.2"));
