@@ -10,8 +10,8 @@ import com.unifi.federicoguerri.traineeship_android.BuildConfig;
 import com.unifi.federicoguerri.traineeship_android.MainActivity;
 import com.unifi.federicoguerri.traineeship_android.R;
 import com.unifi.federicoguerri.traineeship_android.core.database_active_android.DatabaseHelper;
-import com.unifi.federicoguerri.traineeship_android.core.prices_list_setting_up.PricesListDataSet;
 import com.unifi.federicoguerri.traineeship_android.core.prices_list_setting_up.ItemsLoaderToPriceListView;
+import com.unifi.federicoguerri.traineeship_android.core.prices_list_setting_up.PricesListDataSet;
 
 import org.junit.After;
 import org.junit.Before;

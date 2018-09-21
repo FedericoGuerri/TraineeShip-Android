@@ -22,10 +22,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.vision.CameraSource;
-import com.unifi.federicoguerri.traineeship_android.core.ocr_setting_up.PostDelayedSettingUpRunnable;
 import com.unifi.federicoguerri.traineeship_android.core.ocr_setting_up.MiniatureSaver;
 import com.unifi.federicoguerri.traineeship_android.core.ocr_setting_up.MySurfaceHolderCallback;
 import com.unifi.federicoguerri.traineeship_android.core.ocr_setting_up.OcrComponentsBuilder;
+import com.unifi.federicoguerri.traineeship_android.core.ocr_setting_up.PostDelayedSettingUpRunnable;
 
 import java.util.Objects;
 

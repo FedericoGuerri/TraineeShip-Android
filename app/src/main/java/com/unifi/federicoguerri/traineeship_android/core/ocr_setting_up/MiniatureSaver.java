@@ -14,7 +14,6 @@ import com.unifi.federicoguerri.traineeship_android.core.database_active_android
 import java.io.File;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class MiniatureSaver implements CameraSource.PictureCallback {
 
@@ -54,10 +53,8 @@ public class MiniatureSaver implements CameraSource.PictureCallback {
         String filename;
         try {
             Bitmap bitmap=Bitmap.createScaledBitmap(BitmapFactory.decodeByteArray(bytes, 0, bytes.length), 350, 450, true);
-            String timeStamp = new SimpleDateFormat("yyyy_MMdd_HH_mm_ss").format(new Date());
-            filename=appDirectory() + File.separator + "miniature_"+ timeStamp + ".png";
-            FileOutputStream out;
-            out = new FileOutputStream(filename);
+            filename=appDirectory() + File.separator + "miniature_"+ SimpleDateFormat.getDateTimeInstance().format("yyyy_MMdd_HH_mm_ss") + ".png";
+            FileOutputStream out = new FileOutputStream(filename);
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
         }catch (Exception e){
             Toast.makeText(activity, activity.getString(R.string.cant_write_to_file),Toast.LENGTH_SHORT).show();
