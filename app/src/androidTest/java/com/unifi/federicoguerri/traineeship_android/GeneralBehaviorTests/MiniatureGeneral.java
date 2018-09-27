@@ -64,7 +64,6 @@ public class MiniatureGeneral extends AbstractGeneral{
 
     @Test
     public void miniatureImageView_hasMiniature_ifUserClicksOnYESbutton(){
-        CustomMatchers customMatchers=new CustomMatchers();
         genericHelper.recognizeAPrice("YES");//miniature
         onData(anything()).atPosition(0).
                 onChildView(withId(R.id.itemMiniatureImageViewItemPriceListView)).check(matches(not(customMatchers.withDrawable(R.drawable.no_miniature_placeholder))));
@@ -73,7 +72,6 @@ public class MiniatureGeneral extends AbstractGeneral{
 
     @Test
     public void miniatureImageView_notChangingMiniature_ifPricesWereAdded(){
-        CustomMatchers customMatchers=new CustomMatchers();
         genericHelper.recognizeAPrice("NO");
         genericHelper.recognizeAPrice("YES");
         genericHelper.recognizeAPrice("NO");//miniature
@@ -88,7 +86,6 @@ public class MiniatureGeneral extends AbstractGeneral{
 
     @Test
     public void miniatureImageView_notChangingMiniature_ifPricesWereDeleted(){
-        CustomMatchers customMatchers=new CustomMatchers();
         genericHelper.recognizeAPrice("NO");
         genericHelper.recognizeAPrice("NO");
         genericHelper.recognizeAPrice("YES");//miniature
@@ -111,7 +108,6 @@ public class MiniatureGeneral extends AbstractGeneral{
 
     @Test
     public void miniatureImageView_notChangingMiniature_ifPricesWithDifferentDrawableWereAdded(){
-        CustomMatchers customMatchers=new CustomMatchers();
         genericHelper.recognizeAPrice("YES");//miniature
         genericHelper.recognizeAPrice("NO");
         genericHelper.recognizeAPrice("YES");//miniature
@@ -132,7 +128,6 @@ public class MiniatureGeneral extends AbstractGeneral{
 
     @Test
     public void miniatureImageView_notChangingMiniature_ifPricesWithDifferentDrawableWereDeleted(){
-        CustomMatchers customMatchers=new CustomMatchers();
         genericHelper.recognizeAPrice("YES");//miniature
         genericHelper.recognizeAPrice("NO");
         genericHelper.recognizeAPrice("NO");
