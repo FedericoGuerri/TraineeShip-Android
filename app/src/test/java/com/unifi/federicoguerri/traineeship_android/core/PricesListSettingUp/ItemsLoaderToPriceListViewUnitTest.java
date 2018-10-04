@@ -5,11 +5,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 
-import com.activeandroid.ActiveAndroid;
+import com.reactiveandroid.ReActiveAndroid;
+import com.reactiveandroid.ReActiveConfig;
+import com.reactiveandroid.internal.database.DatabaseConfig;
 import com.unifi.federicoguerri.traineeship_android.BuildConfig;
 import com.unifi.federicoguerri.traineeship_android.MainActivity;
 import com.unifi.federicoguerri.traineeship_android.R;
-import com.unifi.federicoguerri.traineeship_android.core.database_active_android.DatabaseHelper;
+import com.unifi.federicoguerri.traineeship_android.core.database.DatabaseHelper;
+import com.unifi.federicoguerri.traineeship_android.core.database.DatabasePrice;
+import com.unifi.federicoguerri.traineeship_android.core.database.DatabaseReactiveAndroid;
 import com.unifi.federicoguerri.traineeship_android.core.prices_list_setting_up.ItemsLoaderToPriceListView;
 import com.unifi.federicoguerri.traineeship_android.core.prices_list_setting_up.PricesListDataSet;
 
@@ -51,12 +55,15 @@ public class ItemsLoaderToPriceListViewUnitTest {
     @Before
     public void init(){
         MockitoAnnotations.initMocks(this);
-        ActiveAndroid.initialize(RuntimeEnvironment.application);
+        ReActiveAndroid.init(new ReActiveConfig.Builder(RuntimeEnvironment.application)
+                .addDatabaseConfigs(new DatabaseConfig.Builder(DatabaseReactiveAndroid.class).addModelClasses(DatabasePrice.class)
+                        .build())
+                .build());
     }
 
     @After
     public void tearDown(){
-        ActiveAndroid.dispose();
+       ReActiveAndroid.destroy();
     }
 
     @Test

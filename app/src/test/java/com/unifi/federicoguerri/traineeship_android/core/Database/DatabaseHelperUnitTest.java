@@ -2,10 +2,13 @@ package com.unifi.federicoguerri.traineeship_android.core.Database;
 
 import android.os.Build;
 
-import com.activeandroid.ActiveAndroid;
+import com.reactiveandroid.ReActiveAndroid;
+import com.reactiveandroid.ReActiveConfig;
+import com.reactiveandroid.internal.database.DatabaseConfig;
 import com.unifi.federicoguerri.traineeship_android.BuildConfig;
-import com.unifi.federicoguerri.traineeship_android.core.database_active_android.DatabaseHelper;
-import com.unifi.federicoguerri.traineeship_android.core.database_active_android.DatabasePrice;
+import com.unifi.federicoguerri.traineeship_android.core.database.DatabaseHelper;
+import com.unifi.federicoguerri.traineeship_android.core.database.DatabasePrice;
+import com.unifi.federicoguerri.traineeship_android.core.database.DatabaseReactiveAndroid;
 
 import org.junit.After;
 import org.junit.Before;
@@ -31,13 +34,16 @@ public class DatabaseHelperUnitTest {
 
     @Before
     public void init(){
-        ActiveAndroid.initialize(RuntimeEnvironment.application);
+        ReActiveAndroid.init(new ReActiveConfig.Builder(RuntimeEnvironment.application)
+                .addDatabaseConfigs(new DatabaseConfig.Builder(DatabaseReactiveAndroid.class).addModelClasses(DatabasePrice.class)
+                        .build())
+                .build());
         helper= DatabaseHelper.getHelper();
     }
 
     @After
     public void tearDown(){
-        ActiveAndroid.dispose();
+        ReActiveAndroid.destroy();
     }
 
 

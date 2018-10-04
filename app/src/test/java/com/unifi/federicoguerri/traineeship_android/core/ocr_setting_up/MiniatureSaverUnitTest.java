@@ -7,10 +7,14 @@ import android.os.Build;
 import android.support.design.widget.FloatingActionButton;
 import android.widget.TextView;
 
-import com.activeandroid.ActiveAndroid;
+import com.reactiveandroid.ReActiveAndroid;
+import com.reactiveandroid.ReActiveConfig;
+import com.reactiveandroid.internal.database.DatabaseConfig;
 import com.unifi.federicoguerri.traineeship_android.BuildConfig;
 import com.unifi.federicoguerri.traineeship_android.OcrScanActivity;
 import com.unifi.federicoguerri.traineeship_android.R;
+import com.unifi.federicoguerri.traineeship_android.core.database.DatabasePrice;
+import com.unifi.federicoguerri.traineeship_android.core.database.DatabaseReactiveAndroid;
 
 import org.junit.After;
 import org.junit.Before;
@@ -21,6 +25,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
+import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowToast;
 
@@ -50,7 +55,10 @@ public class MiniatureSaverUnitTest {
 
     @Before
     public void init(){
-        ActiveAndroid.initialize(activity.getApplicationContext());
+        ReActiveAndroid.init(new ReActiveConfig.Builder(RuntimeEnvironment.application)
+                .addDatabaseConfigs(new DatabaseConfig.Builder(DatabaseReactiveAndroid.class).addModelClasses(DatabasePrice.class)
+                        .build())
+                .build());
         MockitoAnnotations.initMocks(this);
         when(textView.getText()).thenReturn("22.2");
         when(ocrComponentsBuilder.getRecognizedTextView()).thenReturn(textView);
@@ -58,7 +66,7 @@ public class MiniatureSaverUnitTest {
 
     @After
     public void after(){
-        ActiveAndroid.dispose();
+        ReActiveAndroid.destroy();
     }
 
     @Test

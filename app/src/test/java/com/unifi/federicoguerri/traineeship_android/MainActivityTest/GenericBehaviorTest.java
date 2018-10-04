@@ -10,12 +10,11 @@ import android.support.design.widget.FloatingActionButton;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.activeandroid.ActiveAndroid;
-import com.activeandroid.query.Select;
+import com.reactiveandroid.query.Select;
 import com.unifi.federicoguerri.traineeship_android.BuildConfig;
 import com.unifi.federicoguerri.traineeship_android.MainActivity;
 import com.unifi.federicoguerri.traineeship_android.R;
-import com.unifi.federicoguerri.traineeship_android.core.database_active_android.DatabasePrice;
+import com.unifi.federicoguerri.traineeship_android.core.database.DatabasePrice;
 
 import org.junit.After;
 import org.junit.Before;
@@ -23,7 +22,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
-import org.robolectric.RuntimeEnvironment;
 import org.robolectric.android.controller.ActivityController;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowActivity;
@@ -45,13 +43,13 @@ public class GenericBehaviorTest {
     @Before
     public void setUp(){
         activity=Robolectric.buildActivity(MainActivity.class).create().visible().get();
-        ActiveAndroid.initialize(RuntimeEnvironment.application);
+        //ActiveAndroid.initialize(RuntimeEnvironment.application);
     }
 
     @After
     public void tearDown(){
         activity.finish();
-        ActiveAndroid.dispose();
+        //ActiveAndroid.dispose();
     }
 
     @Test
@@ -109,11 +107,12 @@ public class GenericBehaviorTest {
         activity.onRequestPermissionsResult(10800,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},new int[] {PackageManager.PERMISSION_GRANTED});
     }
 
+    /*
     @Test
     public void willCreateAnActiveAndroidDatabase(){
-        assertTrue(ActiveAndroid.getDatabase().isOpen());
+        assertTrue(ReActiveAndroid.getDatabase(DatabaseReactiveAndroid.class).);
     }
-
+    */
 
     @Test
     public void willDelete_allSharedPreferences_onDestroy(){
@@ -127,9 +126,9 @@ public class GenericBehaviorTest {
     public void willDelete_allDatabasePrices_onDestroy(){
         activity.onDestroy();
         activity=Robolectric.setupActivity(MainActivity.class);
-        assertTrue(new Select()
+        assertTrue(Select
                 .from(DatabasePrice.class)
-                .execute().isEmpty());
+                .fetch().isEmpty());
     }
 
     @Test(expected = NullPointerException.class)

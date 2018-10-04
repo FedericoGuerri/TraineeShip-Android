@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.unifi.federicoguerri.traineeship_android.R;
-import com.unifi.federicoguerri.traineeship_android.core.database_active_android.DatabaseHelper;
+import com.unifi.federicoguerri.traineeship_android.core.database.DatabaseHelper;
 
 import java.util.List;
 

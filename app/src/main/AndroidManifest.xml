@@ -31,22 +31,13 @@
             android:name="com.google.android.gms.vision.DEPENDENCIES"
             android:value="ocr" />
 
-        <meta-data android:name="AA_DB_NAME" android:value="Pickrand" />
-        <meta-data android:name="AA_DB_VERSION" android:value="5" />
-        <meta-data
-            android:name="AA_MODELS"
-            android:value="com.unifi.federicoguerri.traineeship" />
 
         <activity android:name=".OcrScanActivity" android:theme="@style/NoActionBarTheme"/>
 
-        <provider
-            android:name="com.activeandroid.content.ContentProvider"
-            android:authorities="com.unifi.federicoguerri.traineeship"
-            android:enabled="true"
-            android:exported="false">
-        </provider>
+
 
     </application>
+
 
 
 

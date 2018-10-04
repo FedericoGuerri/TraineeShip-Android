@@ -33,7 +33,9 @@ project.afterEvaluate {
                                '**/*$ViewInjector*.*',
                                '**/*$ViewBinder*.*',
                                '**/BuildConfig.*',
-                               '**/Manifest*.*']
+                               '**/Manifest*.*',
+                               '**/DatabasePrice.class',
+                               '**/DatabaseReactiveAndroid.class']
             )
 
             //Target source directories

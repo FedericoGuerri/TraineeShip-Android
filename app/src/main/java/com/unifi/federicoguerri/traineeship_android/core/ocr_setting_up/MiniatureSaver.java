@@ -8,8 +8,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.vision.CameraSource;
 import com.unifi.federicoguerri.traineeship_android.R;
-import com.unifi.federicoguerri.traineeship_android.core.database_active_android.DatabaseHelper;
-import com.unifi.federicoguerri.traineeship_android.core.database_active_android.DatabasePrice;
+import com.unifi.federicoguerri.traineeship_android.core.database.DatabaseHelper;
+import com.unifi.federicoguerri.traineeship_android.core.database.DatabasePrice;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -46,7 +46,7 @@ public class MiniatureSaver implements CameraSource.PictureCallback {
     public void saveDataToFile(String miniaturePath) {
         DatabaseHelper.getHelper().savePrice(
                 new DatabasePrice(myOcrBuilder.getRecognizedTextView().getText().toString().replace(",",".")
-                        ,miniaturePath
+                        , miniaturePath
                         ,nextIndex));
     }
 
@@ -55,7 +55,7 @@ public class MiniatureSaver implements CameraSource.PictureCallback {
         String filename;
         try {
             Bitmap bitmap=Bitmap.createScaledBitmap(BitmapFactory.decodeByteArray(bytes, 0, bytes.length), 350, 450, true);
-            filename=appDirectory() + File.separator + "miniature_"+ new SimpleDateFormat("yyyy_MMdd_HH_mm_ss", Locale.UK).format(new Date()) + ".png";
+            filename=appDirectory() + File.separator + "miniature_"+ new SimpleDateFormat("yyyy_MMdd_HH_mm_ss", Locale.US).format(new Date()) + ".png";
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, new FileOutputStream(filename));
         }catch (Exception e){
             Toast.makeText(activity, activity.getString(R.string.cant_write_to_file),Toast.LENGTH_SHORT).show();

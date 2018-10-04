@@ -13,16 +13,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.View;
 
-import com.activeandroid.ActiveAndroid;
-import com.activeandroid.Configuration;
-import com.activeandroid.query.Delete;
-import com.unifi.federicoguerri.traineeship_android.core.database_active_android.DatabaseHelper;
-import com.unifi.federicoguerri.traineeship_android.core.database_active_android.DatabasePrice;
+import com.reactiveandroid.ReActiveAndroid;
+import com.reactiveandroid.ReActiveConfig;
+import com.reactiveandroid.internal.database.DatabaseConfig;
+import com.unifi.federicoguerri.traineeship_android.core.database.DatabaseHelper;
+import com.unifi.federicoguerri.traineeship_android.core.database.DatabasePrice;
+import com.unifi.federicoguerri.traineeship_android.core.database.DatabaseReactiveAndroid;
 import com.unifi.federicoguerri.traineeship_android.core.prices_list_setting_up.ItemsLoaderToPriceListView;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -37,10 +35,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Configuration.Builder configuration = new Configuration.Builder(this).setDatabaseName(getFileName());
-        configuration.addModelClasses(DatabasePrice.class);
-        ActiveAndroid.initialize(configuration.create());
+        DatabaseConfig appDatabase = new DatabaseConfig.Builder(DatabaseReactiveAndroid.class).addModelClasses(DatabasePrice.class)
+                .build();
 
+        ReActiveAndroid.init(new ReActiveConfig.Builder(this)
+                .addDatabaseConfigs(appDatabase)
+                .build());
     }
 
     @Override
@@ -84,12 +84,6 @@ public class MainActivity extends AppCompatActivity {
         editor.commit();
     }
 
-
-    private String getFileName() {
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.US);
-        return "prices_"+formatter.format(new Date())+".db";
-    }
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == REQUEST_STORAGE_PERMISSION_CONFIGURATION && grantResults[0]== PackageManager.PERMISSION_GRANTED) {
@@ -111,7 +105,8 @@ public class MainActivity extends AppCompatActivity {
         prefs.edit().remove(ID_PRICE_COUNT);
         prefs.edit().clear();
         prefs.edit().commit();
-        new Delete().from(DatabasePrice.class).execute();
+        ReActiveAndroid.destroy();
+
     }
 
 }

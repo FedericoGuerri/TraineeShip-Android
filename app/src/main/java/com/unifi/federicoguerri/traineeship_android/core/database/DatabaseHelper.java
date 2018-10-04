@@ -1,10 +1,10 @@
-package com.unifi.federicoguerri.traineeship_android.core.database_active_android;
+package com.unifi.federicoguerri.traineeship_android.core.database;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
-import com.activeandroid.query.Delete;
-import com.activeandroid.query.Select;
+import com.reactiveandroid.query.Delete;
+import com.reactiveandroid.query.Select;
 import com.unifi.federicoguerri.traineeship_android.core.prices_list_setting_up.PricesListDataSet;
 
 import java.util.ArrayList;
@@ -21,10 +21,10 @@ public class DatabaseHelper {
     }
 
     public DatabasePrice readPriceById(int id) {
-        return new Select()
+        return Select
                 .from(DatabasePrice.class)
                 .where("id_" + " =?", id)
-                .executeSingle();
+                .fetchSingle();
     }
 
     public long savePrice(DatabasePrice price){
@@ -33,14 +33,14 @@ public class DatabaseHelper {
 
 
     public void deletePriceById(int id){
-        new Delete().from(DatabasePrice.class).where("id_ = ?", id).execute();
+         Delete.from(DatabasePrice.class).where("id_ = ?", id).execute();
     }
 
     public List<DatabasePrice> getAllPrices() {
-        return new Select()
+        return  Select
                 .from(DatabasePrice.class)
                 .orderBy("id_ ASC")
-                .execute();
+                .fetch();
     }
 
 

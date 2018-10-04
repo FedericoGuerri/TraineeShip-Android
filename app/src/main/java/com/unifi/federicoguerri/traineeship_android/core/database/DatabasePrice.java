@@ -1,10 +1,12 @@
-package com.unifi.federicoguerri.traineeship_android.core.database_active_android;
+package com.unifi.federicoguerri.traineeship_android.core.database;
 
-import com.activeandroid.Model;
-import com.activeandroid.annotation.Column;
-import com.activeandroid.annotation.Table;
 
-@Table(name="Prices")
+import com.reactiveandroid.Model;
+import com.reactiveandroid.annotation.Column;
+import com.reactiveandroid.annotation.PrimaryKey;
+import com.reactiveandroid.annotation.Table;
+
+@Table(name = "Prices", database = DatabaseReactiveAndroid.class)
 public class DatabasePrice extends Model {
     @Column(name = "price")
     public String price;
@@ -12,6 +14,8 @@ public class DatabasePrice extends Model {
     public String path;
     @Column(name = "id_")
     public int id;
+    @PrimaryKey
+    private Long tableID;
 
     public DatabasePrice(){
         super();
