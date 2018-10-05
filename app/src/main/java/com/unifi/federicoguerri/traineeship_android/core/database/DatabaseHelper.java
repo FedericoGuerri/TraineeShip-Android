@@ -57,4 +57,11 @@ public class DatabaseHelper {
         }
         return prices;
     }
+
+    public void deleteAllPrices() {
+        List<DatabasePrice> list=DatabaseHelper.getHelper().getAllPrices();
+        for(DatabasePrice price : list){
+            price.delete();
+        }
+    }
 }

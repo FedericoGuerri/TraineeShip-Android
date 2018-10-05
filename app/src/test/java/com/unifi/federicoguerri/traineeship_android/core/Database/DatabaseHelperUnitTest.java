@@ -25,7 +25,7 @@ import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertTrue;
 
-@Config(constants = BuildConfig.class, sdk = Build.VERSION_CODES.M)
+@Config(constants = BuildConfig.class, sdk = Build.VERSION_CODES.LOLLIPOP)
 @RunWith(RobolectricTestRunner.class)
 
 public class DatabaseHelperUnitTest {
@@ -211,6 +211,19 @@ public class DatabaseHelperUnitTest {
         assertNotNull(helper.getPricesAsDataSet().get(0).getMiniature());
     }
 
+    @Test
+    public void databaseHelper_willDeleteAllPrices(){
+        helper.savePrice(new DatabasePrice("1.1","/path/To/miniature",1));
+        helper.savePrice(new DatabasePrice("0.0","/path/To/miniature",2));
+        helper.deleteAllPrices();
+        assertEquals(0,helper.getAllPrices().size());
+    }
+
+    @Test
+    public void databaseHelper_willNotChangeDatabaseSize_ifThereWasNoPrices(){
+        helper.deleteAllPrices();
+        assertEquals(0,helper.getAllPrices().size());
+    }
 
 
 }

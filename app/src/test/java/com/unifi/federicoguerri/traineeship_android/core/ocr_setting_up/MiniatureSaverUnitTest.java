@@ -37,7 +37,7 @@ import static junit.framework.Assert.assertTrue;
 import static org.junit.Assert.assertNotEquals;
 import static org.mockito.Mockito.when;
 
-@Config(constants = BuildConfig.class, sdk = Build.VERSION_CODES.M)
+@Config(constants = BuildConfig.class, sdk = Build.VERSION_CODES.LOLLIPOP)
 @RunWith(RobolectricTestRunner.class)
 public class MiniatureSaverUnitTest {
 

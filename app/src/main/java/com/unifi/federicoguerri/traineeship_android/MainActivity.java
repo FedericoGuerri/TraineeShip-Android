@@ -105,8 +105,8 @@ public class MainActivity extends AppCompatActivity {
         prefs.edit().remove(ID_PRICE_COUNT);
         prefs.edit().clear();
         prefs.edit().commit();
+        DatabaseHelper.getHelper().deleteAllPrices();
         ReActiveAndroid.destroy();
-
     }
 
 }

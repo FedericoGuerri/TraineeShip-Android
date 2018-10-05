@@ -10,11 +10,9 @@ import android.support.design.widget.FloatingActionButton;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.reactiveandroid.query.Select;
 import com.unifi.federicoguerri.traineeship_android.BuildConfig;
 import com.unifi.federicoguerri.traineeship_android.MainActivity;
 import com.unifi.federicoguerri.traineeship_android.R;
-import com.unifi.federicoguerri.traineeship_android.core.database.DatabasePrice;
 
 import org.junit.After;
 import org.junit.Before;
@@ -30,7 +28,6 @@ import org.robolectric.shadows.ShadowIntent;
 
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNotNull;
-import static junit.framework.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
 import static org.robolectric.Shadows.shadowOf;
 
@@ -107,12 +104,6 @@ public class GenericBehaviorTest {
         activity.onRequestPermissionsResult(10800,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},new int[] {PackageManager.PERMISSION_GRANTED});
     }
 
-    /*
-    @Test
-    public void willCreateAnActiveAndroidDatabase(){
-        assertTrue(ReActiveAndroid.getDatabase(DatabaseReactiveAndroid.class).);
-    }
-    */
 
     @Test
     public void willDelete_allSharedPreferences_onDestroy(){
@@ -122,14 +113,6 @@ public class GenericBehaviorTest {
         assertFalse(sharedPreferences.contains("id_price_count"));
     }
 
-    @Test
-    public void willDelete_allDatabasePrices_onDestroy(){
-        activity.onDestroy();
-        activity=Robolectric.setupActivity(MainActivity.class);
-        assertTrue(Select
-                .from(DatabasePrice.class)
-                .fetch().isEmpty());
-    }
 
     @Test(expected = NullPointerException.class)
     public void willNotLaunchOcrScanActivity_withIntent_ifUserDoesntAllowPermission(){
