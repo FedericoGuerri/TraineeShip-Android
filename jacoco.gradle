@@ -34,8 +34,7 @@ project.afterEvaluate {
                                '**/*$ViewBinder*.*',
                                '**/BuildConfig.*',
                                '**/Manifest*.*',
-                               '**/DatabasePrice.*',
-                               '**/DatabaseReactiveAndroid.*']
+                               'com/unifi/federicoguerri/traineeship_android/core/database/**']
             )
 
             //Target source directories
