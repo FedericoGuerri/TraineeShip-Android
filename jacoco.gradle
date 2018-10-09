@@ -28,7 +28,7 @@ project.afterEvaluate {
             //Target classes directories
             classDirectories = fileTree(
                     dir: "${project.buildDir}/intermediates/classes/${name}",
-                    excludes: ['**/R.class',
+                    exclude: ['**/R.class',
                                '**/R$*.class',
                                '**/*$ViewInjector*.*',
                                '**/*$ViewBinder*.*',
