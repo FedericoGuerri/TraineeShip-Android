@@ -9,8 +9,7 @@ An android app, developed with:
   - <a href="https://about.sonarcloud.io">SonarCloud</a>&nbsp;[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=TraineeShip-Android%3Aapp&metric=alert_status)](https://sonarcloud.io/dashboard?id=TraineeShip-Android:app)
   - <a href="https://travis-ci.org">Travis</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[![Build Status](https://travis-ci.org/FedericoGuerri/TraineeShip-Android.svg?branch=master)](https://travis-ci.org/FedericoGuerri/TraineeShip-Android)
   
-  - <a href="https://codecov.io">CodeCov</a>&nbsp;&nbsp;[![codecov](https://codecov.io/gh/FedericoGuerri/TraineeShip-Android/branch/master/graph/badge.svg)](https://codecov.io/gh/FedericoGuerri/TraineeShip-Android)
-  - <a href='https://coveralls.io/github/FedericoGuerri/TraineeShip-Android?branch=master'><img src='https://coveralls.io/repos/github/FedericoGuerri/TraineeShip-Android/badge.svg?branch=master' alt='Coverage Status' /></a>
+  - <a href='https://coveralls.io/github/FedericoGuerri/TraineeShip-Android?branch=master'>Coveralls&nbsp;&nbsp;<img src='https://coveralls.io/repos/github/FedericoGuerri/TraineeShip-Android/badge.svg?branch=master' alt='Coverage Status' /></a>
 
 
   
