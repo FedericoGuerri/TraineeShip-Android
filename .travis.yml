@@ -42,7 +42,7 @@ install:
   - sdkmanager "system-images;android-22;default;armeabi-v7a"  
   
   # Install codecov for coverage through pip
-  - pip install --user codecov
+  # - pip install --user codecov
     
   # Create and start emulator for the script.
   - echo no | avdmanager create avd --force -n test -k "system-images;android-22;default;armeabi-v7a"
@@ -75,7 +75,7 @@ script:
 
 after_success:
   # Upload coverage to codecov
-  - codecov
+  # - codecov
     
 notifications:
     email:
