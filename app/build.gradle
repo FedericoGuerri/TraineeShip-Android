@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply from: "$rootDir/jacoco.gradle"
 apply plugin: "org.sonarqube"
+apply plugin: "com.github.kt3k.coveralls"
 
 
 android {
