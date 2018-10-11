@@ -77,7 +77,7 @@ after_success:
   # Upload coverage to codecov
   # - codecov
   #- ./gradlew testDebugUnitTestCoverage coveralls
-    
+  - ./gradlew jacocoRootReport coveralls
 notifications:
     email:
       recipients:
