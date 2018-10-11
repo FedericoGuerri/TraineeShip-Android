@@ -76,7 +76,7 @@ script:
 after_success:
   # Upload coverage to codecov
   # - codecov
-  - ./gradlew testDebugUnitTestCoverage coveralls
+  #- ./gradlew testDebugUnitTestCoverage coveralls
     
 notifications:
     email:
