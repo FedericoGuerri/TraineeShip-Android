@@ -1,5 +1,5 @@
 apply plugin: 'jacoco'
-
+apply plugin: "com.github.kt3k.coveralls"
 jacoco {
     toolVersion = "0.7.9"
 }
@@ -53,14 +53,14 @@ project.afterEvaluate {
                 xml.enabled = true
                 html.enabled = true
                 //csv.enabled = false
-                xml.destination = file("${project.buildDir}/reports/jacoco/${testTaskName}Coverage/${testTaskName}Coverage.xml")
+                //xml.destination = file("${project.buildDir}/reports/jacoco/${testTaskName}Coverage/${testTaskName}Coverage.xml")
 
             }
         }
     }
 
     coveralls {
-        sourceDirs = files(subprojects.sourceSets.main.allSource.srcDirs).files.absolutePath
+        //sourceDirs = files(subprojects.sourceSets.main.allSource.srcDirs).files.absolutePath
         jacocoReportPath 'build/reports/jacoco/testDebugUnitTestCoverage/testDebugUnitTestCoverage.xml'
     }
 
