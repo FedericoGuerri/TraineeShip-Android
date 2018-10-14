@@ -53,7 +53,8 @@ project.afterEvaluate {
                 xml.enabled = true
                 html.enabled = true
                // csv.enabled = false
-                xml.destination = files("${project.buildDir}/reports/jacoco/${testTaskName}Coverage/${testTaskName}Coverage.xml")
+                xml.destination = file("${project.buildDir}/reports/jacoco/${testTaskName}Coverage/${testTaskName}Coverage.xml")
+
             }
         }
     }
