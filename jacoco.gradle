@@ -4,6 +4,7 @@ jacoco {
     toolVersion = "0.7.9"
 }
 
+
 android {
     testOptions {
         unitTests.all {

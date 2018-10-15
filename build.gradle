@@ -2,7 +2,6 @@
 
 
 
-
 buildscript {
     repositories {
         jcenter()
@@ -15,7 +14,7 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:3.0.1'
         classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.6"
-        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:1.0.2'
+        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.6.3'
     }
 
 }
@@ -32,6 +31,7 @@ allprojects {
             url "https://oss.sonatype.org/content/repositories/snapshots/"
         }
     }
+
 
 }
 
