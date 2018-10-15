@@ -61,7 +61,7 @@ project.afterEvaluate {
     }
 
     coveralls {
-        //sourceDirs = files(subprojects.sourceSets.main.allSource.srcDirs).files.absolutePath
+        sourceDirs = files(subprojects.sourceSets.main.allSource.srcDirs).files.absolutePath
         jacocoReportPath 'build/reports/jacoco/testDebugUnitTestCoverage/testDebugUnitTestCoverage.xml'
     }
 
