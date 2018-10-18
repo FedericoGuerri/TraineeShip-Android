@@ -77,6 +77,7 @@ after_success:
   # Upload coverage to codecov
   # - codecov
   - ./gradlew coveralls
+  - bash <(curl -s https://codecov.io/bash)
   #- ./gradlew jacocoRootReport coveralls
 notifications:
     email:
