@@ -40,13 +40,11 @@ public class GenericBehaviorTest {
     @Before
     public void setUp(){
         activity=Robolectric.buildActivity(MainActivity.class).create().visible().get();
-        //ActiveAndroid.initialize(RuntimeEnvironment.application);
     }
 
     @After
     public void tearDown(){
         activity.finish();
-        //ActiveAndroid.dispose();
     }
 
     @Test
@@ -98,7 +96,7 @@ public class GenericBehaviorTest {
     }
 
     @Test
-    public void canrequestPermissionAtRuntime(){
+    public void willrequestPermissionAtRuntime(){
         ShadowActivity shadowActivity=shadowOf(activity);
         shadowActivity.denyPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE);
         activity.onRequestPermissionsResult(10800,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},new int[] {PackageManager.PERMISSION_GRANTED});
@@ -151,7 +149,7 @@ public class GenericBehaviorTest {
         denyWritePermission_andClickOnFabNewOcr();
         ShadowActivity shadowActivity = shadowOf(activity);
         Intent startedIntent = shadowActivity.getNextStartedActivity();
-        ShadowIntent shadowIntent = shadowOf(startedIntent);
+        shadowOf(startedIntent);
     }
 
     @Test
