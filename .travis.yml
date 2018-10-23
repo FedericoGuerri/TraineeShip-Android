@@ -74,11 +74,9 @@ script:
   - ./gradlew sonarqube
 
 after_success:
-  # Upload coverage to codecov
-  # - codecov
+  # Upload coverage to coveralls
   - ./gradlew coveralls
-  - bash <(curl -s https://codecov.io/bash)
-  #- ./gradlew jacocoRootReport coveralls
+  
 notifications:
     email:
       recipients:
