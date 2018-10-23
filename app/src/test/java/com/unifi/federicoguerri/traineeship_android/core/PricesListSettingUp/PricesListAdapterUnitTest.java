@@ -63,7 +63,7 @@ public class PricesListAdapterUnitTest {
         Bitmap miniature = BitmapFactory.decodeResource(activity.getApplicationContext().getResources(), R.drawable.no_miniature_placeholder);
         records.add(new PricesListDataSet(22.2f,miniature,0));
         pricesListAdapter =new PricesListAdapter(records,activity.getApplicationContext());
-        assertFalse(convertView== pricesListAdapter.getView(0,null,null));
+        assertFalse(convertView == pricesListAdapter.getView(0,null,null));
     }
 
     @Test
