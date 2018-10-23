@@ -39,10 +39,7 @@ install:
   - sdkmanager tools
   
   # Install the system image.
-  - sdkmanager "system-images;android-22;default;armeabi-v7a"  
-  
-  # Install codecov for coverage through pip
-  # - pip install --user codecov
+  - sdkmanager "system-images;android-22;default;armeabi-v7a"
     
   # Create and start emulator for the script.
   - echo no | avdmanager create avd --force -n test -k "system-images;android-22;default;armeabi-v7a"
@@ -71,7 +68,7 @@ script:
   # Run instrumentation tests and wait for result for 50 minutes
   - travis_wait 50 ./gradlew connectedAndroidTest -Pandroid.testInstrumentationRunnerArguments.size=large
   
-  #- ./gradlew sonarqube
+  - ./gradlew sonarqube
 
 after_success:
   # Upload coverage to coveralls
