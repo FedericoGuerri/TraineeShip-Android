@@ -72,7 +72,7 @@ script:
   -Dsonar.projectKey=internship_android \
   -Dsonar.organization=federicoguerri-github \
   -Dsonar.host.url=https://sonarcloud.io \
-  -Dsonar.login=$SONAR
+  -Dsonar.login=fe32e036621d120260a2e306a4b470a4e55f7404
 
 after_success:
   # Upload coverage to coveralls
