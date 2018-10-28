@@ -18,6 +18,7 @@ cache:
 
 addons:
   sonarcloud:
+    project: "TraineeShip-Android:app"
     organization: "federicoguerri-github"
     token:
         secure: ${SONAR}
