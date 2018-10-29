@@ -18,7 +18,6 @@ cache:
 
 addons:
   sonarcloud:
-    project: "TraineeShip-Android:app"
     organization: "federicoguerri-github"
     token:
         secure: ${SONAR}
@@ -69,7 +68,7 @@ script:
   # Run instrumentation tests and wait for result for 50 minutes
   - travis_wait 50 ./gradlew connectedAndroidTest -Pandroid.testInstrumentationRunnerArguments.size=large
   
-  - sonar-scanner
+  - ./gradlew sonarqube
 
 after_success:
   # Upload coverage to coveralls
