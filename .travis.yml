@@ -20,7 +20,7 @@ addons:
   sonarcloud:
     organization: "federicoguerri-github"
     token:
-        secure: ${SONAR}
+        secure: ${SONAR_TOKEN}
     
 android:
   components:
