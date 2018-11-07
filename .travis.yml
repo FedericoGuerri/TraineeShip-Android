@@ -62,7 +62,6 @@ script:
   - sleep 2
   - adb shell input tap 320 490 &
   - sleep 2
-
   - adb shell input keyevent 82 &
 
   # Run instrumentation tests and wait for result for 50 minutes
