@@ -5,19 +5,19 @@ import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
 
-public class CustomExceptionUnitTest {
+public class PriceRecognitionExceptionUnitTest {
 
     private final String message = "message";
-    private CustomException customException;
+    private PriceRecognitionException priceRecognitionException;
 
     @Before
     public void createObjectWithConstructor(){
-        customException = new CustomException(message);
+        priceRecognitionException = new PriceRecognitionException(message);
     }
 
     @Test
     public void customException_hasMessage_fromConstructor(){
-        assertEquals(message,customException.getMessage());
+        assertEquals(message, priceRecognitionException.getMessage());
     }
 
 

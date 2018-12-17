@@ -120,37 +120,6 @@ public class FabNewOcrScanUnitTest extends AbstractMainActivityUnitTest {
         assertEquals(R.anim.new_ocr_scan_exit,shadowActivity.getPendingTransitionExitAnimationResourceId());
     }
 
-    /*
-    @Test
-    public void fabNewOcr_wontStartsEnterTransition_IfHasNoWritePermission()  {
-        shadowApplication=shadowOf(activity.getApplication());
-        shadowApplication.denyPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-
-        fabNewOcr=activity.findViewById(R.id.fabNewOcrMainActivity);
-
-        fabNewOcr.performClick();
-        ShadowActivity shadowActivity = shadowOf(activity);
-        assertEquals(-1,shadowActivity.getPendingTransitionEnterAnimationResourceId());
-    }
-
-    @Test
-    public void fabNewOcr_wontStartsExitTransitionIfHasNoWritePermission()  {
-        shadowApplication.denyPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        fabNewOcr.performClick();
-        ShadowActivity shadowActivity = shadowOf(activity);
-        assertEquals(-1,shadowActivity.getPendingTransitionExitAnimationResourceId());
-    }
-
-    @Test(expected = NullPointerException.class)
-    public void fabNewOcr_wontLaunchOcrScanActivityWithIntent_IfHasNoWritePermission()  {
-        shadowApplication.denyPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        fabNewOcr.performClick();
-        ShadowActivity shadowActivity = shadowOf(activity);
-        Intent startedIntent = shadowActivity.getNextStartedActivity();
-        ShadowIntent shadowIntent = shadowOf(startedIntent);
-    }
-    */
-
 
     @Test
     public void fabNewOcr_willSave_IdCount_inSharedPreferences_onFabClick(){

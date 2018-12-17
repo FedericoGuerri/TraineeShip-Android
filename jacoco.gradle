@@ -4,7 +4,6 @@ jacoco {
     toolVersion = "0.7.9"
 }
 
-
 android {
     testOptions {
         unitTests.all {
@@ -15,8 +14,6 @@ android {
     }
 
 }
-
-
 
 //Adding action after evaluate the project
 project.afterEvaluate {
@@ -47,8 +44,7 @@ project.afterEvaluate {
 
             //Execute jacoco task
             executionData = files("${project.buildDir}/jacoco/${testTaskName}.exec")
-
-
+            
             //Create both xml and html reports
             reports {
                 xml.enabled = true

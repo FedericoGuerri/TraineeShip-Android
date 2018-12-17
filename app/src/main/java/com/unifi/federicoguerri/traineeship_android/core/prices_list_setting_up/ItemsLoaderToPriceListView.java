@@ -1,11 +1,10 @@
 package com.unifi.federicoguerri.traineeship_android.core.prices_list_setting_up;
 
-import android.app.Activity;
+import android.content.Context;
 import android.database.DataSetObserver;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -13,29 +12,23 @@ import com.unifi.federicoguerri.traineeship_android.R;
 import com.unifi.federicoguerri.traineeship_android.core.database.DatabaseHelper;
 
 import java.text.DecimalFormat;
-import java.util.List;
 
 public class ItemsLoaderToPriceListView {
 
     private DatabaseHelper helper;
     private MenuItem totalItem;
-    private Activity activity;
-    private ListView pricesList;
-    private LinearLayout welcomeLayout;
+    private Context context;
 
-    public ItemsLoaderToPriceListView(DatabaseHelper helper, MenuItem totalItem, Activity activity){
+    public ItemsLoaderToPriceListView(DatabaseHelper helper, MenuItem totalItem, Context context){
         this.helper = helper;
         this.totalItem = totalItem;
-        this.activity = activity;
-        pricesList = activity.findViewById(R.id.pricesListViewMainActivity);
-        welcomeLayout=activity.findViewById(R.id.welcomeLayoutMainActivity);
+        this.context = context;
     }
 
-    public void loadItems(){
+    public void loadItems(final View welcomeLayout, final ListView pricesList){
         try {
-            List<PricesListDataSet> dataSets = helper.getPricesAsDataSet();
-            if(!dataSets.isEmpty()) {
-                final PricesListAdapter adapter = new PricesListAdapter(dataSets, activity.getApplicationContext());
+            if(!helper.isDatabaseEmpty()) {
+                final PricesListAdapter adapter = new PricesListAdapter(helper.getPricesAsDataSet(), context);
                 adapter.registerDataSetObserver(new DataSetObserver() {
                     @Override
                     public void onChanged() {
@@ -72,7 +65,7 @@ public class ItemsLoaderToPriceListView {
                 welcomeLayout.setVisibility(View.VISIBLE);
             }
         } catch (Exception e) {
-            Toast.makeText(activity.getApplicationContext(),activity.getText(R.string.cant_read_from_file),Toast.LENGTH_SHORT).show();
+            Toast.makeText(context,context.getText(R.string.cant_read_from_file),Toast.LENGTH_SHORT).show();
             pricesList.setVisibility(View.INVISIBLE);
             welcomeLayout.setVisibility(View.VISIBLE);
         }

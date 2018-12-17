@@ -12,6 +12,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.View;
+import android.widget.ListView;
 
 import com.reactiveandroid.ReActiveAndroid;
 import com.reactiveandroid.ReActiveConfig;
@@ -48,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         super.onPostResume();
         readIdFromSharedPreferences();
         if(itemsLoaderToPriceListView!=null) {
-            itemsLoaderToPriceListView.loadItems();
+            itemsLoaderToPriceListView.loadItems(this.findViewById(R.id.welcomeLayoutMainActivity),(ListView)this.findViewById(R.id.pricesListViewMainActivity));
         }
     }
 
@@ -72,14 +73,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void readIdFromSharedPreferences() {
-        SharedPreferences prefs;
-        prefs = getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences prefs = getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         id = prefs.getInt(ID_PRICE_COUNT, 0);
     }
 
     private void savePriceIdToSharedPreferences() {
-        SharedPreferences prefs= getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
+        SharedPreferences.Editor editor = getSharedPreferencesEditor();
         editor.putInt(ID_PRICE_COUNT, id);
         editor.commit();
     }
@@ -101,12 +100,20 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        SharedPreferences prefs= getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        prefs.edit().remove(ID_PRICE_COUNT);
-        prefs.edit().clear();
-        prefs.edit().commit();
+        removePriceIdCountFromDatabase();
         DatabaseHelper.getHelper().deleteAllPrices();
         ReActiveAndroid.destroy();
+    }
+
+    private void removePriceIdCountFromDatabase() {
+        SharedPreferences.Editor edit = getSharedPreferencesEditor();
+        edit.remove(ID_PRICE_COUNT);
+        edit.commit();
+    }
+
+    private SharedPreferences.Editor getSharedPreferencesEditor() {
+        SharedPreferences prefs= getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        return prefs.edit();
     }
 
 }

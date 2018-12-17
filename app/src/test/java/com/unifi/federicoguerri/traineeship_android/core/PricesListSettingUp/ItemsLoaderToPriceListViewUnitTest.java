@@ -5,15 +5,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 
-import com.reactiveandroid.ReActiveAndroid;
-import com.reactiveandroid.ReActiveConfig;
-import com.reactiveandroid.internal.database.DatabaseConfig;
 import com.unifi.federicoguerri.traineeship_android.BuildConfig;
 import com.unifi.federicoguerri.traineeship_android.MainActivity;
 import com.unifi.federicoguerri.traineeship_android.R;
+import com.unifi.federicoguerri.traineeship_android.core.AppDatabaseInitializer;
 import com.unifi.federicoguerri.traineeship_android.core.database.DatabaseHelper;
-import com.unifi.federicoguerri.traineeship_android.core.database.DatabasePrice;
-import com.unifi.federicoguerri.traineeship_android.core.database.DatabaseReactiveAndroid;
 import com.unifi.federicoguerri.traineeship_android.core.prices_list_setting_up.ItemsLoaderToPriceListView;
 import com.unifi.federicoguerri.traineeship_android.core.prices_list_setting_up.PricesListDataSet;
 
@@ -26,7 +22,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
-import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowToast;
 
@@ -49,62 +44,63 @@ public class ItemsLoaderToPriceListViewUnitTest {
     @Mock
     private MenuItem menuItem;
     @InjectMocks
-    private ItemsLoaderToPriceListView itemsLoaderToPriceListView=new ItemsLoaderToPriceListView(helper,menuItem,activity);
+    private ItemsLoaderToPriceListView itemsLoaderToPriceListView=new ItemsLoaderToPriceListView(helper,menuItem,activity.getApplicationContext());
+    private View welcomeLayout;
+    private ListView pricesListView;
 
 
     @Before
     public void init(){
         MockitoAnnotations.initMocks(this);
-        ReActiveAndroid.init(new ReActiveConfig.Builder(RuntimeEnvironment.application)
-                .addDatabaseConfigs(new DatabaseConfig.Builder(DatabaseReactiveAndroid.class).addModelClasses(DatabasePrice.class)
-                        .build())
-                .build());
+        AppDatabaseInitializer.initDatabase();
+        welcomeLayout=activity.findViewById(R.id.welcomeLayoutMainActivity);
+        pricesListView=activity.findViewById(R.id.pricesListViewMainActivity);
     }
 
     @After
     public void tearDown(){
-       ReActiveAndroid.destroy();
+       AppDatabaseInitializer.destroyDatabase();
     }
 
     @Test
     public void itemsLoader_setWelcomeLayoutToVisible_ifExceptionOccurred_AfterReadingRecords()  {
         when(helper.getPricesAsDataSet()).thenThrow(Exception.class);
-        itemsLoaderToPriceListView.loadItems();
+        itemsLoaderToPriceListView.loadItems(welcomeLayout,pricesListView);
         assertEquals(View.VISIBLE,activity.findViewById(R.id.welcomeLayoutMainActivity).getVisibility());
     }
 
     @Test
     public void itemsLoader_setPricesListToInvisible_ifExceptionOccurred_AfterReadingRecords()  {
         when(helper.getPricesAsDataSet()).thenThrow(Exception.class);
-        itemsLoaderToPriceListView.loadItems();
+        itemsLoaderToPriceListView.loadItems(welcomeLayout,pricesListView);
         assertEquals(View.INVISIBLE,activity.findViewById(R.id.pricesListViewMainActivity).getVisibility());
     }
 
     @Test
     public void itemsLoader_showsAToastMessage_withTextFromResources_AfterReadingRecords()  {
         when(helper.getPricesAsDataSet()).thenThrow(Exception.class);
-        itemsLoaderToPriceListView.loadItems();
+        itemsLoaderToPriceListView.loadItems(welcomeLayout,pricesListView);
         assertEquals(activity.getText(R.string.cant_read_from_file), ShadowToast.getTextOfLatestToast());
     }
 
     @Test
     public void itemsLoader_setWelcomeLayoutToVisible_ifExceptionOccurred_AfterLoadFile(){
         when(helper.getPricesAsDataSet()).thenThrow(Exception.class);
-        itemsLoaderToPriceListView.loadItems();
+        itemsLoaderToPriceListView.loadItems(welcomeLayout,pricesListView);
         assertEquals(View.VISIBLE,activity.findViewById(R.id.welcomeLayoutMainActivity).getVisibility());
     }
 
     @Test
     public void itemsLoader_setPricesListToInvisible_ifExceptionOccurred_AfterLoadFile() {
         when(helper.getPricesAsDataSet()).thenThrow(Exception.class);
-        itemsLoaderToPriceListView.loadItems();
+        itemsLoaderToPriceListView.loadItems(welcomeLayout,pricesListView);
         assertEquals(View.INVISIBLE,activity.findViewById(R.id.pricesListViewMainActivity).getVisibility());
     }
 
     @Test
     public void itemsLoader_showsAToastMessage_withTextFromResources_AfterLoadFile()  {
         when(helper.getPricesAsDataSet()).thenThrow(Exception.class);
-        itemsLoaderToPriceListView.loadItems();
+        itemsLoaderToPriceListView.loadItems(welcomeLayout,pricesListView);
         assertEquals(activity.getText(R.string.cant_read_from_file), ShadowToast.getTextOfLatestToast());
     }
 
@@ -113,24 +109,22 @@ public class ItemsLoaderToPriceListViewUnitTest {
         ArrayList<PricesListDataSet> array=new ArrayList<>();
         array.add(new PricesListDataSet(22.2f,null,0));
         when(helper.getPricesAsDataSet()).thenReturn(array);
-        itemsLoaderToPriceListView.loadItems();
+        itemsLoaderToPriceListView.loadItems(welcomeLayout,pricesListView);
         ListView listView=activity.findViewById(R.id.pricesListViewMainActivity);
         assertNotNull(listView.getAdapter());
     }
 
     @Test
     public void itemsLoader_setsWelcomeLayoutVisible_ifThereAreNoRecords(){
-        ArrayList<PricesListDataSet> array=new ArrayList<>();
-        when(helper.getPricesAsDataSet()).thenReturn(array);
-        itemsLoaderToPriceListView.loadItems();
+        when(helper.isDatabaseEmpty()).thenReturn(true);
+        itemsLoaderToPriceListView.loadItems(welcomeLayout,pricesListView);
         assertEquals(View.VISIBLE,activity.findViewById(R.id.welcomeLayoutMainActivity).getVisibility());
     }
 
     @Test
     public void itemsLoader_setsPricesListInvisible_ifThereAreNoRecords() {
-        ArrayList<PricesListDataSet> array=new ArrayList<>();
-        when(helper.getPricesAsDataSet()).thenReturn(array);
-        itemsLoaderToPriceListView.loadItems();
+        when(helper.isDatabaseEmpty()).thenReturn(true);
+        itemsLoaderToPriceListView.loadItems(welcomeLayout,pricesListView);
         assertEquals(View.INVISIBLE,activity.findViewById(R.id.pricesListViewMainActivity).getVisibility());
     }
 
@@ -139,7 +133,7 @@ public class ItemsLoaderToPriceListViewUnitTest {
         ArrayList<PricesListDataSet> array=new ArrayList<>();
         array.add(new PricesListDataSet(22.2f,null,0));
         when(helper.getPricesAsDataSet()).thenReturn(array);
-        itemsLoaderToPriceListView.loadItems();
+        itemsLoaderToPriceListView.loadItems(welcomeLayout,pricesListView);
         activity.findViewById(R.id.itemDeletePriceImageViewitemPriceListView).performClick();
         assertEquals(View.INVISIBLE,activity.findViewById(R.id.pricesListViewMainActivity).getVisibility());
     }
@@ -150,7 +144,7 @@ public class ItemsLoaderToPriceListViewUnitTest {
         array.add(new PricesListDataSet(22.2f,null,0));
         array.add(new PricesListDataSet(0.2f,null,1));
         when(helper.getPricesAsDataSet()).thenReturn(array);
-        itemsLoaderToPriceListView.loadItems();
+        itemsLoaderToPriceListView.loadItems(welcomeLayout,pricesListView);
         activity.findViewById(R.id.itemDeletePriceImageViewitemPriceListView).performClick();
         assertEquals(View.VISIBLE,activity.findViewById(R.id.pricesListViewMainActivity).getVisibility());
     }
@@ -160,27 +154,17 @@ public class ItemsLoaderToPriceListViewUnitTest {
         ArrayList<PricesListDataSet> array=new ArrayList<>();
         array.add(new PricesListDataSet(22.2f,null,0));
         when(helper.getPricesAsDataSet()).thenReturn(array);
-        itemsLoaderToPriceListView.loadItems();
+        itemsLoaderToPriceListView.loadItems(welcomeLayout,pricesListView);
         verify(menuItem,atLeastOnce()).setTitle(any(String.class));
     }
 
-    /*
-    @Test
-    public void itemsLoader_setsMenuItemTotalTitle_toRecordValue() throws Exception {
-        ArrayList<PricesListDataSet> array=new ArrayList<>();
-        array.add(new PricesListDataSet(22.2f,null));
-        when(loaderFromFile.getRecords()).thenReturn(array);
-        itemsLoaderToPriceListView.loadItems();
-        verify(menuItem,atLeastOnce()).setTitle("22,2");
-    }
-    */
 
     @Test
     public void itemsLoader_setsMenuItemTotalTitle_toZero_ifThereAreNoRecords() {
         ArrayList<PricesListDataSet> array=new ArrayList<>();
         array.add(new PricesListDataSet(22.2f,null,0));
         when(helper.getPricesAsDataSet()).thenReturn(array);
-        itemsLoaderToPriceListView.loadItems();
+        itemsLoaderToPriceListView.loadItems(welcomeLayout,pricesListView);
         activity.findViewById(R.id.itemDeletePriceImageViewitemPriceListView).performClick();
         verify(menuItem,atLeastOnce()).setTitle("0.0");
     }

@@ -17,14 +17,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class MiniatureSaver implements CameraSource.PictureCallback {
+public class MiniatureHandler implements CameraSource.PictureCallback {
 
     private Activity activity;
     private OcrComponentsBuilder myOcrBuilder;
     private int nextIndex;
     private FloatingActionButton fabSavePrice;
 
-    public MiniatureSaver(Activity activity, OcrComponentsBuilder myOcrBuilder, int nextIndex, FloatingActionButton fabSavePrice) {
+    public MiniatureHandler(Activity activity, OcrComponentsBuilder myOcrBuilder, int nextIndex, FloatingActionButton fabSavePrice) {
         this.activity = activity;
         this.myOcrBuilder = myOcrBuilder;
         this.nextIndex = nextIndex;
@@ -65,7 +65,7 @@ public class MiniatureSaver implements CameraSource.PictureCallback {
         endActivity();
     }
 
-    public void endActivity() {
+    private void endActivity() {
         fabSavePrice.setEnabled(false);
         activity.finish();
         activity.overridePendingTransition(R.anim.end_ocr_scan_enter,R.anim.end_ocr_scan_exit);

@@ -95,8 +95,7 @@ dependencies {
     testImplementation "junit:junit:$junitVersion"
     androidTestUtil "com.android.support.test:orchestrator:$orchestratorVersion"
     testImplementation "org.robolectric:robolectric:$robolectricVersion"
-    testImplementation "org.mockito:mockito-android:$mockitoVersion"
-    androidTestImplementation "org.mockito:mockito-android:$mockitoVersion"
+    testCompile "org.mockito:mockito-core:$mockitoVersion"
 
     implementation 'com.reactiveandroid:reactiveandroid:1.4.3'
 }

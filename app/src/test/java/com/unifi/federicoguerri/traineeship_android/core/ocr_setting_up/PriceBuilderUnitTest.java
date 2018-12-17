@@ -155,7 +155,7 @@ public class PriceBuilderUnitTest {
 
 
     @Test
-    public void priceBuilder_willNotReturnDefaultBox_ifAPriceInLineArrayMatches() throws CustomException {
+    public void priceBuilder_willNotReturnDefaultBox_ifAPriceInLineArrayMatches() throws PriceRecognitionException {
         readPrice("22,2");
         priceBuilder.getPrice();
 
@@ -172,7 +172,7 @@ public class PriceBuilderUnitTest {
 
 
     @Test
-    public void priceBuilder_willReturnDefaultBox_ifNoPriceInLineArrayMatches() throws CustomException {
+    public void priceBuilder_willReturnDefaultBox_ifNoPriceInLineArrayMatches() throws PriceRecognitionException {
         readPrice("22.2");
         priceBuilder.getPrice();
 
@@ -187,7 +187,7 @@ public class PriceBuilderUnitTest {
     }
 
     @Test
-    public void priceBuilder_willReturnDefaultBox_ifThereAreNoLines() throws CustomException {
+    public void priceBuilder_willReturnDefaultBox_ifThereAreNoLines() throws PriceRecognitionException {
         readPrice("22.2");
         priceBuilder.getPrice();
         ArrayList<Text> linesArray=new ArrayList<>();

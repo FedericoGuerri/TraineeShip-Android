@@ -22,7 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.vision.CameraSource;
-import com.unifi.federicoguerri.traineeship_android.core.ocr_setting_up.MiniatureSaver;
+import com.unifi.federicoguerri.traineeship_android.core.ocr_setting_up.MiniatureHandler;
 import com.unifi.federicoguerri.traineeship_android.core.ocr_setting_up.MySurfaceHolderCallback;
 import com.unifi.federicoguerri.traineeship_android.core.ocr_setting_up.OcrComponentsBuilder;
 import com.unifi.federicoguerri.traineeship_android.core.ocr_setting_up.PostDelayedSettingUpRunnable;
@@ -37,8 +37,7 @@ public class OcrScanActivity extends AppCompatActivity {
     private boolean isGettingMiniature = false;
 
     private FloatingActionButton fabSavePrice;
-    private int color;
-    private MiniatureSaver miniatureSaver;
+    private MiniatureHandler miniatureHandler;
 
 
     @Override
@@ -63,9 +62,9 @@ public class OcrScanActivity extends AppCompatActivity {
         resizeTargetingView(displayMetrics.widthPixels,displayMetrics.heightPixels);
 
         fabSavePrice =findViewById(R.id.fabSaveCurrentPrice);
-        color=ContextCompat.getColor(this,R.color.colorAccent);
 
-        miniatureSaver =new MiniatureSaver(this,myOcrBuilder,getIntent().getIntExtra("nextIndex",0),fabSavePrice);
+
+        miniatureHandler =new MiniatureHandler(this,myOcrBuilder,getIntent().getIntExtra("nextIndex",0),fabSavePrice);
 
     }
 
@@ -80,9 +79,8 @@ public class OcrScanActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == REQUEST_CAMERA_PERMISSION) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                miniatureSaver.endActivity();
+               endActivity();
             }
-
             myOcrBuilder.startCamera(ocrScanView.getHolder());
         }
     }
@@ -99,9 +97,9 @@ public class OcrScanActivity extends AppCompatActivity {
         }else{
             SystemClock.sleep(1500);
             fabSavePrice.setImageResource(R.drawable.ic_format_text);
-            fabSavePrice.setBackgroundTintList(ColorStateList.valueOf(color));
+            fabSavePrice.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(this,R.color.colorAccent)));
             isGettingMiniature=false;
-            myOcrBuilder.getCameraSource().takePicture(null, miniatureSaver);
+            myOcrBuilder.getCameraSource().takePicture(null, miniatureHandler);
         }
     }
 
@@ -113,14 +111,14 @@ public class OcrScanActivity extends AppCompatActivity {
         builder.setMessage(getString(R.string.miniature_dialog_message));
         builder.setPositiveButton(getString(R.string.affermative), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        getMiniature();
+                        prepareForMiniature();
                         dialog.dismiss();
                     }
                 });
         builder.setNegativeButton(getString(R.string.negative), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        miniatureSaver.saveDataToFile("noMiniature");
-                        miniatureSaver.endActivity();
+                        miniatureHandler.saveDataToFile("noMiniature");
+                        endActivity();
                         dialog.dismiss();
                     }
         });
@@ -140,7 +138,7 @@ public class OcrScanActivity extends AppCompatActivity {
     }
 
 
-    private void getMiniature() {
+    private void prepareForMiniature() {
         findViewById(R.id.textTargetingLayout).animate().alpha(0f);
         fabSavePrice.setImageResource(R.drawable.ic_camera);
         fabSavePrice.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(this,R.color.fab_miniature_color)));
@@ -152,9 +150,8 @@ public class OcrScanActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        miniatureSaver.endActivity();
+        endActivity();
     }
-
 
 
     @Override
@@ -163,10 +160,11 @@ public class OcrScanActivity extends AppCompatActivity {
         new PostDelayedSettingUpRunnable(1300,findViewById(R.id.textTargetingLayout),myOcrBuilder);
     }
 
-    public OcrComponentsBuilder getMyOcrBuilder() {
-        return myOcrBuilder;
+
+    private void endActivity() {
+        fabSavePrice.setEnabled(false);
+        finish();
+        overridePendingTransition(R.anim.end_ocr_scan_enter,R.anim.end_ocr_scan_exit);
     }
-
-
 
 }

@@ -64,4 +64,8 @@ public class DatabaseHelper {
             price.delete();
         }
     }
+
+    public boolean isDatabaseEmpty() {
+        return getAllPrices().isEmpty();
+    }
 }

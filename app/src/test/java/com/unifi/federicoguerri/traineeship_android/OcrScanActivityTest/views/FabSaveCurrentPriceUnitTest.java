@@ -118,12 +118,6 @@ public class FabSaveCurrentPriceUnitTest extends AbstractOcrScanActivityUnitTest
     }
 
     @Test
-    public void fabSavePrice_willShowDialog_thatIsDismissedWhenTappingOnNegativeButton(){
-        tapOnFabAndPressDialogNegativeButton();
-        assertFalse(ShadowDialog.getLatestDialog().isShowing());
-    }
-
-    @Test
     public void fabSavePrice_willShowDialogWith_negativeButton(){
         fabSavePrice.performClick();
         assertNotNull(ShadowAlertDialog.getLatestAlertDialog().getButton(AlertDialog.BUTTON_NEGATIVE));
@@ -154,33 +148,6 @@ public class FabSaveCurrentPriceUnitTest extends AbstractOcrScanActivityUnitTest
         ShadowAlertDialog shadowAlertDialog=shadowOf(ShadowAlertDialog.getLatestAlertDialog());
         assertEquals(getStringFromResources(R.string.miniature_dialog_message),shadowAlertDialog.getMessage().toString());
     }
-
-    @Test
-    public void fabSavePrice_willStopOcrRecognition(){
-        fabSavePrice.performClick();
-        assertFalse(activity.getMyOcrBuilder().isDetecting());
-    }
-
-    @Test
-    public void fabSavePrice_willStopOcrRecognition_andRenableItAfterDialogIsDismissed_withNegativeButton(){
-        tapOnFabAndPressDialogNegativeButton();
-        assertTrue(activity.getMyOcrBuilder().isDetecting());
-    }
-
-    @Test
-    public void fabSavePrice_willStopOcrRecognition_whileTakingMiniature(){
-        tapOnFabAndPressDialogPositiveButton();
-        assertFalse(activity.getMyOcrBuilder().isDetecting());
-    }
-
-
-    @Test
-    public void fabSavePrice_willNotRenableOcrRecognition_AfterTakingMiniature() {
-        tapOnFabAndPressDialogPositiveButton();
-        fabSavePrice.performClick();
-        assertFalse(activity.getMyOcrBuilder().isDetecting());
-    }
-
 
     // tapping on fab and press dialog's negative button
 

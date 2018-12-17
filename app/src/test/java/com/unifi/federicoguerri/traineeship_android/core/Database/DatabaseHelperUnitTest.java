@@ -2,20 +2,16 @@ package com.unifi.federicoguerri.traineeship_android.core.Database;
 
 import android.os.Build;
 
-import com.reactiveandroid.ReActiveAndroid;
-import com.reactiveandroid.ReActiveConfig;
-import com.reactiveandroid.internal.database.DatabaseConfig;
 import com.unifi.federicoguerri.traineeship_android.BuildConfig;
+import com.unifi.federicoguerri.traineeship_android.core.AppDatabaseInitializer;
 import com.unifi.federicoguerri.traineeship_android.core.database.DatabaseHelper;
 import com.unifi.federicoguerri.traineeship_android.core.database.DatabasePrice;
-import com.unifi.federicoguerri.traineeship_android.core.database.DatabaseReactiveAndroid;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
-import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 
 import java.util.ArrayList;
@@ -34,16 +30,13 @@ public class DatabaseHelperUnitTest {
 
     @Before
     public void init(){
-        ReActiveAndroid.init(new ReActiveConfig.Builder(RuntimeEnvironment.application)
-                .addDatabaseConfigs(new DatabaseConfig.Builder(DatabaseReactiveAndroid.class).addModelClasses(DatabasePrice.class)
-                        .build())
-                .build());
+        AppDatabaseInitializer.initDatabase();
         helper= DatabaseHelper.getHelper();
     }
 
     @After
     public void tearDown(){
-        ReActiveAndroid.destroy();
+        AppDatabaseInitializer.destroyDatabase();
     }
 
 
@@ -223,6 +216,19 @@ public class DatabaseHelperUnitTest {
     public void databaseHelper_willNotChangeDatabaseSize_ifThereWasNoPrices(){
         helper.deleteAllPrices();
         assertEquals(0,helper.getAllPrices().size());
+    }
+
+    @Test
+    public void databaseHelper_checkIfThereArePrices_withNoPrices(){
+        helper.deleteAllPrices();
+        assertEquals(true,helper.isDatabaseEmpty());
+    }
+
+    @Test
+    public void databaseHelper_checkIfThereArePrices_withMorePrices(){
+        helper.savePrice(new DatabasePrice("1.1","/path/To/miniature",1));
+        helper.savePrice(new DatabasePrice("0.0","/path/To/miniature",2));
+        assertEquals(false,helper.isDatabaseEmpty());
     }
 
 

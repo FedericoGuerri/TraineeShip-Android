@@ -74,7 +74,7 @@ public class MiniatureGeneral extends AbstractGeneral{
     public void miniatureImageView_notChangingMiniature_ifPricesWereAdded(){
         genericHelper.recognizeAPrice("NO");
         genericHelper.recognizeAPrice("YES");
-        genericHelper.recognizeAPrice("NO");//miniature
+        genericHelper.recognizeAPrice("NO");
         onData(anything()).atPosition(0).
                 onChildView(withId(R.id.itemMiniatureImageViewItemPriceListView)).check(matches((customMatchers.withDrawable(R.drawable.no_miniature_placeholder))));
         onData(anything()).atPosition(1).

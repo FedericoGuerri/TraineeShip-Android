@@ -106,7 +106,6 @@ public class OcrComponentsBuilder implements Detector.Processor<TextBlock>{
                 }
             }
 
-
             PriceBuilder priceBuilder = new PriceBuilder(stringBuilder.toString());
             String price=priceBuilder.getPrice();
             itemBox = priceBuilder.choosePriceThatFitsInTargetRect(lines,itemBox);
@@ -114,7 +113,7 @@ public class OcrComponentsBuilder implements Detector.Processor<TextBlock>{
             recognizedTextView.setText(price);
             animateRecognitionTextViewToLocation(itemBox.left, itemBox.top);
 
-        } catch (Exception e) {
+        } catch (PriceRecognitionException e) {
             if (recognizedTextView.getX()!=originalX- badRecognitionSpace) {
                 recognizedTextView.setText(recognizedTextView.getContext().getResources().getString(R.string.bad_recognition_get_closer_please));
                 recognizedTextView.animate().scaleY(0f).scaleX(0f).withEndAction(new Runnable() {

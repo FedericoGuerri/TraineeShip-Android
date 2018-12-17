@@ -18,13 +18,13 @@ public class PriceBuilder{
         recognized=price;
     }
 
-    public String getPrice() throws CustomException {
+    public String getPrice() throws PriceRecognitionException {
         chooseMoreProbablePrice();
         checkCorrectPriceFormat();
         return recognized;
     }
 
-    private void chooseMoreProbablePrice() throws CustomException{
+    private void chooseMoreProbablePrice() throws PriceRecognitionException {
         Matcher matcher = getAllPrices();
         recognized=matcher.group();
         while (matcher.find()){
@@ -33,41 +33,41 @@ public class PriceBuilder{
                 if(!recognized.contains(",")){
                     recognized=possiblePrice;
                 }else{
-                    recognized = checkWitchPriceHasMoreFloatDigits(possiblePrice, recognized);
+                    recognized = checkWhichPriceHasMoreFloatDigits(possiblePrice, recognized);
                 }
             }
         }
     }
 
-    private String checkWitchPriceHasMoreFloatDigits(String price1, String price2) {
+    private String checkWhichPriceHasMoreFloatDigits(String price1, String price2) {
         if(price1.indexOf(',')<price2.indexOf(',')){
             return price1;
         }
         return price2;
     }
 
-    private Matcher getAllPrices() throws CustomException {
+    private Matcher getAllPrices() throws PriceRecognitionException {
         recognized = recognized.replaceAll("[.]", ",");
         final Pattern pattern = Pattern.compile("[0-9]+([,][0-9]{0,2})?");
         String data=" "+recognized;
         Matcher matcher = pattern.matcher(data);
         matcher.matches();
         if(!matcher.find()){
-            throw new CustomException(RECOGNITION_ERROR);
+            throw new PriceRecognitionException(RECOGNITION_ERROR);
         }
         return matcher;
     }
 
 
-    private void checkCorrectPriceFormat() throws CustomException{
+    private void checkCorrectPriceFormat() throws PriceRecognitionException {
         if(recognized.length()>7){
-            throw new CustomException(RECOGNITION_ERROR);
+            throw new PriceRecognitionException(RECOGNITION_ERROR);
         }
         if(recognized.endsWith(",") ){
-            throw new CustomException(RECOGNITION_ERROR);
+            throw new PriceRecognitionException(RECOGNITION_ERROR);
         }
         if(recognized.startsWith("0") && !recognized.contains(",")){
-            throw new CustomException(RECOGNITION_ERROR);
+            throw new PriceRecognitionException(RECOGNITION_ERROR);
         }
     }
 
