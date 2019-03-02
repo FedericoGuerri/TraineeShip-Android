@@ -285,6 +285,7 @@ public class OcrComponentsBuilderUnitTest {
     @Test
     public void ocrBuilder_implementsRelease_withNoActualCode(){
         ocrBuilder.release();
+        assertTrue(ocrBuilder.isDetecting());
     }
 
     @Test
