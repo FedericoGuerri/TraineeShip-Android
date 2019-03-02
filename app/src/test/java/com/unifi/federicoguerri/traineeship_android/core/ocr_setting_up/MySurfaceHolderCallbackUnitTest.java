@@ -1,6 +1,7 @@
 package com.unifi.federicoguerri.traineeship_android.core.ocr_setting_up;
 
 import android.Manifest;
+import android.graphics.Rect;
 import android.os.Build;
 import android.view.SurfaceHolder;
 
@@ -58,7 +59,9 @@ public class MySurfaceHolderCallbackUnitTest {
 
     @Test
     public void surfaceHolder_implementsWithNoCode_surfaceChanged(){
+        Rect originalSurfaceRect=surfaceHolder.getSurfaceFrame();
         surfaceHolderCallback.surfaceChanged(surfaceHolder,0,0,0);
+        assertEquals(originalSurfaceRect,surfaceHolder.getSurfaceFrame());
     }
 
     @Test
