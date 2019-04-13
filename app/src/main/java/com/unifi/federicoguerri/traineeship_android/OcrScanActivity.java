@@ -127,12 +127,7 @@ public class OcrScanActivity extends AppCompatActivity {
         alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialogInterface) {
-                if(!isGettingMiniature){
-                    myOcrBuilder.setDetecting(true);
-                }else{
-                    myOcrBuilder.setDetecting(false);
-                }
-
+                myOcrBuilder.setDetecting(!isGettingMiniature);
             }
         });
     }

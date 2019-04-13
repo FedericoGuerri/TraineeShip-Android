@@ -28,7 +28,6 @@ import org.robolectric.shadows.ShadowIntent;
 
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNotNull;
-import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 import static org.robolectric.Shadows.shadowOf;
 
@@ -50,7 +49,7 @@ public class GenericBehaviorTest {
 
     @Test
     public void actionBar_isShowing() {
-        assertTrue( activity.getSupportActionBar().isShowing());
+        assertEquals(true, activity.getSupportActionBar().isShowing());
     }
 
     @Test
@@ -96,6 +95,12 @@ public class GenericBehaviorTest {
         assertEquals("com.unifi.federicoguerri.traineeship_android.OcrScanActivity",shadowIntent.getIntentClass().getName());
     }
 
+    @Test
+    public void willrequestPermissionAtRuntime(){
+        ShadowActivity shadowActivity=shadowOf(activity);
+        shadowActivity.denyPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        activity.onRequestPermissionsResult(10800,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},new int[] {PackageManager.PERMISSION_GRANTED});
+    }
 
 
     @Test
