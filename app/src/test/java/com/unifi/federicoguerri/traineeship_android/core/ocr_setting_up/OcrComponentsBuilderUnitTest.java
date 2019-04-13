@@ -285,10 +285,11 @@ public class OcrComponentsBuilderUnitTest {
     @Test
     public void ocrBuilder_implementsRelease_withNoActualCode(){
         ocrBuilder.release();
+        assertTrue(ocrBuilder.isDetecting());
     }
 
     @Test
-    public void ocrBuilder_canThrowException_thatIsCaught() throws IOException {
+    public void ocrBuilder_canThrowException() throws IOException {
         CameraSource fakeCamera = setUpFakeCameraSouce();
         when(fakeCamera.start(any(SurfaceHolder.class))).thenThrow(IOException.class);
         verify(fakeCamera,atLeastOnce()).start(any(SurfaceHolder.class));

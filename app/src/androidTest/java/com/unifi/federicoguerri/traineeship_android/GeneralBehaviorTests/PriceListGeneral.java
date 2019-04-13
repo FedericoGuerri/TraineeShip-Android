@@ -18,9 +18,40 @@ import static android.support.test.espresso.matcher.ViewMatchers.isRoot;
 import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+
+
 @RunWith(AndroidJUnit4.class)
 @LargeTest
 public class PriceListGeneral extends AbstractGeneral{
+
+    @Test
+    public void pricesList_willUpdateListSize_AfterRecognizedASecondPrice(){
+        genericHelper.recognizeAPrice("NO");
+        genericHelper.recognizeAPrice("NO");
+        onView(withId(R.id.pricesListViewMainActivity)).check(matches(CustomMatchers.withListSize(2)));
+    }
+
+    @Test
+    public void pricesList_willBeInvisible_ifBackWasPressedBeforePriceRecognition(){
+        onView(withId(R.id.fabNewOcrMainActivity)).perform(click());
+        onView(isRoot()).perform(pressBack());
+        onView(withId(R.id.pricesListViewMainActivity))
+                .check(matches(withEffectiveVisibility(ViewMatchers.Visibility.INVISIBLE)));
+    }
+
+    @Test
+    public void pricesList_willNoChangeVisibility_AfterRecognizedAPrice_ifBackWasPressed(){
+        genericHelper.recognizeAPrice("NO");
+        onView(withId(R.id.fabNewOcrMainActivity)).perform(click());
+        onView(isRoot()).perform(pressBack());
+        onView(withId(R.id.pricesListViewMainActivity)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+    }
+
+    @Test
+    public void pricesList_willStoreAPriceValue_AfterRecognizedAPrice(){
+        genericHelper.recognizeAPrice("NO");
+        onView(withId(R.id.itemPriceTextViewPricesListView)).check(matches(withText("0.0")));
+    }
 
     @Test
     public void pricesList_willUpdateListSize_AfterRecognizedAPrice(){
@@ -35,19 +66,6 @@ public class PriceListGeneral extends AbstractGeneral{
     }
 
     @Test
-    public void pricesList_willUpdateListSize_AfterRecognizedASecondPrice(){
-        genericHelper.recognizeAPrice("NO");
-        genericHelper.recognizeAPrice("NO");
-        onView(withId(R.id.pricesListViewMainActivity)).check(matches(CustomMatchers.withListSize(2)));
-    }
-
-    @Test
-    public void pricesList_willStoreAPriceValue_AfterRecognizedAPrice(){
-        genericHelper.recognizeAPrice("NO");
-        onView(withId(R.id.itemPriceTextViewPricesListView)).check(matches(withText("0.0")));
-    }
-
-    @Test
     public void pricesList_wontChangeListSize_AfterRecognizedAPrice_ifBackWasPressed(){
         genericHelper.recognizeAPrice("NO");
         onView(withId(R.id.fabNewOcrMainActivity)).perform(click());
@@ -55,20 +73,7 @@ public class PriceListGeneral extends AbstractGeneral{
         onView(withId(R.id.pricesListViewMainActivity)).check(matches(CustomMatchers.withListSize(1)));
     }
 
-    @Test
-    public void pricesList_willBeInvisible_ifBackWasPressedBeforePriceRecognition(){
-        onView(withId(R.id.fabNewOcrMainActivity)).perform(click());
-        onView(isRoot()).perform(pressBack());
-        onView(withId(R.id.pricesListViewMainActivity)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.INVISIBLE)));
-    }
 
-    @Test
-    public void pricesList_willNoChangeVisibility_AfterRecognizedAPrice_ifBackWasPressed(){
-        genericHelper.recognizeAPrice("NO");
-        onView(withId(R.id.fabNewOcrMainActivity)).perform(click());
-        onView(isRoot()).perform(pressBack());
-        onView(withId(R.id.pricesListViewMainActivity)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
-    }
 
     @Test
     public void pricesList_willChangeVisibility_AfterRecognizedOnePrice_ifItWasRemoved(){

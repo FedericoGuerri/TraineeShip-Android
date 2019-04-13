@@ -35,10 +35,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        DatabaseConfig appDatabase = new DatabaseConfig.Builder(DatabaseReactiveAndroid.class).addModelClasses(DatabasePrice.class)
+        DatabaseConfig appDatabase = new DatabaseConfig.Builder(DatabaseReactiveAndroid.class)
+                .addModelClasses(DatabasePrice.class)
                 .build();
-
         ReActiveAndroid.init(new ReActiveConfig.Builder(this)
                 .addDatabaseConfigs(appDatabase)
                 .build());
@@ -59,11 +58,11 @@ public class MainActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(MainActivity.this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_STORAGE_PERMISSION_CONFIGURATION);
             return;
         }
-        lauchActivity();
+        launchActivity();
     }
 
 
-    private void lauchActivity(){
+    private void launchActivity(){
         Intent intent = new Intent(this, OcrScanActivity.class);
         intent.putExtra("nextIndex",id);
         startActivity(intent);
@@ -86,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == REQUEST_STORAGE_PERMISSION_CONFIGURATION && grantResults[0]== PackageManager.PERMISSION_GRANTED) {
-            lauchActivity();
+            launchActivity();
         }
     }
 

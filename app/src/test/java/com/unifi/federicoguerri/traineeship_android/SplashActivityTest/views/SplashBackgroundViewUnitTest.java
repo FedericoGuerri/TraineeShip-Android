@@ -23,7 +23,6 @@ import static org.junit.Assert.assertEquals;
 public class SplashBackgroundViewUnitTest {
 
     private RelativeLayout splashBackground;
-
     @Before
     public void setUp() {
         SplashScreenActivity activity = Robolectric.buildActivity( SplashScreenActivity.class ).create().get();
@@ -44,8 +43,4 @@ public class SplashBackgroundViewUnitTest {
     public void splashBackground_hasMatchParentHeight(){
         assertEquals(ViewGroup.LayoutParams.MATCH_PARENT,splashBackground.getLayoutParams().height);
     }
-
-
-
-
 }

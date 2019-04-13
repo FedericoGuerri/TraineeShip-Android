@@ -2,8 +2,6 @@ apply plugin: 'com.android.application'
 apply from: "$rootDir/jacoco.gradle"
 apply plugin: "org.sonarqube"
 
-
-
 android {
     compileSdkVersion 27
     buildToolsVersion "27.0.3"
@@ -15,7 +13,6 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
-
     buildTypes {
         debug {
             testCoverageEnabled true
@@ -57,11 +54,7 @@ android {
             unitTests.returnDefaultValues = true
         }
     }
-
-
-
 }
-
 
 ext {
     //App
@@ -78,8 +71,6 @@ ext {
     robolectricVersion = '3.3.2'
     mockitoVersion='2.7.22'
 }
-
-
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])

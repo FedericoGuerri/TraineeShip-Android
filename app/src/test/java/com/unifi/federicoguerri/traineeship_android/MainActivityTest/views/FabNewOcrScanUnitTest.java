@@ -37,6 +37,15 @@ public class FabNewOcrScanUnitTest extends AbstractMainActivityUnitTest {
     }
 
     @Test
+    public void fabNewOcr_launchOcrScanActivityWithIntent()  {
+        fabNewOcr.performClick();
+        ShadowActivity shadowActivity = shadowOf(activity);
+        Intent startedIntent = shadowActivity.getNextStartedActivity();
+        ShadowIntent shadowIntent = shadowOf(startedIntent);
+        assertEquals("OcrScanActivity",shadowIntent.getIntentClass().getSimpleName());
+    }
+
+    @Test
     public void fabNewOcr_isVisible() {
         assertEquals(View.VISIBLE,fabNewOcr.getVisibility());
     }
@@ -81,14 +90,7 @@ public class FabNewOcrScanUnitTest extends AbstractMainActivityUnitTest {
         assertEquals(0,(int)fabNewOcr.getCompatElevation());
     }
 
-    @Test
-    public void fabNewOcr_launchOcrScanActivityWithIntent()  {
-        fabNewOcr.performClick();
-        ShadowActivity shadowActivity = shadowOf(activity);
-        Intent startedIntent = shadowActivity.getNextStartedActivity();
-        ShadowIntent shadowIntent = shadowOf(startedIntent);
-        assertEquals("OcrScanActivity",shadowIntent.getIntentClass().getSimpleName());
-    }
+
 
     @Test
     public void fabNewOcr_givesOcrScanActivityFileNameWithIntent()  {

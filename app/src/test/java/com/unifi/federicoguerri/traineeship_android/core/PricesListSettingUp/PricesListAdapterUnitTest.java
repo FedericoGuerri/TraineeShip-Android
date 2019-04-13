@@ -14,7 +14,6 @@ import com.unifi.federicoguerri.traineeship_android.core.prices_list_setting_up.
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
@@ -28,7 +27,6 @@ import static junit.framework.Assert.assertFalse;
 @RunWith(RobolectricTestRunner.class)
 public class PricesListAdapterUnitTest {
 
-    @InjectMocks
     private PricesListAdapter pricesListAdapter;
 
     private MainActivity activity;

@@ -96,6 +96,7 @@ public class FabSaveCurrentPriceUnitTest extends AbstractOcrScanActivityUnitTest
     @Test
     public void fabSavePrice_willShowADialog(){
         fabSavePrice.performClick();
+
         assertTrue(ShadowDialog.getLatestDialog().isShowing());
     }
 

@@ -8,6 +8,7 @@ import com.unifi.federicoguerri.traineeship_android.R;
 
 import org.junit.Test;
 
+import static junit.framework.Assert.assertFalse;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
@@ -28,7 +29,7 @@ public class AppLogoImageViewUnitTest extends AbstractMainActivityUnitTest {
 
     @Test
     public void appLogoImageView_isNotClickable()  {
-        assertEquals(false,appLogoImageView.isClickable());
+        assertFalse(appLogoImageView.isClickable());
     }
 
     @Test

@@ -50,16 +50,11 @@ project.afterEvaluate {
                 xml.enabled = true
                 html.enabled = true
                 csv.enabled = false
-                //xml.destination = file("${project.buildDir}/reports/jacoco/${testTaskName}Coverage/${testTaskName}Coverage.xml")
-
             }
         }
     }
-
     coveralls {
         sourceDirs = files(subprojects.sourceSets.main.allSource.srcDirs).files.absolutePath
         jacocoReportPath "${project.buildDir}/reports/jacoco/testDebugUnitTestCoverage/testDebugUnitTestCoverage.xml"
     }
-
-
 }

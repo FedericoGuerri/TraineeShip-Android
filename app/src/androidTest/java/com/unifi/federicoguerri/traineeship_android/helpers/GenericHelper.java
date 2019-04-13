@@ -24,14 +24,10 @@ import static org.hamcrest.core.AllOf.allOf;
 public class GenericHelper {
 
     public void recognizeAPrice(String text) {
-        waitUI(1500);
         onView(withId(R.id.fabNewOcrMainActivity)).perform(click());
-        waitUI(1500);
         onView(withId(R.id.fabSaveCurrentPrice)).perform(click());
-        waitUI(1500);
         onView(withText(text)).perform(click());
         if(text.equals("YES")){
-            waitUI(3500);
             onView(withId(R.id.fabSaveCurrentPrice)).perform(click());
         }
     }

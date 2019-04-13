@@ -1,6 +1,7 @@
 package com.unifi.federicoguerri.traineeship_android.core.ocr_setting_up;
 
 import android.Manifest;
+import android.graphics.Rect;
 import android.os.Build;
 import android.view.SurfaceHolder;
 
@@ -21,6 +22,7 @@ import org.robolectric.shadows.ShadowApplication;
 
 import java.io.IOException;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.atMost;
@@ -38,7 +40,9 @@ public class MySurfaceHolderCallbackUnitTest {
     @Mock
     private SurfaceHolder surfaceHolder;
     @InjectMocks
-    private MySurfaceHolderCallback surfaceHolderCallback=new MySurfaceHolderCallback(ocrComponentsBuilder,surfaceHolder);
+    private MySurfaceHolderCallback surfaceHolderCallback;
+
+
     @Mock
     private CameraSource fakeCamera;
 
@@ -58,7 +62,9 @@ public class MySurfaceHolderCallbackUnitTest {
 
     @Test
     public void surfaceHolder_implementsWithNoCode_surfaceChanged(){
+        Rect originalSurfaceRect=surfaceHolder.getSurfaceFrame();
         surfaceHolderCallback.surfaceChanged(surfaceHolder,0,0,0);
+        assertEquals(originalSurfaceRect,surfaceHolder.getSurfaceFrame());
     }
 
     @Test

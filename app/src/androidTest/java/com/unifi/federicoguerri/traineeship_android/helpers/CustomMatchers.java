@@ -31,7 +31,8 @@ public class CustomMatchers {
         return new TypeSafeMatcher<View>() {
             @Override public boolean matchesSafely (final View view) {
                 ImageView imageView = (ImageView) view;
-                Drawable expectedDrawable = InstrumentationRegistry.getTargetContext().getResources().getDrawable(drawable_id,null);
+                Drawable expectedDrawable = InstrumentationRegistry.getTargetContext()
+                        .getResources().getDrawable(drawable_id,null);
                 if (expectedDrawable == null) {
                     return false;
                 }

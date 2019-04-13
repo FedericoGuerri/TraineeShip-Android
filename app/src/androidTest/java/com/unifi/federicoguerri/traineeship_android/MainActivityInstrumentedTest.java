@@ -123,6 +123,8 @@ public class MainActivityInstrumentedTest {
         onView(withId(R.id.fabNewOcrMainActivity)).perform(click());
         intended(hasComponent(OcrScanActivity.class.getName()));
         Intents.release();
+        onView(withId(R.id.ocrViewOcrScanActivity))
+                .check(matches(isDisplayed()));
     }
 
     // General tests

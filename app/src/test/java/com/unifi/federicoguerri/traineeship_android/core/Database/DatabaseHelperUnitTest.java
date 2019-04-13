@@ -27,24 +27,19 @@ import static junit.framework.Assert.assertTrue;
 public class DatabaseHelperUnitTest {
 
     private DatabaseHelper helper;
+    private TestDbHelper testDb;
 
     @Before
     public void init(){
         AppDatabaseInitializer.initDatabase();
         helper= DatabaseHelper.getHelper();
+        testDb=new TestDbHelper();
     }
 
     @After
     public void tearDown(){
         AppDatabaseInitializer.destroyDatabase();
     }
-
-
-    @Test
-    public void databaseHelper_createOneInstance(){
-        assertEquals(helper.hashCode(),DatabaseHelper.getHelper().hashCode());
-    }
-
 
     // Save
 
@@ -61,13 +56,13 @@ public class DatabaseHelperUnitTest {
     @Test
     public void databaseHelper_canSaveMorePrices_toDatabase(){
         helper.savePrice(new DatabasePrice());
-        assertTrue(helper.savePrice(new DatabasePrice())>0);
+        assertEquals(1, testDb.getAllSavedPrices().size());
     }
 
     @Test
     public void databaseHelper_canSaveMorePricesWithNotEmptyFields_toDatabase(){
         helper.savePrice(new DatabasePrice("price","path",0));
-        assertTrue(helper.savePrice(new DatabasePrice("price1","path1",1))>0);
+        assertEquals(1, testDb.getAllSavedPrices().size());
     }
 
 
@@ -75,27 +70,27 @@ public class DatabaseHelperUnitTest {
 
     @Test
     public void databaseHelper_canReadPrice_fromDatabase(){
-        helper.savePrice(new DatabasePrice("","pathToMiniature",1));
+        testDb.savePrice("","pathToMiniature",1);
         assertEquals("pathToMiniature",helper.readPriceById(1).path);
     }
 
     @Test
     public void databaseHelper_canReadPrice_fromDatabase_ifThereAreMore(){
-        helper.savePrice(new DatabasePrice("","pathToMiniature1",1));
-        helper.savePrice(new DatabasePrice("","pathToMiniature2",2));
-        helper.savePrice(new DatabasePrice("","pathToMiniature3",3));
+        testDb.savePrice("","pathToMiniature1",1);
+        testDb.savePrice("","pathToMiniature2",2);
+        testDb.savePrice("","pathToMiniature3",3);
         assertEquals("pathToMiniature2",helper.readPriceById(2).path);
     }
 
     @Test
     public void databaseHelper_savedPricesHasCorrectValue(){
-        helper.savePrice(new DatabasePrice("11.1","",1));
+        testDb.savePrice("11.1","",1);
         assertEquals("11.1",helper.readPriceById(1).price);
     }
 
     @Test
     public void databaseHelper_savedPriceHasCorrectPath(){
-        helper.savePrice(new DatabasePrice("","/data/miniature.jpg",1));
+        testDb.savePrice("","/data/miniature.jpg",1);
         assertEquals("/data/miniature.jpg",helper.readPriceById(1).path);
     }
 
@@ -103,16 +98,16 @@ public class DatabaseHelperUnitTest {
 
     @Test
     public void databaseHelper_canDeleteSavedPrice(){
-        helper.savePrice(new DatabasePrice("","/data/miniature.jpg",1));
+        testDb.savePrice("","/data/miniature.jpg",1);
         helper.deletePriceById(1);
-        assertNull(helper.readPriceById(1));
+        assertNull(testDb.readPriceById(1));
     }
 
     @Test
     public void databaseHelper_canDeletePrices_thenReadOne(){
-        helper.savePrice(new DatabasePrice("","pathToMiniature1",1));
-        helper.savePrice(new DatabasePrice("","pathToMiniature2",2));
-        helper.savePrice(new DatabasePrice("","pathToMiniature3",3));
+        testDb.savePrice("","pathToMiniature1",1);
+        testDb.savePrice("","pathToMiniature2",2);
+        testDb.savePrice("","pathToMiniature3",3);
         helper.deletePriceById(1);
         helper.deletePriceById(2);
         assertNotNull(helper.readPriceById(3));
@@ -120,18 +115,18 @@ public class DatabaseHelperUnitTest {
 
     @Test
     public void databaseHelper_canDeletePrice_thenSaveItAgain_withSameFields(){
-        helper.savePrice(new DatabasePrice("","pathToMiniature1",1));
+        testDb.savePrice("","pathToMiniature1",1);
         helper.deletePriceById(1);
         helper.savePrice(new DatabasePrice("","pathToMiniature1",1));
-        assertNotNull(helper.readPriceById(1));
+        assertNotNull(testDb.readPriceById(1));
     }
 
     @Test
     public void databaseHelper_canDeletePrice_thenSaveItAgain_withDifferentFields(){
-        helper.savePrice(new DatabasePrice("","pathToMiniature1",1));
+        testDb.savePrice("","pathToMiniature1",1);
         helper.deletePriceById(1);
         helper.savePrice(new DatabasePrice("","pathToMiniature1",2));
-        assertNotNull(helper.readPriceById(2));
+        assertNotNull(testDb.readPriceById(2));
     }
 
     // Get All Prices
@@ -143,31 +138,31 @@ public class DatabaseHelperUnitTest {
 
     @Test
     public void databaseHelper_readsRightPricesCount_withOnePrice(){
-        helper.savePrice(new DatabasePrice("","pathToMiniature2",1));
+        testDb.savePrice("","pathToMiniature2",1);
         assertEquals(1,helper.getAllPrices().size());
     }
 
     @Test
     public void databaseHelper_readsRightPricesCount_withMorePrices(){
-        helper.savePrice(new DatabasePrice("","pathToMiniature1",1));
-        helper.savePrice(new DatabasePrice("","pathToMiniature2",2));
+        testDb.savePrice("","pathToMiniature1",1);
+        testDb.savePrice("","pathToMiniature2",2);
         assertEquals(2,helper.getAllPrices().size());
     }
 
     @Test
     public void databaseHelper_readsRightPricesCount_afterDeletingSome(){
-        helper.savePrice(new DatabasePrice("","pathToMiniature1",1));
-        helper.savePrice(new DatabasePrice("","pathToMiniature2",2));
-        helper.savePrice(new DatabasePrice("","pathToMiniature3",3));
-        helper.deletePriceById(1);
-        helper.deletePriceById(2);
+        testDb.savePrice("","pathToMiniature1",1);
+        testDb.savePrice("","pathToMiniature2",2);
+        testDb.savePrice("","pathToMiniature3",3);
+        testDb.deletePriceById(1);
+        testDb.deletePriceById(2);
         assertEquals(1,helper.getAllPrices().size());
     }
 
     @Test
     public void databaseHelper_readsPricesOrderedById(){
-        helper.savePrice(new DatabasePrice("","pathToMiniature1",2));
-        helper.savePrice(new DatabasePrice("","pathToMiniature2",1));
+        testDb.savePrice("","pathToMiniature1",2);
+        testDb.savePrice("","pathToMiniature2",1);
         assertEquals(1,helper.getAllPrices().get(0).id);
     }
 
@@ -180,56 +175,60 @@ public class DatabaseHelperUnitTest {
 
     @Test
     public void databaseHelper_readsRightPricesCount_asCustomDataset_withOnePrice(){
-        helper.savePrice(new DatabasePrice("1.1","noMiniature",1));
+        testDb.savePrice("1.1","noMiniature",1);
         assertEquals(1,helper.getPricesAsDataSet().size());
     }
 
     @Test
     public void databaseHelper_readsRightPricesCount_asCustomDataset_withMorePrices(){
-        helper.savePrice(new DatabasePrice("1.1","noMiniature",1));
-        helper.savePrice(new DatabasePrice("2.2","noMiniature",2));
+        testDb.savePrice("1.1","noMiniature",1);
+        testDb.savePrice("2.2","noMiniature",2);
         assertEquals(2,helper.getPricesAsDataSet().size());
     }
 
 
     @Test
     public void databaseHelper_doesntLoadABitmap_ifPathEqualsTo_noMiniature(){
-        helper.savePrice(new DatabasePrice("1.1","noMiniature",1));
+        testDb.savePrice("1.1","noMiniature",1);
         assertNull(helper.getPricesAsDataSet().get(0).getMiniature());
     }
 
     @Test
     public void databaseHelper_willLoadABitmap_ifPathNotEqualsTo_noMiniature(){
-        helper.savePrice(new DatabasePrice("1.1","/path/To/miniature",1));
+        testDb.savePrice("1.1","/path/To/miniature",1);
         assertNotNull(helper.getPricesAsDataSet().get(0).getMiniature());
     }
 
     @Test
     public void databaseHelper_willDeleteAllPrices(){
-        helper.savePrice(new DatabasePrice("1.1","/path/To/miniature",1));
-        helper.savePrice(new DatabasePrice("0.0","/path/To/miniature",2));
-        helper.deleteAllPrices();
+        testDb.savePrice("1.1","/path/To/miniature",1);
+        testDb.savePrice("0.0","/path/To/miniature",2);
+        testDb.deleteAllPrices();
         assertEquals(0,helper.getAllPrices().size());
     }
 
     @Test
     public void databaseHelper_willNotChangeDatabaseSize_ifThereWasNoPrices(){
-        helper.deleteAllPrices();
+        testDb.deleteAllPrices();
         assertEquals(0,helper.getAllPrices().size());
     }
 
     @Test
     public void databaseHelper_checkIfThereArePrices_withNoPrices(){
-        helper.deleteAllPrices();
+        testDb.deleteAllPrices();
         assertEquals(true,helper.isDatabaseEmpty());
     }
 
     @Test
     public void databaseHelper_checkIfThereArePrices_withMorePrices(){
-        helper.savePrice(new DatabasePrice("1.1","/path/To/miniature",1));
-        helper.savePrice(new DatabasePrice("0.0","/path/To/miniature",2));
+        testDb.savePrice("1.1","/path/To/miniature",1);
+        testDb.savePrice("0.0","/path/To/miniature",2);
         assertEquals(false,helper.isDatabaseEmpty());
     }
 
+    @Test
+    public void databaseHelper_createOneInstance(){
+        assertEquals(helper.hashCode(),DatabaseHelper.getHelper().hashCode());
+    }
 
 }

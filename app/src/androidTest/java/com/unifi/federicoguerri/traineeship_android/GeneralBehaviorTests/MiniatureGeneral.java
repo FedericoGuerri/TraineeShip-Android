@@ -28,11 +28,13 @@ public class MiniatureGeneral extends AbstractGeneral{
         customMatchers=new CustomMatchers();
     }
 
+
     @Test
     public void miniatureImageView_hasPlaceholderDrawable_ifUserClicksOnNObutton(){
         genericHelper.recognizeAPrice("NO");
-        onData(anything()).atPosition(0).
-                onChildView(withId(R.id.itemMiniatureImageViewItemPriceListView)).check(matches(customMatchers.withDrawable(R.drawable.no_miniature_placeholder)));
+        onData(anything()).atPosition(0)
+                .onChildView(withId(R.id.itemMiniatureImageViewItemPriceListView))
+                .check(matches(customMatchers.withDrawable(R.drawable.no_miniature_placeholder)));
     }
 
     @Test
@@ -49,7 +51,18 @@ public class MiniatureGeneral extends AbstractGeneral{
 
     }
 
+
+
     @Test
+    public void miniatureImageView_hasMiniature_ifUserClicksOnYESbutton(){
+        genericHelper.recognizeAPrice("YES");//miniature
+        onData(anything()).atPosition(0).
+                onChildView(withId(R.id.itemMiniatureImageViewItemPriceListView)).check(matches(not(customMatchers.withDrawable(R.drawable.no_miniature_placeholder))));
+    }
+
+
+
+     @Test
     public void miniatureImageView_notChangingPlaceholder_ifPricesWereDeleted(){
         genericHelper.recognizeAPrice("NO");
         genericHelper.recognizeAPrice("NO");
@@ -62,15 +75,34 @@ public class MiniatureGeneral extends AbstractGeneral{
 
 
 
+
+
+
+
+
+
     @Test
-    public void miniatureImageView_hasMiniature_ifUserClicksOnYESbutton(){
+    public void miniatureImageView_notChangingMiniature_ifPricesWithDifferentDrawableWereAdded(){
+        genericHelper.recognizeAPrice("YES");//miniature
+        genericHelper.recognizeAPrice("NO");
         genericHelper.recognizeAPrice("YES");//miniature
         onData(anything()).atPosition(0).
                 onChildView(withId(R.id.itemMiniatureImageViewItemPriceListView)).check(matches(not(customMatchers.withDrawable(R.drawable.no_miniature_placeholder))));
     }
 
 
+
+
     @Test
+    public void miniatureImageView_notChangingMiniature_ifPricesWithDifferentDrawableWereDeleted(){
+        genericHelper.recognizeAPrice("YES");//miniature
+        genericHelper.recognizeAPrice("NO");
+        genericHelper.recognizeAPrice("NO");
+        genericHelper.deletePrice(1);
+        genericHelper.deletePrice(1);
+        onData(anything()).atPosition(0).
+                onChildView(withId(R.id.itemMiniatureImageViewItemPriceListView)).check(matches(not(customMatchers.withDrawable(R.drawable.no_miniature_placeholder))));
+    }@Test
     public void miniatureImageView_notChangingMiniature_ifPricesWereAdded(){
         genericHelper.recognizeAPrice("NO");
         genericHelper.recognizeAPrice("YES");
@@ -97,23 +129,8 @@ public class MiniatureGeneral extends AbstractGeneral{
 
 
 
-    @Test
-    public void miniatureImageView_notChangingPlaceholder_ifPricesWithDifferentDrawableWereAdded(){
-        genericHelper.recognizeAPrice("NO");
-        genericHelper.recognizeAPrice("YES");//miniature
-        genericHelper.recognizeAPrice("NO");
-        onData(anything()).atPosition(0).
-                onChildView(withId(R.id.itemMiniatureImageViewItemPriceListView)).check(matches(customMatchers.withDrawable(R.drawable.no_miniature_placeholder)));
-    }
 
-    @Test
-    public void miniatureImageView_notChangingMiniature_ifPricesWithDifferentDrawableWereAdded(){
-        genericHelper.recognizeAPrice("YES");//miniature
-        genericHelper.recognizeAPrice("NO");
-        genericHelper.recognizeAPrice("YES");//miniature
-        onData(anything()).atPosition(0).
-                onChildView(withId(R.id.itemMiniatureImageViewItemPriceListView)).check(matches(not(customMatchers.withDrawable(R.drawable.no_miniature_placeholder))));
-    }
+
 
     @Test
     public void miniatureImageView_notChangingPlaceholder_ifPricesWithDifferentDrawableWereDeleted(){
@@ -126,16 +143,15 @@ public class MiniatureGeneral extends AbstractGeneral{
     }
 
 
+
+
+/*
     @Test
-    public void miniatureImageView_notChangingMiniature_ifPricesWithDifferentDrawableWereDeleted(){
-        genericHelper.recognizeAPrice("YES");//miniature
-        genericHelper.recognizeAPrice("NO");
-        genericHelper.recognizeAPrice("NO");
-        genericHelper.deletePrice(1);
-        genericHelper.deletePrice(1);
-        onData(anything()).atPosition(0).
-                onChildView(withId(R.id.itemMiniatureImageViewItemPriceListView)).check(matches(not(customMatchers.withDrawable(R.drawable.no_miniature_placeholder))));
+    public void willFail(){
+        System.exit(0);
     }
+*/
+
 
 
 
