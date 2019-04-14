@@ -1,5 +1,4 @@
 language: android
-os: osx
 jdk: oraclejdk8
 sudo: required
 
