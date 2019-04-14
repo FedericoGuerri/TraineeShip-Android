@@ -25,10 +25,12 @@ addons:
     
 android:
   components:
+    - tools
+    - platform-tools
     - extra-google-google_play_services
     - extra-google-m2repository
     - extra-android-m2repository
-    - addon-google_apis-google-22
+    - addon-google_apis-google-24
     
 install:
   # Install SDK license so Android Gradle plugin can install dependencies.
@@ -39,10 +41,10 @@ install:
   - sdkmanager tools
   
   # Install the system image.
-  - sdkmanager "system-images;android-22;default;armeabi-v7a"
+  - sdkmanager "system-images;android-24;default;armeabi-v7a"
     
   # Create and start emulator for the script.
-  - echo no | avdmanager create avd --force -n test -k "system-images;android-22;default;armeabi-v7a"
+  - echo no | avdmanager create avd --force -n test -k "system-images;android-24;default;armeabi-v7a"
   - $ANDROID_HOME/emulator/emulator -avd test -no-audio -no-window &
 
 script:
