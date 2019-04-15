@@ -5,7 +5,7 @@ sudo: required
 env:
   global:
    # Increase timeout for installation to 8 minutes. Default is 2.
-    - ADB_INSTALL_TIMEOUT=16
+    - ADB_INSTALL_TIMEOUT=8
     
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
@@ -29,7 +29,7 @@ android:
     - extra-google-google_play_services
     - extra-google-m2repository
     - extra-android-m2repository
-    - addon-google_apis-google-21
+    - addon-google_apis-google-22
     
 install:
   # Install SDK license so Android Gradle plugin can install dependencies.
@@ -40,10 +40,10 @@ install:
   - sdkmanager tools
   
   # Install the system image.
-  - sdkmanager "system-images;android-21;default;armeabi-v7a"
+  - sdkmanager "system-images;android-22;default;x86_64"
     
   # Create and start emulator for the script.
-  - echo no | avdmanager create avd --force -n test -k "system-images;android-21;default;armeabi-v7a"
+  - echo no | avdmanager create avd --force -n test -k "system-images;android-22;default;x86_64"
   - $ANDROID_HOME/emulator/emulator -avd test -no-audio -no-window &
   
   - android list target
