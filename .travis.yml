@@ -47,6 +47,13 @@ install:
   - $ANDROID_HOME/emulator/emulator -avd test -no-audio -no-window &
   
   - android list target
+  - adb kill-server
+  - adb devices
+ 
+  
+  # Restart the emulator.
+  - echo no | avdmanager create avd --force -n test -k "system-images;android-22;default;x86_64"
+  - $ANDROID_HOME/emulator/emulator -avd test -no-audio -no-window &
 
 script:
   # Run junit tests
