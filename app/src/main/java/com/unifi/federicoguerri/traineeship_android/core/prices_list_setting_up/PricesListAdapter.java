@@ -33,7 +33,6 @@ public class PricesListAdapter extends ArrayAdapter<PricesListDataSet> {
         TextView priceTextView;
         ImageView miniatureImageView;
         ImageView deleteImageView;
-        //TextView idTextView;
     }
 
     @NonNull
@@ -49,7 +48,6 @@ public class PricesListAdapter extends ArrayAdapter<PricesListDataSet> {
             viewHolder.priceTextView = rowView.findViewById(R.id.itemPriceTextViewPricesListView);
             viewHolder.miniatureImageView = rowView.findViewById(R.id.itemMiniatureImageViewItemPriceListView);
             viewHolder.deleteImageView=rowView.findViewById(R.id.itemDeletePriceImageViewitemPriceListView);
-            //viewHolder.idTextView = rowView.findViewById(R.id.itemIdTextViewPricesListView);
             rowView.setTag(viewHolder);
             adapter.notifyDataSetChanged();
         }else{
@@ -62,7 +60,6 @@ public class PricesListAdapter extends ArrayAdapter<PricesListDataSet> {
             viewHolder.miniatureImageView.setImageBitmap(BitmapFactory.decodeResource(mContext.getResources(),R.drawable.no_miniature_placeholder));
         }
         viewHolder.priceTextView.setText(String.valueOf(dataSet.getPrice()));
-        //viewHolder.idTextView.setText(String.valueOf(dataSet.getId()));
         viewHolder.deleteImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
