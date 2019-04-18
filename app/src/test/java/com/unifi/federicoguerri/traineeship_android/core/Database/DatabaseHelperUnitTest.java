@@ -129,6 +129,21 @@ public class DatabaseHelperUnitTest {
         assertNotNull(testDb.readPriceById(2));
     }
 
+
+    @Test
+    public void databaseHelper_canDeleteAllPrices_atOnce(){
+        testDb.savePrice("","pathToMiniature1",1);
+        testDb.savePrice("","pathToMiniature2",2);
+        helper.deleteAllPrices();
+        assertEquals(0,testDb.getAllSavedPrices().size());
+    }
+
+    @Test
+    public void databaseHelper_canDeleteAllPrices_ifNoPricesInDatabase(){
+        helper.deleteAllPrices();
+        assertEquals(0,testDb.getAllSavedPrices().size());
+    }
+
     // Get All Prices
 
     @Test
