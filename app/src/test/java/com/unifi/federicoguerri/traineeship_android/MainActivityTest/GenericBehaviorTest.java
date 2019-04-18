@@ -95,13 +95,6 @@ public class GenericBehaviorTest {
         assertEquals("com.unifi.federicoguerri.traineeship_android.OcrScanActivity",shadowIntent.getIntentClass().getName());
     }
 
-    @Test
-    public void willrequestPermissionAtRuntime(){
-        ShadowActivity shadowActivity=shadowOf(activity);
-        shadowActivity.denyPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        activity.onRequestPermissionsResult(10800,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},new int[] {PackageManager.PERMISSION_GRANTED});
-    }
-
 
     @Test
     public void willDelete_allSharedPreferences_onDestroy(){
