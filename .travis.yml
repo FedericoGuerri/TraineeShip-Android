@@ -6,6 +6,12 @@ env:
   global:
    # Increase timeout for installation to 8 minutes. Default is 2.
     - ADB_INSTALL_TIMEOUT=8
+    - ABI=x86_64
+    - EMU_FLAVOR=default
+    - ANDROID_HOME=/usr/local/android-sdk
+    - TOOLS=${ANDROID_HOME}/tools
+    - PATH=${ANDROID_HOME}:${ANDROID_HOME}/emulator:${TOOLS}:${TOOLS}/bin:${ANDROID_HOME}/platform-tools:${PATH}
+    - API=22
     
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
@@ -25,45 +31,41 @@ addons:
 android:
   components:
     - tools
-    - platform-tools
     - extra-google-google_play_services
     - extra-google-m2repository
     - extra-android-m2repository
     - addon-google_apis-google-22
     
 install:
-  # Install SDK license so Android Gradle plugin can install dependencies.
+  # Accept SDK license, so Android Gradle plugin can install dependencies.
   - mkdir "$ANDROID_HOME/licenses" || true
   - echo "24333f8a63b6825ea9c5514f83c2829b004d1fee" > "$ANDROID_HOME/licenses/android-sdk-license"
   
-  # Install the rest of tools.
-  - sdkmanager tools
+  # Install tools, android emulator image, android SDK, with sdkmanager tool.
+  # Disable sdkmanager warning.
+  - echo 'count=0' > /home/travis/.android/repositories.cfg
+  - echo y | sdkmanager "platform-tools" >/dev/null
+  - echo y | sdkmanager "tools" >/dev/null
+  - echo y | sdkmanager "build-tools;28.0.3" >/dev/null
+  - echo y | sdkmanager "platforms;android-$API" >/dev/null
+  - echo y | sdkmanager "platforms;android-28" >/dev/null
+  # Use canary channel to workaround emulator problem, also add support x86_64 and 29.x.x
+  - echo y | sdkmanager --channel=4 "emulator" >/dev/null 
+  - echo y | sdkmanager "extras;android;m2repository" >/dev/null
+  - echo y | sdkmanager "system-images;android-$API;$EMU_FLAVOR;$ABI" >/dev/null
   
-  # Install the system image.
-  - sdkmanager "system-images;android-22;default;armeabi-v7a"
-    
-  # Create and start emulator for the script.
-  - echo no | avdmanager create avd --force -n test -k "system-images;android-22;default;armeabi-v7a"
-  - $ANDROID_HOME/emulator/emulator -avd test -no-audio -no-window &
+  # Create the emulator for Instrumentation tests
+  - echo no | avdmanager create avd --force -n test -k "system-images;android-$API;$EMU_FLAVOR;$ABI" -c 10M
+  - emulator -verbose -avd test -no-accel -no-snapshot -no-window -selinux permissive -qemu -m 2048 &
   
-  # Workaround to start emulator, it seems broken upstream
-  - android list target
-  - adb kill-server
-  - adb devices
-  
-  # Restart the emulator.
-  - echo no | avdmanager create avd --force -n test -k "system-images;android-22;default;armeabi-v7a"
-  - $ANDROID_HOME/emulator/emulator -avd test -no-audio -no-window &
-  
-  - android list target
-  - adb devices
+  # Waiting for emulator to be online
+  - android-wait-for-emulator
 
 script:
   # Run junit tests
   - ./gradlew testDebugUnitTestCoverage
 
   # Wait emulator and unlock it.
-  - travis_wait 30 android-wait-for-emulator
   - adb -s emulator-5554 shell settings put global window_animation_scale 0 &
   - adb -s emulator-5554 shell settings put global transition_animation_scale 0 &
   - adb -s emulator-5554 shell settings put global animator_duration_scale 0 &
