@@ -30,10 +30,8 @@ addons:
     
 android:
   components:
-    - tools
     - extra-google-google_play_services
     - extra-google-m2repository
-    - extra-android-m2repository
     - addon-google_apis-google-22
     
 install:
@@ -44,19 +42,23 @@ install:
   # Install tools, android emulator image, android SDK, with sdkmanager tool.
   # Disable sdkmanager warning.
   - echo 'count=0' > /home/travis/.android/repositories.cfg
+  
+  #Install platform-tools and tools
   - echo y | sdkmanager "platform-tools" >/dev/null
   - echo y | sdkmanager "tools" >/dev/null
+  
+  #Install Gradle build-tools and Android SDK
   - echo y | sdkmanager "build-tools;28.0.3" >/dev/null
   - echo y | sdkmanager "platforms;android-$API" >/dev/null
 
-# Use canary channel to workaround emulator problem, also add support x86_64 and 29.x.x
+  # Use canary channel to workaround emulator problem, also add support x86_64 and 29.x.x
   - echo y | sdkmanager --channel=4 "emulator" >/dev/null 
   - echo y | sdkmanager "extras;android;m2repository" >/dev/null
   - echo y | sdkmanager "system-images;android-$API;$EMU_FLAVOR;$ABI" >/dev/null
   
   # Create the emulator for Instrumentation tests
-  - echo no | avdmanager create avd --force -n test -k "system-images;android-$API;$EMU_FLAVOR;$ABI" -c 10M
-  - emulator -verbose -avd test -no-accel -no-snapshot -no-window -selinux permissive -qemu -m 2048 &
+  - echo no | avdmanager create avd --force -n testEmulator -k "system-images;android-$API;$EMU_FLAVOR;$ABI"
+  - emulator -avd testEmulator -no-accel -no-snapshot -no-window -qemu -m 2048 &
   
   # Waiting for emulator to be online
   - android-wait-for-emulator
@@ -65,7 +67,7 @@ script:
   # Run junit tests
   - ./gradlew testDebugUnitTestCoverage
 
-  # Wait emulator and unlock it.
+  # Disable emulator's animations
   - adb -s emulator-5554 shell settings put global window_animation_scale 0 &
   - adb -s emulator-5554 shell settings put global transition_animation_scale 0 &
   - adb -s emulator-5554 shell settings put global animator_duration_scale 0 &
@@ -77,6 +79,8 @@ script:
   - sleep 2
   - adb -s emulator-5554 shell input tap 320 490 &
   - sleep 2
+  
+  # Unlock the emulator
   - adb -s emulator-5554 shell input keyevent 82 &
 
   # Run instrumentation tests and wait for result for 50 minutes
