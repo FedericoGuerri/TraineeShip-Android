@@ -26,8 +26,7 @@ public class PriceListGeneral extends AbstractGeneral{
 
     @Test
     public void pricesList_willUpdateListSize_AfterRecognizedASecondPrice(){
-        genericHelper.recognizeAPrice("NO");
-        genericHelper.recognizeAPrice("NO");
+        genericHelper.recognizePricesWithNoMiniature(2);
         onView(withId(R.id.pricesListViewMainActivity)).check(matches(CustomMatchers.withListSize(2)));
     }
 
@@ -41,7 +40,7 @@ public class PriceListGeneral extends AbstractGeneral{
 
     @Test
     public void pricesList_willNoChangeVisibility_AfterRecognizedAPrice_ifBackWasPressed(){
-        genericHelper.recognizeAPrice("NO");
+        genericHelper.recognizeAPriceWithNoMiniature();
         onView(withId(R.id.fabNewOcrMainActivity)).perform(click());
         onView(isRoot()).perform(pressBack());
         onView(withId(R.id.pricesListViewMainActivity)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
@@ -49,25 +48,25 @@ public class PriceListGeneral extends AbstractGeneral{
 
     @Test
     public void pricesList_willStoreAPriceValue_AfterRecognizedAPrice(){
-        genericHelper.recognizeAPrice("NO");
+        genericHelper.recognizeAPriceWithNoMiniature();
         onView(withId(R.id.itemPriceTextViewPricesListView)).check(matches(withText("0.0")));
     }
 
     @Test
     public void pricesList_willUpdateListSize_AfterRecognizedAPrice(){
-        genericHelper.recognizeAPrice("NO");
+        genericHelper.recognizeAPriceWithNoMiniature();
         onView(ViewMatchers.withId(R.id.pricesListViewMainActivity)).check(matches(CustomMatchers.withListSize(1)));
     }
 
     @Test
     public void pricesList_willBeVisible_AfterRecognizedAPrice(){
-        genericHelper.recognizeAPrice("NO");
+        genericHelper.recognizeAPriceWithNoMiniature();
         onView(withId(R.id.pricesListViewMainActivity)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
     }
 
     @Test
     public void pricesList_wontChangeListSize_AfterRecognizedAPrice_ifBackWasPressed(){
-        genericHelper.recognizeAPrice("NO");
+        genericHelper.recognizeAPriceWithNoMiniature();
         onView(withId(R.id.fabNewOcrMainActivity)).perform(click());
         onView(isRoot()).perform(pressBack());
         onView(withId(R.id.pricesListViewMainActivity)).check(matches(CustomMatchers.withListSize(1)));
@@ -77,41 +76,39 @@ public class PriceListGeneral extends AbstractGeneral{
 
     @Test
     public void pricesList_willChangeVisibility_AfterRecognizedOnePrice_ifItWasRemoved(){
-        genericHelper.recognizeAPrice("NO");
+        genericHelper.recognizeAPriceWithNoMiniature();
         onView(withId(R.id.itemDeletePriceImageViewitemPriceListView)).perform(click());
         onView(withId(R.id.pricesListViewMainActivity)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.INVISIBLE)));
     }
 
     @Test
     public void pricesList_wontChangeVisibility_AfterRecognizedMorePrices_ifOneWasRemoved(){
-        genericHelper.recognizeAPrice("NO");
-        genericHelper.recognizeAPrice("NO");
+        genericHelper.recognizePricesWithNoMiniature(2);
         genericHelper.deleteFirstPrice();
         onView(withId(R.id.pricesListViewMainActivity)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
     }
 
     @Test
     public void pricesList_canAddAndDeletePrices(){
-        genericHelper.recognizeAPrice("NO");
+        genericHelper.recognizeAPriceWithNoMiniature();
         genericHelper.deleteFirstPrice();
         onView(withId(R.id.pricesListViewMainActivity)).check(matches(CustomMatchers.withListSize(0)));
     }
 
     @Test
     public void pricesList_canAddAndDeleteMultipleTimes(){
-        genericHelper.recognizeAPrice("NO");
+        genericHelper.recognizeAPriceWithNoMiniature();
         genericHelper.deleteFirstPrice();
-        genericHelper.recognizeAPrice("NO");
+        genericHelper.recognizeAPriceWithNoMiniature();
         genericHelper.deleteFirstPrice();
-        genericHelper.recognizeAPrice("NO");
+        genericHelper.recognizeAPriceWithNoMiniature();
         onView(withId(R.id.pricesListViewMainActivity)).check(matches(CustomMatchers.withListSize(1)));
     }
 
 
     @Test
     public void pricesList_canAddAndDelete_inDifferentOrder(){
-        genericHelper.recognizeAPrice("NO");
-        genericHelper.recognizeAPrice("NO");
+        genericHelper.recognizePricesWithNoMiniature(2);
         genericHelper.deletePrice(1);
         genericHelper.deletePrice(0);
         onView(withId(R.id.pricesListViewMainActivity)).check(matches(CustomMatchers.withListSize(0)));
@@ -119,25 +116,17 @@ public class PriceListGeneral extends AbstractGeneral{
 
     @Test
     public void pricesList_visibilityWillChangeEventually_ifAddingAndRemovingPrices(){
-        genericHelper.recognizeAPrice("NO");
-        genericHelper.recognizeAPrice("NO");
-        genericHelper.recognizeAPrice("NO");
-        genericHelper.recognizeAPrice("NO");
+        genericHelper.recognizePricesWithNoMiniature(4);
         genericHelper.deletePrice(3);
         genericHelper.deletePrice(1);
-        genericHelper.deleteFirstPrice();
-        genericHelper.deleteFirstPrice();
+        genericHelper.deleteFirstPrices(2);
         onView(withId(R.id.pricesListViewMainActivity)).check(matches(ViewMatchers.withEffectiveVisibility(ViewMatchers.Visibility.INVISIBLE)));
     }
 
     @Test
     public void pricesList_willChangeVisibility_AfterRecognizedMorePrices_ifAllWereRemoved(){
-        genericHelper.recognizeAPrice("NO");
-        genericHelper.recognizeAPrice("NO");
-        genericHelper.recognizeAPrice("NO");
-        genericHelper.deleteFirstPrice();
-        genericHelper.deleteFirstPrice();
-        genericHelper.deleteFirstPrice();
+        genericHelper.recognizePricesWithNoMiniature(4);
+        genericHelper.deleteFirstPrices(4);
         onView(withId(R.id.pricesListViewMainActivity)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.INVISIBLE)));
     }
 

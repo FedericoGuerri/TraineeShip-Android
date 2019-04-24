@@ -23,7 +23,7 @@ public class WelcomeLayoutGeneral extends  AbstractGeneral{
 
     @Test
     public void welcomeLayout_willBeInvisible_AfterRecognizedAPrice(){
-        genericHelper.recognizeAPrice("NO");
+        genericHelper.recognizeAPriceWithNoMiniature();
         onView(withId(R.id.welcomeLayoutMainActivity)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.INVISIBLE)));
     }
 
@@ -36,7 +36,7 @@ public class WelcomeLayoutGeneral extends  AbstractGeneral{
 
     @Test
     public void welcomeLayout_willNoChangeVisibility_AfterRecognizedAPrice_ifBackWasPressed(){
-        genericHelper.recognizeAPrice("NO");
+        genericHelper.recognizeAPriceWithNoMiniature();
         onView(withId(R.id.fabNewOcrMainActivity)).perform(click());
         onView(isRoot()).perform(pressBack());
         onView(withId(R.id.welcomeLayoutMainActivity)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.INVISIBLE)));
@@ -44,40 +44,31 @@ public class WelcomeLayoutGeneral extends  AbstractGeneral{
 
     @Test
     public void welcomeLayout_willChangeVisibility_AfterRecognizedOnePrice_ifItWasRemoved(){
-        genericHelper.recognizeAPrice("NO");
+        genericHelper.recognizeAPriceWithNoMiniature();
         onView(withId(R.id.itemDeletePriceImageViewitemPriceListView)).perform(click());
         onView(withId(R.id.welcomeLayoutMainActivity)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
     }
 
     @Test
     public void welcomeLayout_wontChangeVisibility_AfterRecognizedMorePrices_ifOneWasRemoved(){
-        genericHelper.recognizeAPrice("NO");
-        genericHelper.recognizeAPrice("NO");
+        genericHelper.recognizePricesWithNoMiniature(2);
         genericHelper.deleteFirstPrice();
         onView(withId(R.id.welcomeLayoutMainActivity)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.INVISIBLE)));
     }
 
     @Test
     public void welcomeLayout_willChangeVisibility_AfterRecognizedMorePrices_ifAllWereRemoved(){
-        genericHelper.recognizeAPrice("NO");
-        genericHelper.recognizeAPrice("NO");
-        genericHelper.recognizeAPrice("NO");
-        genericHelper.deleteFirstPrice();
-        genericHelper.deleteFirstPrice();
-        genericHelper.deleteFirstPrice();
+        genericHelper.recognizePricesWithNoMiniature(3);
+        genericHelper.deleteFirstPrices(3);
         onView(withId(R.id.welcomeLayoutMainActivity)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
     }
 
     @Test
     public void welcomeLayout_visibilityWillChangeEventually_ifAddingAndRemovingPrices(){
-        genericHelper.recognizeAPrice("NO");
-        genericHelper.recognizeAPrice("NO");
-        genericHelper.recognizeAPrice("NO");
-        genericHelper.recognizeAPrice("NO");
+        genericHelper.recognizePricesWithNoMiniature(4);
         genericHelper.deletePrice(3);
         genericHelper.deletePrice(1);
-        genericHelper.deleteFirstPrice();
-        genericHelper.deleteFirstPrice();
+        genericHelper.deleteFirstPrices(2);
         onView(withId(R.id.welcomeLayoutMainActivity)).check(matches(ViewMatchers.withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
     }
 

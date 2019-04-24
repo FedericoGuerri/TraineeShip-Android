@@ -12,7 +12,8 @@ env:
     - TOOLS=${ANDROID_HOME}/tools
     - PATH=${ANDROID_HOME}:${ANDROID_HOME}/emulator:${TOOLS}:${TOOLS}/bin:${ANDROID_HOME}/platform-tools:${PATH}
     - API=22
-    
+
+# Defining cache directories
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
@@ -22,12 +23,14 @@ cache:
     - $HOME/.gradle/wrapper/
     - $HOME/.android/build-cache
 
+# Configuring Sonarcloud
 addons:
   sonarcloud:
     organization: "federicoguerri-github"
     token:
         secure: ${SONAR_TOKEN}
-    
+
+# Definig android components: play Services, maven repository and google Api
 android:
   components:
     - extra-google-google_play_services
@@ -85,13 +88,15 @@ script:
 
   # Run instrumentation tests and wait for result for 50 minutes
   - travis_wait 50 ./gradlew connectedAndroidTest -Pandroid.testInstrumentationRunnerArguments.size=medium
-  
+
+  #Run sonarqube
   - ./gradlew sonarqube
 
 after_success:
   # Upload coverage to coveralls
   - ./gradlew coveralls
-  
+
+# Email configuration
 notifications:
     email:
       recipients:

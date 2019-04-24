@@ -23,20 +23,47 @@ import static org.hamcrest.core.AllOf.allOf;
 
 public class GenericHelper {
 
-    public void recognizeAPrice(String text) {
+    public void recognizeAPriceWithNoMiniature() {
         onView(withId(R.id.fabNewOcrMainActivity)).perform(click());
         waitUI(1500);
         onView(withId(R.id.fabSaveCurrentPrice)).perform(click());
         waitUI(1500);
-        onView(withText(text)).perform(click());
-        if(text.equals("YES")){
-            waitUI(1500);
-            onView(withId(R.id.fabSaveCurrentPrice)).perform(click());
+        onView(withText("NO")).perform(click());
+    }
+
+    public void recognizeAPriceWithMiniature() {
+        onView(withId(R.id.fabNewOcrMainActivity)).perform(click());
+        waitUI(1500);
+        onView(withId(R.id.fabSaveCurrentPrice)).perform(click());
+        waitUI(1500);
+        onView(withText("YES")).perform(click());
+        waitUI(1500);
+        onView(withId(R.id.fabSaveCurrentPrice)).perform(click());
+    }
+
+    public void recognizePricesWithNoMiniature(int recognizedCount){
+        for(int i=0;i<recognizedCount;i++){
+            recognizeAPriceWithNoMiniature();
         }
     }
 
+    public void recognizePricesWithMiniature(int recognizedCount){
+        for(int i=0;i<recognizedCount;i++){
+            recognizeAPriceWithMiniature();
+        }
+    }
+
+
+
     private void waitUI(int time) {
         SystemClock.sleep(time);
+    }
+
+
+    public void deleteFirstPrices(int pricesToDelete){
+        for(int i=0;i<pricesToDelete;i++){
+            deleteFirstPrice();
+        }
     }
 
 
